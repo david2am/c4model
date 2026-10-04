@@ -1,118 +1,410 @@
 {
   "configuration" : { },
-  "description" : "Demo version of the settlement ledger, focused on backend correctness.",
+  "description" : "Payment Orchestration and Settlement Accounts — MVP demo.",
   "documentation" : { },
   "id" : 1,
-  "lastModifiedDate" : "2026-10-04T21:18:09Z",
+  "lastModifiedDate" : "2026-10-04T22:32:33Z",
   "model" : {
     "people" : [ {
-      "description" : "Views balances, holds, and entry history for each member credit union.",
+      "description" : "Person or business with an account at a member credit union, sending or receiving payments.",
+      "group" : "Member Credit Union",
       "id" : "1",
-      "name" : "Finance Viewer (Demo: Manager)",
+      "name" : "Credit Union Member",
+      "properties" : {
+        "structurizr.dsl.identifier" : "member"
+      },
+      "relationships" : [ {
+        "description" : "Sends payments and checks balances using",
+        "destinationId" : "4",
+        "id" : "24",
+        "sourceId" : "1",
+        "tags" : "Relationship"
+      } ],
+      "tags" : "Element,Person"
+    }, {
+      "description" : "Staff at a member credit union who track payments, returns, and exceptions.",
+      "group" : "Member Credit Union",
+      "id" : "2",
+      "name" : "Credit Union Payments Staff",
+      "properties" : {
+        "structurizr.dsl.identifier" : "cuOps"
+      },
+      "relationships" : [ {
+        "description" : "Tracks payments and resolves exceptions using",
+        "destinationId" : "9",
+        "id" : "28",
+        "sourceId" : "2",
+        "tags" : "Relationship"
+      } ],
+      "tags" : "Element,Person"
+    }, {
+      "description" : "Manages the credit union's cash and liquidity, and needs to know settlement positions in real time.",
+      "group" : "Member Credit Union",
+      "id" : "3",
+      "name" : "Credit Union Treasury Officer",
+      "properties" : {
+        "structurizr.dsl.identifier" : "cuTreasury"
+      },
+      "relationships" : [ {
+        "description" : "Monitors liquidity and settlement position using",
+        "destinationId" : "9",
+        "id" : "29",
+        "sourceId" : "3",
+        "tags" : "Relationship"
+      } ],
+      "tags" : "Element,Person"
+    }, {
+      "description" : "Staff who monitor payment flow across all member credit unions and resolve exceptions.",
+      "group" : "CorporateOne",
+      "id" : "6",
+      "name" : "CorporateOne Payment Operations",
+      "properties" : {
+        "structurizr.dsl.identifier" : "coOps"
+      },
+      "relationships" : [ {
+        "description" : "Monitors all payment activity and handles exceptions using",
+        "destinationId" : "9",
+        "id" : "30",
+        "sourceId" : "6",
+        "tags" : "Relationship"
+      } ],
+      "tags" : "Element,Person"
+    }, {
+      "description" : "Review ledger balances, investigate differences, and approve manual adjustments.",
+      "group" : "CorporateOne",
+      "id" : "7",
+      "name" : "CorporateOne Finance and Settlement Staff",
+      "properties" : {
+        "structurizr.dsl.identifier" : "coFinance"
+      },
+      "relationships" : [ {
+        "description" : "Reviews balances and approves adjustments using",
+        "destinationId" : "13",
+        "id" : "35",
+        "sourceId" : "7",
+        "tags" : "Relationship"
+      } ],
+      "tags" : "Element,Person"
+    }, {
+      "description" : "Reviews the history of entries and reconciliation results. Read-only access.",
+      "group" : "CorporateOne",
+      "id" : "8",
+      "name" : "Auditor / Compliance Officer",
+      "properties" : {
+        "structurizr.dsl.identifier" : "coAuditor"
+      },
+      "relationships" : [ {
+        "description" : "Reviews entry history and reconciliation using",
+        "destinationId" : "13",
+        "id" : "36",
+        "sourceId" : "8",
+        "tags" : "Relationship"
+      } ],
+      "tags" : "Element,Person"
+    }, {
+      "description" : "Views payments, their status, and the available funds of each credit union.",
+      "id" : "39",
+      "name" : "Operations Viewer (Demo: Manager)",
       "properties" : {
         "structurizr.dsl.identifier" : "viewer"
       },
       "relationships" : [ {
-        "description" : "Views balances and entry history using",
-        "destinationId" : "6",
-        "id" : "10",
-        "sourceId" : "1",
+        "description" : "Views payments and funds using",
+        "destinationId" : "10",
+        "id" : "44",
+        "sourceId" : "39",
         "tags" : "Relationship",
         "technology" : "HTTPS"
       }, {
-        "description" : "Views balances and entry history using",
-        "destinationId" : "5",
-        "id" : "11",
-        "linkedRelationshipId" : "10",
-        "sourceId" : "1",
+        "description" : "Views payments and funds using",
+        "destinationId" : "9",
+        "id" : "45",
+        "linkedRelationshipId" : "44",
+        "sourceId" : "39",
         "technology" : "HTTPS"
       } ],
       "tags" : "Element,Person"
     }, {
-      "description" : "Runs the simulator and the integrity check to show the ledger is safe.",
-      "id" : "2",
+      "description" : "Runs the simulators and triggers failure scenarios to show the platform recovers.",
+      "id" : "40",
       "name" : "Developer (Demo Presenter)",
       "properties" : {
         "structurizr.dsl.identifier" : "developer"
       },
       "relationships" : [ {
+        "description" : "Submits normal, duplicate, and failing payments with",
+        "destinationId" : "41",
+        "id" : "46",
+        "sourceId" : "40",
+        "tags" : "Relationship",
+        "technology" : "Command line"
+      }, {
+        "description" : "Chooses accept, reject, delay, or silence using",
+        "destinationId" : "42",
+        "id" : "47",
+        "sourceId" : "40",
+        "tags" : "Relationship",
+        "technology" : "Command line"
+      }, {
+        "description" : "Stops and restarts, to show recovery, on",
+        "destinationId" : "11",
+        "id" : "48",
+        "sourceId" : "40",
+        "tags" : "Relationship",
+        "technology" : "Command line"
+      }, {
+        "description" : "Stops and restarts, to show recovery, on",
+        "destinationId" : "9",
+        "id" : "49",
+        "linkedRelationshipId" : "48",
+        "sourceId" : "40",
+        "technology" : "Command line"
+      }, {
         "description" : "Runs load and duplicate-request tests with",
-        "destinationId" : "3",
-        "id" : "12",
-        "sourceId" : "2",
+        "destinationId" : "65",
+        "id" : "68",
+        "sourceId" : "40",
         "tags" : "Relationship",
         "technology" : "Command line"
       }, {
         "description" : "Triggers on demand and reviews results of",
-        "destinationId" : "7",
-        "id" : "13",
-        "sourceId" : "2",
+        "destinationId" : "15",
+        "id" : "69",
+        "sourceId" : "40",
         "tags" : "Relationship",
         "technology" : "Command line"
       }, {
         "description" : "Triggers on demand and reviews results of",
-        "destinationId" : "5",
-        "id" : "14",
-        "linkedRelationshipId" : "13",
-        "sourceId" : "2",
+        "destinationId" : "13",
+        "id" : "70",
+        "linkedRelationshipId" : "69",
+        "sourceId" : "40",
         "technology" : "Command line"
+      } ],
+      "tags" : "Element,Person"
+    }, {
+      "description" : "Views balances, holds, and entry history for each member credit union.",
+      "id" : "64",
+      "name" : "Finance Viewer (Demo: Manager)",
+      "properties" : {
+        "structurizr.dsl.identifier" : "financeViewer"
+      },
+      "relationships" : [ {
+        "description" : "Views balances and entry history using",
+        "destinationId" : "14",
+        "id" : "66",
+        "sourceId" : "64",
+        "tags" : "Relationship",
+        "technology" : "HTTPS"
+      }, {
+        "description" : "Views balances and entry history using",
+        "destinationId" : "13",
+        "id" : "67",
+        "linkedRelationshipId" : "66",
+        "sourceId" : "64",
+        "technology" : "HTTPS"
       } ],
       "tags" : "Element,Person"
     } ],
     "softwareSystems" : [ {
-      "description" : "Test tool that plays the role of the Payment Orchestration Platform. Sends reserve, post, and release requests, including duplicates and simultaneous ones.",
+      "description" : "Online and mobile banking used by members to make payments and view balances.",
       "documentation" : { },
-      "id" : "3",
-      "name" : "Payment Simulator",
+      "group" : "Member Credit Union",
+      "id" : "4",
+      "name" : "Credit Union Digital Banking",
       "properties" : {
-        "structurizr.dsl.identifier" : "simulator"
+        "structurizr.dsl.identifier" : "cuDigital"
       },
       "relationships" : [ {
-        "description" : "Reserves funds, posts entries, releases holds, and queries balances with",
-        "destinationId" : "6",
-        "id" : "15",
-        "sourceId" : "3",
-        "tags" : "Relationship",
+        "description" : "Reads accounts and requests transactions from",
+        "destinationId" : "5",
+        "id" : "25",
+        "sourceId" : "4",
+        "tags" : "Relationship"
+      } ],
+      "tags" : "Element,Software System,External"
+    }, {
+      "description" : "System of record for the credit union's member accounts, balances, and transactions.",
+      "documentation" : { },
+      "group" : "Member Credit Union",
+      "id" : "5",
+      "name" : "Credit Union Core Processor",
+      "properties" : {
+        "structurizr.dsl.identifier" : "cuCore"
+      },
+      "relationships" : [ {
+        "description" : "Submits payment requests to",
+        "destinationId" : "9",
+        "id" : "26",
+        "sourceId" : "5",
+        "tags" : "Relationship"
+      } ],
+      "tags" : "Element,Software System,External"
+    }, {
+      "containers" : [ {
+        "description" : "Accepts payment requests and network answers. Saves each one together with a work item in a single transaction, ignores duplicates, and serves the read-only operations pages.",
+        "documentation" : { },
+        "id" : "10",
+        "name" : "Orchestrator API",
+        "properties" : {
+          "structurizr.dsl.identifier" : "orchestratorApi"
+        },
+        "relationships" : [ {
+          "description" : "Saves payments, idempotency keys, and work items in one transaction",
+          "destinationId" : "12",
+          "id" : "54",
+          "sourceId" : "10",
+          "tags" : "Relationship",
+          "technology" : "SQL"
+        }, {
+          "description" : "Reads available funds from",
+          "destinationId" : "13",
+          "id" : "63",
+          "sourceId" : "10",
+          "tags" : "Relationship",
+          "technology" : "HTTPS/JSON"
+        } ],
+        "tags" : "Element,Container,App",
+        "technology" : "ASP.NET Core"
+      }, {
+        "description" : "Picks up work items and moves each payment through its steps: screen, reserve, send, confirm, post, notify. Retries safely, times out silent networks, and releases holds on failure.",
+        "documentation" : { },
+        "id" : "11",
+        "name" : "Payment Worker",
+        "properties" : {
+          "structurizr.dsl.identifier" : "paymentWorker"
+        },
+        "relationships" : [ {
+          "description" : "Picks up work items and updates payment state",
+          "destinationId" : "12",
+          "id" : "55",
+          "sourceId" : "11",
+          "tags" : "Relationship",
+          "technology" : "SQL"
+        }, {
+          "description" : "Screens payments with",
+          "destinationId" : "43",
+          "id" : "56",
+          "sourceId" : "11",
+          "tags" : "Relationship",
+          "technology" : "HTTPS/JSON"
+        }, {
+          "description" : "Reserves funds, posts entries, and releases holds with",
+          "destinationId" : "13",
+          "id" : "58",
+          "sourceId" : "11",
+          "tags" : "Relationship",
+          "technology" : "HTTPS/JSON"
+        }, {
+          "description" : "Sends payment messages to",
+          "destinationId" : "42",
+          "id" : "59",
+          "sourceId" : "11",
+          "tags" : "Relationship",
+          "technology" : "HTTPS (ISO 20022 pacs.008)"
+        }, {
+          "description" : "Notifies payment results to",
+          "destinationId" : "41",
+          "id" : "61",
+          "sourceId" : "11",
+          "tags" : "Relationship",
+          "technology" : "Webhooks/HTTPS"
+        } ],
+        "tags" : "Element,Container,App",
+        "technology" : ".NET Worker Service"
+      }, {
+        "description" : "Stores payments and their state history, idempotency keys, the work item queue, and raw network messages.",
+        "documentation" : { },
+        "id" : "12",
+        "name" : "Platform Database",
+        "properties" : {
+          "structurizr.dsl.identifier" : "platformDb"
+        },
+        "tags" : "Element,Container,Database",
+        "technology" : "Azure SQL Database"
+      } ],
+      "description" : "Receives payment requests from member credit unions, validates and routes them to the right payment network, and monitors liquidity and settlement in real time.",
+      "documentation" : { },
+      "group" : "CorporateOne",
+      "id" : "9",
+      "name" : "Payment Orchestration Platform",
+      "properties" : {
+        "structurizr.dsl.identifier" : "platform"
+      },
+      "relationships" : [ {
+        "description" : "Reports payment status and returns to",
+        "destinationId" : "5",
+        "id" : "27",
+        "sourceId" : "9",
+        "tags" : "Relationship"
+      }, {
+        "description" : "Checks funds and posts settlement entries to",
+        "destinationId" : "13",
+        "id" : "31",
+        "sourceId" : "9",
+        "tags" : "Relationship"
+      }, {
+        "description" : "Screens payments with",
+        "destinationId" : "21",
+        "id" : "32",
+        "sourceId" : "9",
+        "tags" : "Relationship"
+      }, {
+        "description" : "Sends payments to and receives confirmations from",
+        "destinationId" : "18",
+        "id" : "33",
+        "sourceId" : "9",
+        "tags" : "Relationship"
+      }, {
+        "description" : "Sends payments to and receives confirmations from",
+        "destinationId" : "20",
+        "id" : "34",
+        "sourceId" : "9",
+        "tags" : "Relationship"
+      }, {
+        "description" : "Screens payments with",
+        "destinationId" : "43",
+        "id" : "57",
+        "linkedRelationshipId" : "56",
+        "sourceId" : "9",
         "technology" : "HTTPS/JSON"
       }, {
-        "description" : "Reserves funds, posts entries, releases holds, and queries balances with",
-        "destinationId" : "5",
-        "id" : "16",
-        "linkedRelationshipId" : "15",
-        "sourceId" : "3",
-        "technology" : "HTTPS/JSON"
+        "description" : "Sends payment messages to",
+        "destinationId" : "42",
+        "id" : "60",
+        "linkedRelationshipId" : "59",
+        "sourceId" : "9",
+        "technology" : "HTTPS (ISO 20022 pacs.008)"
+      }, {
+        "description" : "Notifies payment results to",
+        "destinationId" : "41",
+        "id" : "62",
+        "linkedRelationshipId" : "61",
+        "sourceId" : "9",
+        "technology" : "Webhooks/HTTPS"
       } ],
-      "tags" : "Element,Software System,Test Tool"
-    }, {
-      "description" : "Signs in staff and issues access tokens.",
-      "documentation" : { },
-      "id" : "4",
-      "name" : "Identity Provider",
-      "properties" : {
-        "structurizr.dsl.identifier" : "identity"
-      },
-      "tags" : "Element,Software System,External"
+      "tags" : "Element,Software System,In Scope"
     }, {
       "containers" : [ {
         "description" : "Only component that changes balances. Holds, posts, and releases funds, rejects overdrafts, ignores duplicate requests, and serves the read-only dashboard pages.",
         "documentation" : { },
-        "id" : "6",
+        "id" : "14",
         "name" : "Ledger Service",
         "properties" : {
           "structurizr.dsl.identifier" : "ledgerService"
         },
         "relationships" : [ {
           "description" : "Validates sign-ins and tokens with",
-          "destinationId" : "4",
-          "id" : "17",
-          "sourceId" : "6",
+          "destinationId" : "23",
+          "id" : "73",
+          "sourceId" : "14",
           "tags" : "Relationship",
           "technology" : "OpenID Connect"
         }, {
           "description" : "Reads and writes entries, balances, holds, and idempotency keys",
-          "destinationId" : "9",
-          "id" : "19",
-          "sourceId" : "6",
+          "destinationId" : "17",
+          "id" : "75",
+          "sourceId" : "14",
           "tags" : "Relationship",
           "technology" : "SQL"
         } ],
@@ -121,16 +413,16 @@
       }, {
         "description" : "Runs on a schedule and checks that debits equal credits, balances match entries, and no holds are stuck.",
         "documentation" : { },
-        "id" : "7",
+        "id" : "15",
         "name" : "Integrity Check Job",
         "properties" : {
           "structurizr.dsl.identifier" : "integrityJob"
         },
         "relationships" : [ {
           "description" : "Reads entries and balances, and stores check results in",
-          "destinationId" : "9",
-          "id" : "20",
-          "sourceId" : "7",
+          "destinationId" : "17",
+          "id" : "76",
+          "sourceId" : "15",
           "tags" : "Relationship",
           "technology" : "SQL"
         } ],
@@ -139,23 +431,23 @@
       }, {
         "description" : "Reads new entries from an outbox table and sends balance-changed events. Stretch goal.",
         "documentation" : { },
-        "id" : "8",
+        "id" : "16",
         "name" : "Event Publisher",
         "properties" : {
           "structurizr.dsl.identifier" : "eventPublisher"
         },
         "relationships" : [ {
           "description" : "Reads new outbox events from",
-          "destinationId" : "9",
-          "id" : "21",
-          "sourceId" : "8",
+          "destinationId" : "17",
+          "id" : "77",
+          "sourceId" : "16",
           "tags" : "Relationship",
           "technology" : "SQL"
         }, {
           "description" : "Sends balance-changed events to",
-          "destinationId" : "3",
-          "id" : "22",
-          "sourceId" : "8",
+          "destinationId" : "65",
+          "id" : "78",
+          "sourceId" : "16",
           "tags" : "Relationship",
           "technology" : "Webhooks/HTTPS"
         } ],
@@ -164,7 +456,7 @@
       }, {
         "description" : "Source of truth. Stores accounts, the permanent journal, balances, holds, idempotency keys, outbox events, and integrity check results.",
         "documentation" : { },
-        "id" : "9",
+        "id" : "17",
         "name" : "Ledger Database",
         "properties" : {
           "structurizr.dsl.identifier" : "ledgerDb"
@@ -172,35 +464,182 @@
         "tags" : "Element,Container,Database",
         "technology" : "Azure SQL Database"
       } ],
-      "description" : "Ledger of member credit union accounts: balances, holds, and the full history of every entry.",
+      "description" : "CorporateOne's ledger of member credit union accounts and settlement positions.",
       "documentation" : { },
-      "id" : "5",
+      "group" : "CorporateOne",
+      "id" : "13",
       "name" : "CorporateOne Settlement Accounts",
       "properties" : {
-        "structurizr.dsl.identifier" : "ledger"
+        "structurizr.dsl.identifier" : "coLedger"
       },
       "relationships" : [ {
+        "description" : "Downloads daily statements from",
+        "destinationId" : "19",
+        "id" : "37",
+        "sourceId" : "13",
+        "tags" : "Relationship"
+      }, {
+        "description" : "Sends summarized entries to",
+        "destinationId" : "22",
+        "id" : "38",
+        "sourceId" : "13",
+        "tags" : "Relationship"
+      }, {
         "description" : "Validates sign-ins and tokens with",
-        "destinationId" : "4",
-        "id" : "18",
-        "linkedRelationshipId" : "17",
-        "sourceId" : "5",
+        "destinationId" : "23",
+        "id" : "74",
+        "linkedRelationshipId" : "73",
+        "sourceId" : "13",
         "technology" : "OpenID Connect"
       }, {
         "description" : "Sends balance-changed events to",
-        "destinationId" : "3",
-        "id" : "23",
-        "linkedRelationshipId" : "22",
-        "sourceId" : "5",
+        "destinationId" : "65",
+        "id" : "79",
+        "linkedRelationshipId" : "78",
+        "sourceId" : "13",
         "technology" : "Webhooks/HTTPS"
       } ],
-      "tags" : "Element,Software System,In Scope"
+      "tags" : "Element,Software System,Internal"
+    }, {
+      "description" : "Fed-operated services that move and settle money: FedNow (instant), FedACH (batch), and Fedwire (high value).",
+      "documentation" : { },
+      "id" : "18",
+      "name" : "Federal Reserve Payment Services",
+      "properties" : {
+        "structurizr.dsl.identifier" : "fedServices"
+      },
+      "tags" : "Element,Software System,External"
+    }, {
+      "description" : "Provides statements and balance information for CorporateOne's master account at the Fed.",
+      "documentation" : { },
+      "id" : "19",
+      "name" : "Federal Reserve Account Services",
+      "properties" : {
+        "structurizr.dsl.identifier" : "fedAccount"
+      },
+      "tags" : "Element,Software System,External"
+    }, {
+      "description" : "Real-time payment network operated by The Clearing House.",
+      "documentation" : { },
+      "id" : "20",
+      "name" : "RTP Network",
+      "properties" : {
+        "structurizr.dsl.identifier" : "rtpNetwork"
+      },
+      "tags" : "Element,Software System,External"
+    }, {
+      "description" : "Third-party service that checks payments against sanctions lists and fraud signals.",
+      "documentation" : { },
+      "id" : "21",
+      "name" : "Sanctions and Fraud Screening",
+      "properties" : {
+        "structurizr.dsl.identifier" : "screening"
+      },
+      "tags" : "Element,Software System,External"
+    }, {
+      "description" : "CorporateOne's accounting system for financial statements and reporting.",
+      "documentation" : { },
+      "id" : "22",
+      "name" : "Corporate Core / General Ledger",
+      "properties" : {
+        "structurizr.dsl.identifier" : "coreSystems"
+      },
+      "tags" : "Element,Software System,Internal"
+    }, {
+      "description" : "Signs in CorporateOne staff and issues access tokens.",
+      "documentation" : { },
+      "id" : "23",
+      "name" : "Identity Provider",
+      "properties" : {
+        "structurizr.dsl.identifier" : "identity"
+      },
+      "tags" : "Element,Software System,External"
+    }, {
+      "description" : "Test tool that plays the credit union core. Submits payment requests, sends duplicates, and receives status notifications.",
+      "documentation" : { },
+      "id" : "41",
+      "name" : "Credit Union Core Simulator",
+      "properties" : {
+        "structurizr.dsl.identifier" : "coreSim"
+      },
+      "relationships" : [ {
+        "description" : "Submits payment requests to",
+        "destinationId" : "10",
+        "id" : "50",
+        "sourceId" : "41",
+        "tags" : "Relationship",
+        "technology" : "HTTPS/JSON"
+      }, {
+        "description" : "Submits payment requests to",
+        "destinationId" : "9",
+        "id" : "51",
+        "linkedRelationshipId" : "50",
+        "sourceId" : "41",
+        "technology" : "HTTPS/JSON"
+      } ],
+      "tags" : "Element,Software System,Test Tool"
+    }, {
+      "description" : "Test tool that plays FedNow. Accepts, rejects, delays, or ignores payments, and can send duplicate answers.",
+      "documentation" : { },
+      "id" : "42",
+      "name" : "Payment Network Simulator",
+      "properties" : {
+        "structurizr.dsl.identifier" : "networkSim"
+      },
+      "relationships" : [ {
+        "description" : "Sends payment answers to",
+        "destinationId" : "10",
+        "id" : "52",
+        "sourceId" : "42",
+        "tags" : "Relationship",
+        "technology" : "Webhooks/HTTPS"
+      }, {
+        "description" : "Sends payment answers to",
+        "destinationId" : "9",
+        "id" : "53",
+        "linkedRelationshipId" : "52",
+        "sourceId" : "42",
+        "technology" : "Webhooks/HTTPS"
+      } ],
+      "tags" : "Element,Software System,Test Tool"
+    }, {
+      "description" : "Test tool that rejects payments for names on a small test list.",
+      "documentation" : { },
+      "id" : "43",
+      "name" : "Sanctions Screening Stub",
+      "properties" : {
+        "structurizr.dsl.identifier" : "screeningStub"
+      },
+      "tags" : "Element,Software System,Test Tool"
+    }, {
+      "description" : "Test tool that plays the role of the Payment Orchestration Platform. Sends reserve, post, and release requests, including duplicates and simultaneous ones.",
+      "documentation" : { },
+      "id" : "65",
+      "name" : "Payment Simulator",
+      "properties" : {
+        "structurizr.dsl.identifier" : "simulator"
+      },
+      "relationships" : [ {
+        "description" : "Reserves funds, posts entries, releases holds, and queries balances with",
+        "destinationId" : "14",
+        "id" : "71",
+        "sourceId" : "65",
+        "tags" : "Relationship",
+        "technology" : "HTTPS/JSON"
+      }, {
+        "description" : "Reserves funds, posts entries, releases holds, and queries balances with",
+        "destinationId" : "13",
+        "id" : "72",
+        "linkedRelationshipId" : "71",
+        "sourceId" : "65",
+        "technology" : "HTTPS/JSON"
+      } ],
+      "tags" : "Element,Software System,Test Tool"
     } ]
   },
-  "name" : "CorporateOne Settlement Accounts - Demo",
+  "name" : "CorporateOne MVP",
   "properties" : {
-    "structurizr.inspection.error" : "4",
-    "structurizr.dsl" : "d29ya3NwYWNlICJDb3Jwb3JhdGVPbmUgU2V0dGxlbWVudCBBY2NvdW50cyAtIERlbW8iICJEZW1vIHZlcnNpb24gb2YgdGhlIHNldHRsZW1lbnQgbGVkZ2VyLCBmb2N1c2VkIG9uIGJhY2tlbmQgY29ycmVjdG5lc3MuIiB7CgogICAgbW9kZWwgewoKICAgICAgICAjIC0tLS0tLS0tLS0gUGVvcGxlIC0tLS0tLS0tLS0KICAgICAgICB2aWV3ZXIgPSBwZXJzb24gIkZpbmFuY2UgVmlld2VyIChEZW1vOiBNYW5hZ2VyKSIgIlZpZXdzIGJhbGFuY2VzLCBob2xkcywgYW5kIGVudHJ5IGhpc3RvcnkgZm9yIGVhY2ggbWVtYmVyIGNyZWRpdCB1bmlvbi4iCiAgICAgICAgZGV2ZWxvcGVyID0gcGVyc29uICJEZXZlbG9wZXIgKERlbW8gUHJlc2VudGVyKSIgIlJ1bnMgdGhlIHNpbXVsYXRvciBhbmQgdGhlIGludGVncml0eSBjaGVjayB0byBzaG93IHRoZSBsZWRnZXIgaXMgc2FmZS4iCgogICAgICAgICMgLS0tLS0tLS0tLSBPdGhlciBzeXN0ZW1zIC0tLS0tLS0tLS0KICAgICAgICBzaW11bGF0b3IgPSBzb2Z0d2FyZVN5c3RlbSAiUGF5bWVudCBTaW11bGF0b3IiICJUZXN0IHRvb2wgdGhhdCBwbGF5cyB0aGUgcm9sZSBvZiB0aGUgUGF5bWVudCBPcmNoZXN0cmF0aW9uIFBsYXRmb3JtLiBTZW5kcyByZXNlcnZlLCBwb3N0LCBhbmQgcmVsZWFzZSByZXF1ZXN0cywgaW5jbHVkaW5nIGR1cGxpY2F0ZXMgYW5kIHNpbXVsdGFuZW91cyBvbmVzLiIgIlRlc3QgVG9vbCIKICAgICAgICBpZGVudGl0eSA9IHNvZnR3YXJlU3lzdGVtICJJZGVudGl0eSBQcm92aWRlciIgIlNpZ25zIGluIHN0YWZmIGFuZCBpc3N1ZXMgYWNjZXNzIHRva2Vucy4iICJFeHRlcm5hbCIKCiAgICAgICAgIyAtLS0tLS0tLS0tIFRoZSBzeXN0ZW0gd2UgYXJlIHpvb21pbmcgaW50byAtLS0tLS0tLS0tCiAgICAgICAgbGVkZ2VyID0gc29mdHdhcmVTeXN0ZW0gIkNvcnBvcmF0ZU9uZSBTZXR0bGVtZW50IEFjY291bnRzIiAiTGVkZ2VyIG9mIG1lbWJlciBjcmVkaXQgdW5pb24gYWNjb3VudHM6IGJhbGFuY2VzLCBob2xkcywgYW5kIHRoZSBmdWxsIGhpc3Rvcnkgb2YgZXZlcnkgZW50cnkuIiAiSW4gU2NvcGUiIHsKCiAgICAgICAgICAgIGxlZGdlclNlcnZpY2UgPSBjb250YWluZXIgIkxlZGdlciBTZXJ2aWNlIiAiT25seSBjb21wb25lbnQgdGhhdCBjaGFuZ2VzIGJhbGFuY2VzLiBIb2xkcywgcG9zdHMsIGFuZCByZWxlYXNlcyBmdW5kcywgcmVqZWN0cyBvdmVyZHJhZnRzLCBpZ25vcmVzIGR1cGxpY2F0ZSByZXF1ZXN0cywgYW5kIHNlcnZlcyB0aGUgcmVhZC1vbmx5IGRhc2hib2FyZCBwYWdlcy4iICJBU1AuTkVUIENvcmUiICJBcHAiCgogICAgICAgICAgICBpbnRlZ3JpdHlKb2IgPSBjb250YWluZXIgIkludGVncml0eSBDaGVjayBKb2IiICJSdW5zIG9uIGEgc2NoZWR1bGUgYW5kIGNoZWNrcyB0aGF0IGRlYml0cyBlcXVhbCBjcmVkaXRzLCBiYWxhbmNlcyBtYXRjaCBlbnRyaWVzLCBhbmQgbm8gaG9sZHMgYXJlIHN0dWNrLiIgIi5ORVQgV29ya2VyIFNlcnZpY2UiICJBcHAiCgogICAgICAgICAgICBldmVudFB1Ymxpc2hlciA9IGNvbnRhaW5lciAiRXZlbnQgUHVibGlzaGVyIiAiUmVhZHMgbmV3IGVudHJpZXMgZnJvbSBhbiBvdXRib3ggdGFibGUgYW5kIHNlbmRzIGJhbGFuY2UtY2hhbmdlZCBldmVudHMuIFN0cmV0Y2ggZ29hbC4iICIuTkVUIFdvcmtlciBTZXJ2aWNlIiAiU3RyZXRjaCIKCiAgICAgICAgICAgIGxlZGdlckRiID0gY29udGFpbmVyICJMZWRnZXIgRGF0YWJhc2UiICJTb3VyY2Ugb2YgdHJ1dGguIFN0b3JlcyBhY2NvdW50cywgdGhlIHBlcm1hbmVudCBqb3VybmFsLCBiYWxhbmNlcywgaG9sZHMsIGlkZW1wb3RlbmN5IGtleXMsIG91dGJveCBldmVudHMsIGFuZCBpbnRlZ3JpdHkgY2hlY2sgcmVzdWx0cy4iICJBenVyZSBTUUwgRGF0YWJhc2UiICJEYXRhYmFzZSIKICAgICAgICB9CgogICAgICAgICMgLS0tLS0tLS0tLSBSZWxhdGlvbnNoaXBzIC0tLS0tLS0tLS0KICAgICAgICB2aWV3ZXIgLT4gbGVkZ2VyU2VydmljZSAiVmlld3MgYmFsYW5jZXMgYW5kIGVudHJ5IGhpc3RvcnkgdXNpbmciICJIVFRQUyIKICAgICAgICBkZXZlbG9wZXIgLT4gc2ltdWxhdG9yICJSdW5zIGxvYWQgYW5kIGR1cGxpY2F0ZS1yZXF1ZXN0IHRlc3RzIHdpdGgiICJDb21tYW5kIGxpbmUiCiAgICAgICAgZGV2ZWxvcGVyIC0+IGludGVncml0eUpvYiAiVHJpZ2dlcnMgb24gZGVtYW5kIGFuZCByZXZpZXdzIHJlc3VsdHMgb2YiICJDb21tYW5kIGxpbmUiCgogICAgICAgIHNpbXVsYXRvciAtPiBsZWRnZXJTZXJ2aWNlICJSZXNlcnZlcyBmdW5kcywgcG9zdHMgZW50cmllcywgcmVsZWFzZXMgaG9sZHMsIGFuZCBxdWVyaWVzIGJhbGFuY2VzIHdpdGgiICJIVFRQUy9KU09OIgogICAgICAgIGxlZGdlclNlcnZpY2UgLT4gaWRlbnRpdHkgIlZhbGlkYXRlcyBzaWduLWlucyBhbmQgdG9rZW5zIHdpdGgiICJPcGVuSUQgQ29ubmVjdCIKICAgICAgICBsZWRnZXJTZXJ2aWNlIC0+IGxlZGdlckRiICJSZWFkcyBhbmQgd3JpdGVzIGVudHJpZXMsIGJhbGFuY2VzLCBob2xkcywgYW5kIGlkZW1wb3RlbmN5IGtleXMiICJTUUwiCgogICAgICAgIGludGVncml0eUpvYiAtPiBsZWRnZXJEYiAiUmVhZHMgZW50cmllcyBhbmQgYmFsYW5jZXMsIGFuZCBzdG9yZXMgY2hlY2sgcmVzdWx0cyBpbiIgIlNRTCIKCiAgICAgICAgZXZlbnRQdWJsaXNoZXIgLT4gbGVkZ2VyRGIgIlJlYWRzIG5ldyBvdXRib3ggZXZlbnRzIGZyb20iICJTUUwiCiAgICAgICAgZXZlbnRQdWJsaXNoZXIgLT4gc2ltdWxhdG9yICJTZW5kcyBiYWxhbmNlLWNoYW5nZWQgZXZlbnRzIHRvIiAiV2ViaG9va3MvSFRUUFMiCiAgICB9CgogICAgdmlld3MgewoKICAgICAgICBjb250YWluZXIgbGVkZ2VyICJDb250YWluZXJzIiB7CiAgICAgICAgICAgIGluY2x1ZGUgKgogICAgICAgICAgICBhdXRvTGF5b3V0IGxyCiAgICAgICAgICAgIHRpdGxlICJDb3Jwb3JhdGVPbmUgU2V0dGxlbWVudCBBY2NvdW50cyBEZW1vIC0gQ29udGFpbmVycyIKICAgICAgICAgICAgZGVzY3JpcHRpb24gIkEgc21hbGwgbGVkZ2VyIHNlcnZpY2UsIGEgZGF0YWJhc2UsIGFuIGludGVncml0eSBjaGVjaywgYW5kIGFuIG9wdGlvbmFsIGV2ZW50IHB1Ymxpc2hlci4iCiAgICAgICAgfQoKICAgICAgICBkeW5hbWljIGxlZGdlciAiUmVzZXJ2ZUFuZFBvc3QiICJIb3cgZnVuZHMgYXJlIGhlbGQsIHRoZW4gcG9zdGVkLCBhbmQgaG93IGEgZHVwbGljYXRlIGlzIGlnbm9yZWQuIiB7CiAgICAgICAgICAgIHNpbXVsYXRvciAtPiBsZWRnZXJTZXJ2aWNlICIxLiBBc2tzIHRvIHJlc2VydmUgZnVuZHMgKHVuaXF1ZSByZXF1ZXN0IElEKSIKICAgICAgICAgICAgbGVkZ2VyU2VydmljZSAtPiBsZWRnZXJEYiAiMi4gQ2hlY2tzIHRoZSBJRCwgbG9ja3MgdGhlIGFjY291bnQsIGNoZWNrcyBmdW5kcywgY3JlYXRlcyBob2xkIgogICAgICAgICAgICBzaW11bGF0b3IgLT4gbGVkZ2VyU2VydmljZSAiMy4gU2VuZHMgdGhlIHNhbWUgcmVxdWVzdCBhZ2FpbiBieSBtaXN0YWtlIgogICAgICAgICAgICBsZWRnZXJTZXJ2aWNlIC0+IGxlZGdlckRiICI0LiBGaW5kcyB0aGUgSUQsIHJldHVybnMgdGhlIGZpcnN0IHJlc3VsdCwgY2hhbmdlcyBub3RoaW5nIgogICAgICAgICAgICBzaW11bGF0b3IgLT4gbGVkZ2VyU2VydmljZSAiNS4gQXNrcyB0byBwb3N0IHRoZSBoZWxkIGZ1bmRzIgogICAgICAgICAgICBsZWRnZXJTZXJ2aWNlIC0+IGxlZGdlckRiICI2LiBUdXJucyBob2xkIGludG8gcGVybWFuZW50IGVudHJpZXMsIHVwZGF0ZXMgYmFsYW5jZSIKICAgICAgICAgICAgdmlld2VyIC0+IGxlZGdlclNlcnZpY2UgIjcuIFNlZXMgdGhlIG5ldyBiYWxhbmNlIGFuZCBoaXN0b3J5IgogICAgICAgICAgICBhdXRvTGF5b3V0IGxyCiAgICAgICAgfQoKICAgICAgICBkeW5hbWljIGxlZGdlciAiSW50ZWdyaXR5Q2hlY2siICJIb3cgdGhlIGxlZGdlciBwcm92ZXMgaXQgaXMgc3RpbGwgY29ycmVjdC4iIHsKICAgICAgICAgICAgZGV2ZWxvcGVyIC0+IGludGVncml0eUpvYiAiMS4gU3RhcnRzIHRoZSBjaGVjayIKICAgICAgICAgICAgaW50ZWdyaXR5Sm9iIC0+IGxlZGdlckRiICIyLiBSZWFkcyBlbnRyaWVzIGFuZCBiYWxhbmNlcywgc3RvcmVzIHRoZSByZXN1bHQiCiAgICAgICAgICAgIHZpZXdlciAtPiBsZWRnZXJTZXJ2aWNlICIzLiBTZWVzIHRoZSBjaGVjayByZXN1bHQgb24gdGhlIGRhc2hib2FyZCIKICAgICAgICAgICAgbGVkZ2VyU2VydmljZSAtPiBsZWRnZXJEYiAiNC4gUmVhZHMgdGhlIGxhdGVzdCByZXN1bHQiCiAgICAgICAgICAgIGF1dG9MYXlvdXQgbHIKICAgICAgICB9CgogICAgICAgIHN0eWxlcyB7CiAgICAgICAgICAgIGVsZW1lbnQgIlBlcnNvbiIgewogICAgICAgICAgICAgICAgc2hhcGUgUGVyc29uCiAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kICMwODQyN2IKICAgICAgICAgICAgICAgIGNvbG9yICNmZmZmZmYKICAgICAgICAgICAgfQogICAgICAgICAgICBlbGVtZW50ICJTb2Z0d2FyZSBTeXN0ZW0iIHsKICAgICAgICAgICAgICAgIGJhY2tncm91bmQgIzk5OTk5OQogICAgICAgICAgICAgICAgY29sb3IgI2ZmZmZmZgogICAgICAgICAgICB9CiAgICAgICAgICAgIGVsZW1lbnQgIkluIFNjb3BlIiB7CiAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kICMwYjUzOTQKICAgICAgICAgICAgICAgIGNvbG9yICNmZmZmZmYKICAgICAgICAgICAgfQogICAgICAgICAgICBlbGVtZW50ICJUZXN0IFRvb2wiIHsKICAgICAgICAgICAgICAgIGJhY2tncm91bmQgI2JiYmJiYgogICAgICAgICAgICAgICAgY29sb3IgI2ZmZmZmZgogICAgICAgICAgICAgICAgYm9yZGVyIGRhc2hlZAogICAgICAgICAgICB9CiAgICAgICAgICAgIGVsZW1lbnQgIkV4dGVybmFsIiB7CiAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kICM5OTk5OTkKICAgICAgICAgICAgICAgIGNvbG9yICNmZmZmZmYKICAgICAgICAgICAgfQogICAgICAgICAgICBlbGVtZW50ICJDb250YWluZXIiIHsKICAgICAgICAgICAgICAgIGJhY2tncm91bmQgIzExNjhiZAogICAgICAgICAgICAgICAgY29sb3IgI2ZmZmZmZgogICAgICAgICAgICB9CiAgICAgICAgICAgIGVsZW1lbnQgIlN0cmV0Y2giIHsKICAgICAgICAgICAgICAgIGJhY2tncm91bmQgIzg1YmJmMAogICAgICAgICAgICAgICAgY29sb3IgIzAwMDAwMAogICAgICAgICAgICAgICAgYm9yZGVyIGRhc2hlZAogICAgICAgICAgICB9CiAgICAgICAgICAgIGVsZW1lbnQgIkRhdGFiYXNlIiB7CiAgICAgICAgICAgICAgICBzaGFwZSBDeWxpbmRlcgogICAgICAgICAgICAgICAgYmFja2dyb3VuZCAjMDA3OGQ0CiAgICAgICAgICAgICAgICBjb2xvciAjZmZmZmZmCiAgICAgICAgICAgIH0KICAgICAgICAgICAgcmVsYXRpb25zaGlwICJSZWxhdGlvbnNoaXAiIHsKICAgICAgICAgICAgICAgIGNvbG9yICM3MDcwNzAKICAgICAgICAgICAgfQogICAgICAgIH0KICAgIH0KfQ==",
+    "structurizr.inspection.error" : "26",
     "structurizr.inspection.info" : "0",
     "structurizr.inspection.ignore" : "0",
     "structurizr.inspection.warning" : "0"
@@ -225,6 +664,10 @@
           "background" : "#0b5394",
           "color" : "#ffffff",
           "tag" : "In Scope"
+        }, {
+          "background" : "#438dd5",
+          "color" : "#ffffff",
+          "tag" : "Internal"
         }, {
           "background" : "#08427b",
           "color" : "#ffffff",
@@ -260,7 +703,154 @@
         "rankSeparation" : 100,
         "vertices" : true
       },
-      "description" : "A small ledger service, a database, an integrity check, and an optional event publisher.",
+      "elements" : [ {
+        "id" : "10",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "11",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "12",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "13",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "39",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "40",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "41",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "42",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "43",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalSoftwareSystemBoundariesVisible" : false,
+      "key" : "PaymentContainers",
+      "name" : "Container View: Payment Orchestration Platform",
+      "order" : 2,
+      "relationships" : [ {
+        "id" : "44"
+      }, {
+        "id" : "46"
+      }, {
+        "id" : "47"
+      }, {
+        "id" : "48"
+      }, {
+        "id" : "50"
+      }, {
+        "id" : "52"
+      }, {
+        "id" : "54"
+      }, {
+        "id" : "55"
+      }, {
+        "id" : "56"
+      }, {
+        "id" : "58"
+      }, {
+        "id" : "59"
+      }, {
+        "id" : "61"
+      }, {
+        "id" : "63"
+      }, {
+        "id" : "70"
+      } ],
+      "softwareSystemId" : "9",
+      "title" : "Payment Orchestration MVP — Containers"
+    }, {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "elements" : [ {
+        "id" : "14",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "15",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "16",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "17",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "23",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "40",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "64",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "65",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalSoftwareSystemBoundariesVisible" : false,
+      "key" : "SettlementContainers",
+      "name" : "Container View: CorporateOne Settlement Accounts",
+      "order" : 3,
+      "relationships" : [ {
+        "id" : "66"
+      }, {
+        "id" : "68"
+      }, {
+        "id" : "69"
+      }, {
+        "id" : "71"
+      }, {
+        "id" : "73"
+      }, {
+        "id" : "75"
+      }, {
+        "id" : "76"
+      }, {
+        "id" : "77"
+      }, {
+        "id" : "78"
+      } ],
+      "softwareSystemId" : "13",
+      "title" : "Settlement Accounts MVP — Containers"
+    } ],
+    "systemContextViews" : [ {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "description" : "Who and what interacts directly with the Payment Orchestration Platform.",
       "elements" : [ {
         "id" : "1",
         "x" : 0,
@@ -278,171 +868,63 @@
         "x" : 0,
         "y" : 0
       }, {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
         "id" : "6",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "7",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "8",
         "x" : 0,
         "y" : 0
       }, {
         "id" : "9",
         "x" : 0,
         "y" : 0
+      }, {
+        "id" : "13",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "18",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "20",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "21",
+        "x" : 0,
+        "y" : 0
       } ],
-      "externalSoftwareSystemBoundariesVisible" : false,
-      "key" : "Containers",
-      "name" : "Container View: CorporateOne Settlement Accounts",
+      "enterpriseBoundaryVisible" : true,
+      "key" : "SystemContext",
+      "name" : "System Context View: Payment Orchestration Platform",
       "order" : 1,
       "relationships" : [ {
-        "id" : "10"
+        "id" : "24"
       }, {
-        "id" : "12"
+        "id" : "25"
       }, {
-        "id" : "13"
+        "id" : "26"
       }, {
-        "id" : "15"
+        "id" : "27"
       }, {
-        "id" : "17"
+        "id" : "28"
       }, {
-        "id" : "19"
+        "id" : "29"
       }, {
-        "id" : "20"
+        "id" : "30"
       }, {
-        "id" : "21"
+        "id" : "31"
       }, {
-        "id" : "22"
+        "id" : "32"
+      }, {
+        "id" : "33"
+      }, {
+        "id" : "34"
       } ],
-      "softwareSystemId" : "5",
-      "title" : "CorporateOne Settlement Accounts Demo - Containers"
-    } ],
-    "dynamicViews" : [ {
-      "automaticLayout" : {
-        "edgeSeparation" : 50,
-        "nodeSeparation" : 50,
-        "rankDirection" : "LeftRight",
-        "rankSeparation" : 100,
-        "vertices" : true
-      },
-      "description" : "How funds are held, then posted, and how a duplicate is ignored.",
-      "elementId" : "5",
-      "elements" : [ {
-        "id" : "1",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "3",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "6",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "9",
-        "x" : 0,
-        "y" : 0
-      } ],
-      "externalBoundariesVisible" : false,
-      "key" : "ReserveAndPost",
-      "name" : "Dynamic View: CorporateOne Settlement Accounts",
-      "order" : 2,
-      "relationships" : [ {
-        "description" : "1. Asks to reserve funds (unique request ID)",
-        "id" : "15",
-        "order" : "1",
-        "response" : false
-      }, {
-        "description" : "2. Checks the ID, locks the account, checks funds, creates hold",
-        "id" : "19",
-        "order" : "2",
-        "response" : false
-      }, {
-        "description" : "3. Sends the same request again by mistake",
-        "id" : "15",
-        "order" : "3",
-        "response" : false
-      }, {
-        "description" : "4. Finds the ID, returns the first result, changes nothing",
-        "id" : "19",
-        "order" : "4",
-        "response" : false
-      }, {
-        "description" : "5. Asks to post the held funds",
-        "id" : "15",
-        "order" : "5",
-        "response" : false
-      }, {
-        "description" : "6. Turns hold into permanent entries, updates balance",
-        "id" : "19",
-        "order" : "6",
-        "response" : false
-      }, {
-        "description" : "7. Sees the new balance and history",
-        "id" : "10",
-        "order" : "7",
-        "response" : false
-      } ]
-    }, {
-      "automaticLayout" : {
-        "edgeSeparation" : 50,
-        "nodeSeparation" : 50,
-        "rankDirection" : "LeftRight",
-        "rankSeparation" : 100,
-        "vertices" : true
-      },
-      "description" : "How the ledger proves it is still correct.",
-      "elementId" : "5",
-      "elements" : [ {
-        "id" : "1",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "2",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "6",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "7",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "9",
-        "x" : 0,
-        "y" : 0
-      } ],
-      "externalBoundariesVisible" : false,
-      "key" : "IntegrityCheck",
-      "name" : "Dynamic View: CorporateOne Settlement Accounts",
-      "order" : 3,
-      "relationships" : [ {
-        "description" : "1. Starts the check",
-        "id" : "13",
-        "order" : "1",
-        "response" : false
-      }, {
-        "description" : "2. Reads entries and balances, stores the result",
-        "id" : "20",
-        "order" : "2",
-        "response" : false
-      }, {
-        "description" : "3. Sees the check result on the dashboard",
-        "id" : "10",
-        "order" : "3",
-        "response" : false
-      }, {
-        "description" : "4. Reads the latest result",
-        "id" : "19",
-        "order" : "4",
-        "response" : false
-      } ]
+      "softwareSystemId" : "9",
+      "title" : "CorporateOne Payment Orchestration — System Context"
     } ]
   }
 }
