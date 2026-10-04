@@ -1,0 +1,448 @@
+{
+  "configuration" : { },
+  "description" : "Demo version of the settlement ledger, focused on backend correctness.",
+  "documentation" : { },
+  "id" : 1,
+  "lastModifiedDate" : "2026-10-04T21:18:09Z",
+  "model" : {
+    "people" : [ {
+      "description" : "Views balances, holds, and entry history for each member credit union.",
+      "id" : "1",
+      "name" : "Finance Viewer (Demo: Manager)",
+      "properties" : {
+        "structurizr.dsl.identifier" : "viewer"
+      },
+      "relationships" : [ {
+        "description" : "Views balances and entry history using",
+        "destinationId" : "6",
+        "id" : "10",
+        "sourceId" : "1",
+        "tags" : "Relationship",
+        "technology" : "HTTPS"
+      }, {
+        "description" : "Views balances and entry history using",
+        "destinationId" : "5",
+        "id" : "11",
+        "linkedRelationshipId" : "10",
+        "sourceId" : "1",
+        "technology" : "HTTPS"
+      } ],
+      "tags" : "Element,Person"
+    }, {
+      "description" : "Runs the simulator and the integrity check to show the ledger is safe.",
+      "id" : "2",
+      "name" : "Developer (Demo Presenter)",
+      "properties" : {
+        "structurizr.dsl.identifier" : "developer"
+      },
+      "relationships" : [ {
+        "description" : "Runs load and duplicate-request tests with",
+        "destinationId" : "3",
+        "id" : "12",
+        "sourceId" : "2",
+        "tags" : "Relationship",
+        "technology" : "Command line"
+      }, {
+        "description" : "Triggers on demand and reviews results of",
+        "destinationId" : "7",
+        "id" : "13",
+        "sourceId" : "2",
+        "tags" : "Relationship",
+        "technology" : "Command line"
+      }, {
+        "description" : "Triggers on demand and reviews results of",
+        "destinationId" : "5",
+        "id" : "14",
+        "linkedRelationshipId" : "13",
+        "sourceId" : "2",
+        "technology" : "Command line"
+      } ],
+      "tags" : "Element,Person"
+    } ],
+    "softwareSystems" : [ {
+      "description" : "Test tool that plays the role of the Payment Orchestration Platform. Sends reserve, post, and release requests, including duplicates and simultaneous ones.",
+      "documentation" : { },
+      "id" : "3",
+      "name" : "Payment Simulator",
+      "properties" : {
+        "structurizr.dsl.identifier" : "simulator"
+      },
+      "relationships" : [ {
+        "description" : "Reserves funds, posts entries, releases holds, and queries balances with",
+        "destinationId" : "6",
+        "id" : "15",
+        "sourceId" : "3",
+        "tags" : "Relationship",
+        "technology" : "HTTPS/JSON"
+      }, {
+        "description" : "Reserves funds, posts entries, releases holds, and queries balances with",
+        "destinationId" : "5",
+        "id" : "16",
+        "linkedRelationshipId" : "15",
+        "sourceId" : "3",
+        "technology" : "HTTPS/JSON"
+      } ],
+      "tags" : "Element,Software System,Test Tool"
+    }, {
+      "description" : "Signs in staff and issues access tokens.",
+      "documentation" : { },
+      "id" : "4",
+      "name" : "Identity Provider",
+      "properties" : {
+        "structurizr.dsl.identifier" : "identity"
+      },
+      "tags" : "Element,Software System,External"
+    }, {
+      "containers" : [ {
+        "description" : "Only component that changes balances. Holds, posts, and releases funds, rejects overdrafts, ignores duplicate requests, and serves the read-only dashboard pages.",
+        "documentation" : { },
+        "id" : "6",
+        "name" : "Ledger Service",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ledgerService"
+        },
+        "relationships" : [ {
+          "description" : "Validates sign-ins and tokens with",
+          "destinationId" : "4",
+          "id" : "17",
+          "sourceId" : "6",
+          "tags" : "Relationship",
+          "technology" : "OpenID Connect"
+        }, {
+          "description" : "Reads and writes entries, balances, holds, and idempotency keys",
+          "destinationId" : "9",
+          "id" : "19",
+          "sourceId" : "6",
+          "tags" : "Relationship",
+          "technology" : "SQL"
+        } ],
+        "tags" : "Element,Container,App",
+        "technology" : "ASP.NET Core"
+      }, {
+        "description" : "Runs on a schedule and checks that debits equal credits, balances match entries, and no holds are stuck.",
+        "documentation" : { },
+        "id" : "7",
+        "name" : "Integrity Check Job",
+        "properties" : {
+          "structurizr.dsl.identifier" : "integrityJob"
+        },
+        "relationships" : [ {
+          "description" : "Reads entries and balances, and stores check results in",
+          "destinationId" : "9",
+          "id" : "20",
+          "sourceId" : "7",
+          "tags" : "Relationship",
+          "technology" : "SQL"
+        } ],
+        "tags" : "Element,Container,App",
+        "technology" : ".NET Worker Service"
+      }, {
+        "description" : "Reads new entries from an outbox table and sends balance-changed events. Stretch goal.",
+        "documentation" : { },
+        "id" : "8",
+        "name" : "Event Publisher",
+        "properties" : {
+          "structurizr.dsl.identifier" : "eventPublisher"
+        },
+        "relationships" : [ {
+          "description" : "Reads new outbox events from",
+          "destinationId" : "9",
+          "id" : "21",
+          "sourceId" : "8",
+          "tags" : "Relationship",
+          "technology" : "SQL"
+        }, {
+          "description" : "Sends balance-changed events to",
+          "destinationId" : "3",
+          "id" : "22",
+          "sourceId" : "8",
+          "tags" : "Relationship",
+          "technology" : "Webhooks/HTTPS"
+        } ],
+        "tags" : "Element,Container,Stretch",
+        "technology" : ".NET Worker Service"
+      }, {
+        "description" : "Source of truth. Stores accounts, the permanent journal, balances, holds, idempotency keys, outbox events, and integrity check results.",
+        "documentation" : { },
+        "id" : "9",
+        "name" : "Ledger Database",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ledgerDb"
+        },
+        "tags" : "Element,Container,Database",
+        "technology" : "Azure SQL Database"
+      } ],
+      "description" : "Ledger of member credit union accounts: balances, holds, and the full history of every entry.",
+      "documentation" : { },
+      "id" : "5",
+      "name" : "CorporateOne Settlement Accounts",
+      "properties" : {
+        "structurizr.dsl.identifier" : "ledger"
+      },
+      "relationships" : [ {
+        "description" : "Validates sign-ins and tokens with",
+        "destinationId" : "4",
+        "id" : "18",
+        "linkedRelationshipId" : "17",
+        "sourceId" : "5",
+        "technology" : "OpenID Connect"
+      }, {
+        "description" : "Sends balance-changed events to",
+        "destinationId" : "3",
+        "id" : "23",
+        "linkedRelationshipId" : "22",
+        "sourceId" : "5",
+        "technology" : "Webhooks/HTTPS"
+      } ],
+      "tags" : "Element,Software System,In Scope"
+    } ]
+  },
+  "name" : "CorporateOne Settlement Accounts - Demo",
+  "properties" : {
+    "structurizr.inspection.error" : "4",
+    "structurizr.dsl" : "d29ya3NwYWNlICJDb3Jwb3JhdGVPbmUgU2V0dGxlbWVudCBBY2NvdW50cyAtIERlbW8iICJEZW1vIHZlcnNpb24gb2YgdGhlIHNldHRsZW1lbnQgbGVkZ2VyLCBmb2N1c2VkIG9uIGJhY2tlbmQgY29ycmVjdG5lc3MuIiB7CgogICAgbW9kZWwgewoKICAgICAgICAjIC0tLS0tLS0tLS0gUGVvcGxlIC0tLS0tLS0tLS0KICAgICAgICB2aWV3ZXIgPSBwZXJzb24gIkZpbmFuY2UgVmlld2VyIChEZW1vOiBNYW5hZ2VyKSIgIlZpZXdzIGJhbGFuY2VzLCBob2xkcywgYW5kIGVudHJ5IGhpc3RvcnkgZm9yIGVhY2ggbWVtYmVyIGNyZWRpdCB1bmlvbi4iCiAgICAgICAgZGV2ZWxvcGVyID0gcGVyc29uICJEZXZlbG9wZXIgKERlbW8gUHJlc2VudGVyKSIgIlJ1bnMgdGhlIHNpbXVsYXRvciBhbmQgdGhlIGludGVncml0eSBjaGVjayB0byBzaG93IHRoZSBsZWRnZXIgaXMgc2FmZS4iCgogICAgICAgICMgLS0tLS0tLS0tLSBPdGhlciBzeXN0ZW1zIC0tLS0tLS0tLS0KICAgICAgICBzaW11bGF0b3IgPSBzb2Z0d2FyZVN5c3RlbSAiUGF5bWVudCBTaW11bGF0b3IiICJUZXN0IHRvb2wgdGhhdCBwbGF5cyB0aGUgcm9sZSBvZiB0aGUgUGF5bWVudCBPcmNoZXN0cmF0aW9uIFBsYXRmb3JtLiBTZW5kcyByZXNlcnZlLCBwb3N0LCBhbmQgcmVsZWFzZSByZXF1ZXN0cywgaW5jbHVkaW5nIGR1cGxpY2F0ZXMgYW5kIHNpbXVsdGFuZW91cyBvbmVzLiIgIlRlc3QgVG9vbCIKICAgICAgICBpZGVudGl0eSA9IHNvZnR3YXJlU3lzdGVtICJJZGVudGl0eSBQcm92aWRlciIgIlNpZ25zIGluIHN0YWZmIGFuZCBpc3N1ZXMgYWNjZXNzIHRva2Vucy4iICJFeHRlcm5hbCIKCiAgICAgICAgIyAtLS0tLS0tLS0tIFRoZSBzeXN0ZW0gd2UgYXJlIHpvb21pbmcgaW50byAtLS0tLS0tLS0tCiAgICAgICAgbGVkZ2VyID0gc29mdHdhcmVTeXN0ZW0gIkNvcnBvcmF0ZU9uZSBTZXR0bGVtZW50IEFjY291bnRzIiAiTGVkZ2VyIG9mIG1lbWJlciBjcmVkaXQgdW5pb24gYWNjb3VudHM6IGJhbGFuY2VzLCBob2xkcywgYW5kIHRoZSBmdWxsIGhpc3Rvcnkgb2YgZXZlcnkgZW50cnkuIiAiSW4gU2NvcGUiIHsKCiAgICAgICAgICAgIGxlZGdlclNlcnZpY2UgPSBjb250YWluZXIgIkxlZGdlciBTZXJ2aWNlIiAiT25seSBjb21wb25lbnQgdGhhdCBjaGFuZ2VzIGJhbGFuY2VzLiBIb2xkcywgcG9zdHMsIGFuZCByZWxlYXNlcyBmdW5kcywgcmVqZWN0cyBvdmVyZHJhZnRzLCBpZ25vcmVzIGR1cGxpY2F0ZSByZXF1ZXN0cywgYW5kIHNlcnZlcyB0aGUgcmVhZC1vbmx5IGRhc2hib2FyZCBwYWdlcy4iICJBU1AuTkVUIENvcmUiICJBcHAiCgogICAgICAgICAgICBpbnRlZ3JpdHlKb2IgPSBjb250YWluZXIgIkludGVncml0eSBDaGVjayBKb2IiICJSdW5zIG9uIGEgc2NoZWR1bGUgYW5kIGNoZWNrcyB0aGF0IGRlYml0cyBlcXVhbCBjcmVkaXRzLCBiYWxhbmNlcyBtYXRjaCBlbnRyaWVzLCBhbmQgbm8gaG9sZHMgYXJlIHN0dWNrLiIgIi5ORVQgV29ya2VyIFNlcnZpY2UiICJBcHAiCgogICAgICAgICAgICBldmVudFB1Ymxpc2hlciA9IGNvbnRhaW5lciAiRXZlbnQgUHVibGlzaGVyIiAiUmVhZHMgbmV3IGVudHJpZXMgZnJvbSBhbiBvdXRib3ggdGFibGUgYW5kIHNlbmRzIGJhbGFuY2UtY2hhbmdlZCBldmVudHMuIFN0cmV0Y2ggZ29hbC4iICIuTkVUIFdvcmtlciBTZXJ2aWNlIiAiU3RyZXRjaCIKCiAgICAgICAgICAgIGxlZGdlckRiID0gY29udGFpbmVyICJMZWRnZXIgRGF0YWJhc2UiICJTb3VyY2Ugb2YgdHJ1dGguIFN0b3JlcyBhY2NvdW50cywgdGhlIHBlcm1hbmVudCBqb3VybmFsLCBiYWxhbmNlcywgaG9sZHMsIGlkZW1wb3RlbmN5IGtleXMsIG91dGJveCBldmVudHMsIGFuZCBpbnRlZ3JpdHkgY2hlY2sgcmVzdWx0cy4iICJBenVyZSBTUUwgRGF0YWJhc2UiICJEYXRhYmFzZSIKICAgICAgICB9CgogICAgICAgICMgLS0tLS0tLS0tLSBSZWxhdGlvbnNoaXBzIC0tLS0tLS0tLS0KICAgICAgICB2aWV3ZXIgLT4gbGVkZ2VyU2VydmljZSAiVmlld3MgYmFsYW5jZXMgYW5kIGVudHJ5IGhpc3RvcnkgdXNpbmciICJIVFRQUyIKICAgICAgICBkZXZlbG9wZXIgLT4gc2ltdWxhdG9yICJSdW5zIGxvYWQgYW5kIGR1cGxpY2F0ZS1yZXF1ZXN0IHRlc3RzIHdpdGgiICJDb21tYW5kIGxpbmUiCiAgICAgICAgZGV2ZWxvcGVyIC0+IGludGVncml0eUpvYiAiVHJpZ2dlcnMgb24gZGVtYW5kIGFuZCByZXZpZXdzIHJlc3VsdHMgb2YiICJDb21tYW5kIGxpbmUiCgogICAgICAgIHNpbXVsYXRvciAtPiBsZWRnZXJTZXJ2aWNlICJSZXNlcnZlcyBmdW5kcywgcG9zdHMgZW50cmllcywgcmVsZWFzZXMgaG9sZHMsIGFuZCBxdWVyaWVzIGJhbGFuY2VzIHdpdGgiICJIVFRQUy9KU09OIgogICAgICAgIGxlZGdlclNlcnZpY2UgLT4gaWRlbnRpdHkgIlZhbGlkYXRlcyBzaWduLWlucyBhbmQgdG9rZW5zIHdpdGgiICJPcGVuSUQgQ29ubmVjdCIKICAgICAgICBsZWRnZXJTZXJ2aWNlIC0+IGxlZGdlckRiICJSZWFkcyBhbmQgd3JpdGVzIGVudHJpZXMsIGJhbGFuY2VzLCBob2xkcywgYW5kIGlkZW1wb3RlbmN5IGtleXMiICJTUUwiCgogICAgICAgIGludGVncml0eUpvYiAtPiBsZWRnZXJEYiAiUmVhZHMgZW50cmllcyBhbmQgYmFsYW5jZXMsIGFuZCBzdG9yZXMgY2hlY2sgcmVzdWx0cyBpbiIgIlNRTCIKCiAgICAgICAgZXZlbnRQdWJsaXNoZXIgLT4gbGVkZ2VyRGIgIlJlYWRzIG5ldyBvdXRib3ggZXZlbnRzIGZyb20iICJTUUwiCiAgICAgICAgZXZlbnRQdWJsaXNoZXIgLT4gc2ltdWxhdG9yICJTZW5kcyBiYWxhbmNlLWNoYW5nZWQgZXZlbnRzIHRvIiAiV2ViaG9va3MvSFRUUFMiCiAgICB9CgogICAgdmlld3MgewoKICAgICAgICBjb250YWluZXIgbGVkZ2VyICJDb250YWluZXJzIiB7CiAgICAgICAgICAgIGluY2x1ZGUgKgogICAgICAgICAgICBhdXRvTGF5b3V0IGxyCiAgICAgICAgICAgIHRpdGxlICJDb3Jwb3JhdGVPbmUgU2V0dGxlbWVudCBBY2NvdW50cyBEZW1vIC0gQ29udGFpbmVycyIKICAgICAgICAgICAgZGVzY3JpcHRpb24gIkEgc21hbGwgbGVkZ2VyIHNlcnZpY2UsIGEgZGF0YWJhc2UsIGFuIGludGVncml0eSBjaGVjaywgYW5kIGFuIG9wdGlvbmFsIGV2ZW50IHB1Ymxpc2hlci4iCiAgICAgICAgfQoKICAgICAgICBkeW5hbWljIGxlZGdlciAiUmVzZXJ2ZUFuZFBvc3QiICJIb3cgZnVuZHMgYXJlIGhlbGQsIHRoZW4gcG9zdGVkLCBhbmQgaG93IGEgZHVwbGljYXRlIGlzIGlnbm9yZWQuIiB7CiAgICAgICAgICAgIHNpbXVsYXRvciAtPiBsZWRnZXJTZXJ2aWNlICIxLiBBc2tzIHRvIHJlc2VydmUgZnVuZHMgKHVuaXF1ZSByZXF1ZXN0IElEKSIKICAgICAgICAgICAgbGVkZ2VyU2VydmljZSAtPiBsZWRnZXJEYiAiMi4gQ2hlY2tzIHRoZSBJRCwgbG9ja3MgdGhlIGFjY291bnQsIGNoZWNrcyBmdW5kcywgY3JlYXRlcyBob2xkIgogICAgICAgICAgICBzaW11bGF0b3IgLT4gbGVkZ2VyU2VydmljZSAiMy4gU2VuZHMgdGhlIHNhbWUgcmVxdWVzdCBhZ2FpbiBieSBtaXN0YWtlIgogICAgICAgICAgICBsZWRnZXJTZXJ2aWNlIC0+IGxlZGdlckRiICI0LiBGaW5kcyB0aGUgSUQsIHJldHVybnMgdGhlIGZpcnN0IHJlc3VsdCwgY2hhbmdlcyBub3RoaW5nIgogICAgICAgICAgICBzaW11bGF0b3IgLT4gbGVkZ2VyU2VydmljZSAiNS4gQXNrcyB0byBwb3N0IHRoZSBoZWxkIGZ1bmRzIgogICAgICAgICAgICBsZWRnZXJTZXJ2aWNlIC0+IGxlZGdlckRiICI2LiBUdXJucyBob2xkIGludG8gcGVybWFuZW50IGVudHJpZXMsIHVwZGF0ZXMgYmFsYW5jZSIKICAgICAgICAgICAgdmlld2VyIC0+IGxlZGdlclNlcnZpY2UgIjcuIFNlZXMgdGhlIG5ldyBiYWxhbmNlIGFuZCBoaXN0b3J5IgogICAgICAgICAgICBhdXRvTGF5b3V0IGxyCiAgICAgICAgfQoKICAgICAgICBkeW5hbWljIGxlZGdlciAiSW50ZWdyaXR5Q2hlY2siICJIb3cgdGhlIGxlZGdlciBwcm92ZXMgaXQgaXMgc3RpbGwgY29ycmVjdC4iIHsKICAgICAgICAgICAgZGV2ZWxvcGVyIC0+IGludGVncml0eUpvYiAiMS4gU3RhcnRzIHRoZSBjaGVjayIKICAgICAgICAgICAgaW50ZWdyaXR5Sm9iIC0+IGxlZGdlckRiICIyLiBSZWFkcyBlbnRyaWVzIGFuZCBiYWxhbmNlcywgc3RvcmVzIHRoZSByZXN1bHQiCiAgICAgICAgICAgIHZpZXdlciAtPiBsZWRnZXJTZXJ2aWNlICIzLiBTZWVzIHRoZSBjaGVjayByZXN1bHQgb24gdGhlIGRhc2hib2FyZCIKICAgICAgICAgICAgbGVkZ2VyU2VydmljZSAtPiBsZWRnZXJEYiAiNC4gUmVhZHMgdGhlIGxhdGVzdCByZXN1bHQiCiAgICAgICAgICAgIGF1dG9MYXlvdXQgbHIKICAgICAgICB9CgogICAgICAgIHN0eWxlcyB7CiAgICAgICAgICAgIGVsZW1lbnQgIlBlcnNvbiIgewogICAgICAgICAgICAgICAgc2hhcGUgUGVyc29uCiAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kICMwODQyN2IKICAgICAgICAgICAgICAgIGNvbG9yICNmZmZmZmYKICAgICAgICAgICAgfQogICAgICAgICAgICBlbGVtZW50ICJTb2Z0d2FyZSBTeXN0ZW0iIHsKICAgICAgICAgICAgICAgIGJhY2tncm91bmQgIzk5OTk5OQogICAgICAgICAgICAgICAgY29sb3IgI2ZmZmZmZgogICAgICAgICAgICB9CiAgICAgICAgICAgIGVsZW1lbnQgIkluIFNjb3BlIiB7CiAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kICMwYjUzOTQKICAgICAgICAgICAgICAgIGNvbG9yICNmZmZmZmYKICAgICAgICAgICAgfQogICAgICAgICAgICBlbGVtZW50ICJUZXN0IFRvb2wiIHsKICAgICAgICAgICAgICAgIGJhY2tncm91bmQgI2JiYmJiYgogICAgICAgICAgICAgICAgY29sb3IgI2ZmZmZmZgogICAgICAgICAgICAgICAgYm9yZGVyIGRhc2hlZAogICAgICAgICAgICB9CiAgICAgICAgICAgIGVsZW1lbnQgIkV4dGVybmFsIiB7CiAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kICM5OTk5OTkKICAgICAgICAgICAgICAgIGNvbG9yICNmZmZmZmYKICAgICAgICAgICAgfQogICAgICAgICAgICBlbGVtZW50ICJDb250YWluZXIiIHsKICAgICAgICAgICAgICAgIGJhY2tncm91bmQgIzExNjhiZAogICAgICAgICAgICAgICAgY29sb3IgI2ZmZmZmZgogICAgICAgICAgICB9CiAgICAgICAgICAgIGVsZW1lbnQgIlN0cmV0Y2giIHsKICAgICAgICAgICAgICAgIGJhY2tncm91bmQgIzg1YmJmMAogICAgICAgICAgICAgICAgY29sb3IgIzAwMDAwMAogICAgICAgICAgICAgICAgYm9yZGVyIGRhc2hlZAogICAgICAgICAgICB9CiAgICAgICAgICAgIGVsZW1lbnQgIkRhdGFiYXNlIiB7CiAgICAgICAgICAgICAgICBzaGFwZSBDeWxpbmRlcgogICAgICAgICAgICAgICAgYmFja2dyb3VuZCAjMDA3OGQ0CiAgICAgICAgICAgICAgICBjb2xvciAjZmZmZmZmCiAgICAgICAgICAgIH0KICAgICAgICAgICAgcmVsYXRpb25zaGlwICJSZWxhdGlvbnNoaXAiIHsKICAgICAgICAgICAgICAgIGNvbG9yICM3MDcwNzAKICAgICAgICAgICAgfQogICAgICAgIH0KICAgIH0KfQ==",
+    "structurizr.inspection.info" : "0",
+    "structurizr.inspection.ignore" : "0",
+    "structurizr.inspection.warning" : "0"
+  },
+  "views" : {
+    "configuration" : {
+      "styles" : {
+        "elements" : [ {
+          "background" : "#1168bd",
+          "color" : "#ffffff",
+          "tag" : "Container"
+        }, {
+          "background" : "#0078d4",
+          "color" : "#ffffff",
+          "shape" : "Cylinder",
+          "tag" : "Database"
+        }, {
+          "background" : "#999999",
+          "color" : "#ffffff",
+          "tag" : "External"
+        }, {
+          "background" : "#0b5394",
+          "color" : "#ffffff",
+          "tag" : "In Scope"
+        }, {
+          "background" : "#08427b",
+          "color" : "#ffffff",
+          "shape" : "Person",
+          "tag" : "Person"
+        }, {
+          "background" : "#999999",
+          "color" : "#ffffff",
+          "tag" : "Software System"
+        }, {
+          "background" : "#85bbf0",
+          "border" : "Dashed",
+          "color" : "#000000",
+          "tag" : "Stretch"
+        }, {
+          "background" : "#bbbbbb",
+          "border" : "Dashed",
+          "color" : "#ffffff",
+          "tag" : "Test Tool"
+        } ],
+        "relationships" : [ {
+          "color" : "#707070",
+          "tag" : "Relationship"
+        } ]
+      },
+      "terminology" : { }
+    },
+    "containerViews" : [ {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "description" : "A small ledger service, a database, an integrity check, and an optional event publisher.",
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "3",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "4",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "6",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "7",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "8",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "9",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalSoftwareSystemBoundariesVisible" : false,
+      "key" : "Containers",
+      "name" : "Container View: CorporateOne Settlement Accounts",
+      "order" : 1,
+      "relationships" : [ {
+        "id" : "10"
+      }, {
+        "id" : "12"
+      }, {
+        "id" : "13"
+      }, {
+        "id" : "15"
+      }, {
+        "id" : "17"
+      }, {
+        "id" : "19"
+      }, {
+        "id" : "20"
+      }, {
+        "id" : "21"
+      }, {
+        "id" : "22"
+      } ],
+      "softwareSystemId" : "5",
+      "title" : "CorporateOne Settlement Accounts Demo - Containers"
+    } ],
+    "dynamicViews" : [ {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "description" : "How funds are held, then posted, and how a duplicate is ignored.",
+      "elementId" : "5",
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "3",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "6",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "9",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalBoundariesVisible" : false,
+      "key" : "ReserveAndPost",
+      "name" : "Dynamic View: CorporateOne Settlement Accounts",
+      "order" : 2,
+      "relationships" : [ {
+        "description" : "1. Asks to reserve funds (unique request ID)",
+        "id" : "15",
+        "order" : "1",
+        "response" : false
+      }, {
+        "description" : "2. Checks the ID, locks the account, checks funds, creates hold",
+        "id" : "19",
+        "order" : "2",
+        "response" : false
+      }, {
+        "description" : "3. Sends the same request again by mistake",
+        "id" : "15",
+        "order" : "3",
+        "response" : false
+      }, {
+        "description" : "4. Finds the ID, returns the first result, changes nothing",
+        "id" : "19",
+        "order" : "4",
+        "response" : false
+      }, {
+        "description" : "5. Asks to post the held funds",
+        "id" : "15",
+        "order" : "5",
+        "response" : false
+      }, {
+        "description" : "6. Turns hold into permanent entries, updates balance",
+        "id" : "19",
+        "order" : "6",
+        "response" : false
+      }, {
+        "description" : "7. Sees the new balance and history",
+        "id" : "10",
+        "order" : "7",
+        "response" : false
+      } ]
+    }, {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "description" : "How the ledger proves it is still correct.",
+      "elementId" : "5",
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "6",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "7",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "9",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalBoundariesVisible" : false,
+      "key" : "IntegrityCheck",
+      "name" : "Dynamic View: CorporateOne Settlement Accounts",
+      "order" : 3,
+      "relationships" : [ {
+        "description" : "1. Starts the check",
+        "id" : "13",
+        "order" : "1",
+        "response" : false
+      }, {
+        "description" : "2. Reads entries and balances, stores the result",
+        "id" : "20",
+        "order" : "2",
+        "response" : false
+      }, {
+        "description" : "3. Sees the check result on the dashboard",
+        "id" : "10",
+        "order" : "3",
+        "response" : false
+      }, {
+        "description" : "4. Reads the latest result",
+        "id" : "19",
+        "order" : "4",
+        "response" : false
+      } ]
+    } ]
+  }
+}
