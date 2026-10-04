@@ -3,7 +3,7 @@
   "description" : "Payment Orchestration and Settlement Accounts — MVP demo.",
   "documentation" : { },
   "id" : 1,
-  "lastModifiedDate" : "2026-10-04T22:32:33Z",
+  "lastModifiedDate" : "2026-10-04T22:45:16Z",
   "model" : {
     "people" : [ {
       "description" : "Person or business with an account at a member credit union, sending or receiving payments.",
