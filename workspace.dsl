@@ -2,7 +2,7 @@
 // Composes the system-context model (c1), payment MVP (c2_payment_mvp),
 // and settlement MVP (c2_settlement_mvp) into a single Structurizr workspace.
 
-workspace "CorporateOne MVP" "Payment Orchestration and Settlement Accounts — MVP demo." {
+workspace "OneCredit MVP" "Payment Orchestration and Settlement Accounts — MVP demo." {
 
     model {
         !include c1.dsl
@@ -19,7 +19,7 @@ workspace "CorporateOne MVP" "Payment Orchestration and Settlement Accounts — 
             include cuDigital cuCore coLedger
             include fedServices rtpNetwork screening
             autoLayout lr
-            title "CorporateOne Payment Orchestration — System Context"
+            title "OneCredit Payment Orchestration — System Context"
             description "Who and what interacts directly with the Payment Orchestration Platform."
         }
 

@@ -1,6 +1,6 @@
-# CorporateOne C4 Model
+# OneCredit C4 Model
 
-Architecture diagrams for the CorporateOne Payment Orchestration Platform and Settlement Accounts, using the [C4 model](https://c4model.com/) and [Structurizr DSL](https://docs.structurizr.com/dsl).
+Architecture diagrams for the OneCredit Payment Orchestration Platform and Settlement Accounts, using the [C4 model](https://c4model.com/) and [Structurizr DSL](https://docs.structurizr.com/dsl).
 
 ## Diagrams
 
@@ -10,7 +10,7 @@ Three diagrams are published in the workspace:
 |---|---|---|
 | System Context | C1 | People and systems that interact with the Payment Orchestration Platform |
 | Payment Orchestration MVP — Containers | C2 | Internal containers of the Payment Orchestration Platform |
-| Settlement Accounts MVP — Containers | C2 | Internal containers of the CorporateOne Settlement Accounts ledger |
+| Settlement Accounts MVP — Containers | C2 | Internal containers of the OneCredit Settlement Accounts ledger |
 
 ## File structure
 

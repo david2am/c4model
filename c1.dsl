@@ -11,10 +11,10 @@ group "Member Credit Union" {
     cuCore = softwareSystem "Credit Union Core Processor" "System of record for the credit union's member accounts, balances, and transactions." "External"
 }
 
-// ---------- CorporateOne side ----------
-group "CorporateOne" {
-    coOps = person "CorporateOne Payment Operations" "Staff who monitor payment flow across all member credit unions and resolve exceptions."
-    coFinance = person "CorporateOne Finance and Settlement Staff" "Review ledger balances, investigate differences, and approve manual adjustments."
+// ---------- OneCredit side ----------
+group "OneCredit" {
+    coOps = person "OneCredit Payment Operations" "Staff who monitor payment flow across all member credit unions and resolve exceptions."
+    coFinance = person "OneCredit Finance and Settlement Staff" "Review ledger balances, investigate differences, and approve manual adjustments."
     coAuditor = person "Auditor / Compliance Officer" "Reviews the history of entries and reconciliation results. Read-only access."
 
     platform = softwareSystem "Payment Orchestration Platform" "Receives payment requests from member credit unions, validates and routes them to the right payment network, and monitors liquidity and settlement in real time." "In Scope" {
@@ -23,7 +23,7 @@ group "CorporateOne" {
         platformDb = container "Platform Database" "Stores payments and their state history, idempotency keys, the work item queue, and raw network messages." "Azure SQL Database" "Database"
     }
 
-    coLedger = softwareSystem "CorporateOne Settlement Accounts" "CorporateOne's ledger of member credit union accounts and settlement positions." "Internal" {
+    coLedger = softwareSystem "OneCredit Settlement Accounts" "OneCredit's ledger of member credit union accounts and settlement positions." "Internal" {
         ledgerService = container "Ledger Service" "Only component that changes balances. Holds, posts, and releases funds, rejects overdrafts, ignores duplicate requests, and serves the read-only dashboard pages." "ASP.NET Core" "App"
         integrityJob = container "Integrity Check Job" "Runs on a schedule and checks that debits equal credits, balances match entries, and no holds are stuck." ".NET Worker Service" "App"
         eventPublisher = container "Event Publisher" "Reads new entries from an outbox table and sends balance-changed events. Stretch goal." ".NET Worker Service" "Stretch"
@@ -33,11 +33,11 @@ group "CorporateOne" {
 
 // ---------- External services ----------
 fedServices = softwareSystem "Federal Reserve Payment Services" "Fed-operated services that move and settle money: FedNow (instant), FedACH (batch), and Fedwire (high value)." "External"
-fedAccount = softwareSystem "Federal Reserve Account Services" "Provides statements and balance information for CorporateOne's master account at the Fed." "External"
+fedAccount = softwareSystem "Federal Reserve Account Services" "Provides statements and balance information for OneCredit's master account at the Fed." "External"
 rtpNetwork = softwareSystem "RTP Network" "Real-time payment network operated by The Clearing House." "External"
 screening = softwareSystem "Sanctions and Fraud Screening" "Third-party service that checks payments against sanctions lists and fraud signals." "External"
-coreSystems = softwareSystem "Corporate Core / General Ledger" "CorporateOne's accounting system for financial statements and reporting." "Internal"
-identity = softwareSystem "Identity Provider" "Signs in CorporateOne staff and issues access tokens." "External"
+coreSystems = softwareSystem "Corporate Core / General Ledger" "OneCredit's accounting system for financial statements and reporting." "Internal"
+identity = softwareSystem "Identity Provider" "Signs in OneCredit staff and issues access tokens." "External"
 
 // ---------- System-level relationships ----------
 member -> cuDigital "Sends payments and checks balances using"

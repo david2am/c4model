@@ -3,7 +3,7 @@
   "description" : "Payment Orchestration and Settlement Accounts — MVP demo.",
   "documentation" : { },
   "id" : 1,
-  "lastModifiedDate" : "2026-10-04T22:45:16Z",
+  "lastModifiedDate" : "2026-10-05T19:55:05Z",
   "model" : {
     "people" : [ {
       "description" : "Person or business with an account at a member credit union, sending or receiving payments.",
@@ -55,9 +55,9 @@
       "tags" : "Element,Person"
     }, {
       "description" : "Staff who monitor payment flow across all member credit unions and resolve exceptions.",
-      "group" : "CorporateOne",
+      "group" : "OneCredit",
       "id" : "6",
-      "name" : "CorporateOne Payment Operations",
+      "name" : "OneCredit Payment Operations",
       "properties" : {
         "structurizr.dsl.identifier" : "coOps"
       },
@@ -71,9 +71,9 @@
       "tags" : "Element,Person"
     }, {
       "description" : "Review ledger balances, investigate differences, and approve manual adjustments.",
-      "group" : "CorporateOne",
+      "group" : "OneCredit",
       "id" : "7",
-      "name" : "CorporateOne Finance and Settlement Staff",
+      "name" : "OneCredit Finance and Settlement Staff",
       "properties" : {
         "structurizr.dsl.identifier" : "coFinance"
       },
@@ -87,7 +87,7 @@
       "tags" : "Element,Person"
     }, {
       "description" : "Reviews the history of entries and reconciliation results. Read-only access.",
-      "group" : "CorporateOne",
+      "group" : "OneCredit",
       "id" : "8",
       "name" : "Auditor / Compliance Officer",
       "properties" : {
@@ -325,7 +325,7 @@
       } ],
       "description" : "Receives payment requests from member credit unions, validates and routes them to the right payment network, and monitors liquidity and settlement in real time.",
       "documentation" : { },
-      "group" : "CorporateOne",
+      "group" : "OneCredit",
       "id" : "9",
       "name" : "Payment Orchestration Platform",
       "properties" : {
@@ -464,11 +464,11 @@
         "tags" : "Element,Container,Database",
         "technology" : "Azure SQL Database"
       } ],
-      "description" : "CorporateOne's ledger of member credit union accounts and settlement positions.",
+      "description" : "OneCredit's ledger of member credit union accounts and settlement positions.",
       "documentation" : { },
-      "group" : "CorporateOne",
+      "group" : "OneCredit",
       "id" : "13",
-      "name" : "CorporateOne Settlement Accounts",
+      "name" : "OneCredit Settlement Accounts",
       "properties" : {
         "structurizr.dsl.identifier" : "coLedger"
       },
@@ -510,7 +510,7 @@
       },
       "tags" : "Element,Software System,External"
     }, {
-      "description" : "Provides statements and balance information for CorporateOne's master account at the Fed.",
+      "description" : "Provides statements and balance information for OneCredit's master account at the Fed.",
       "documentation" : { },
       "id" : "19",
       "name" : "Federal Reserve Account Services",
@@ -537,7 +537,7 @@
       },
       "tags" : "Element,Software System,External"
     }, {
-      "description" : "CorporateOne's accounting system for financial statements and reporting.",
+      "description" : "OneCredit's accounting system for financial statements and reporting.",
       "documentation" : { },
       "id" : "22",
       "name" : "Corporate Core / General Ledger",
@@ -546,7 +546,7 @@
       },
       "tags" : "Element,Software System,Internal"
     }, {
-      "description" : "Signs in CorporateOne staff and issues access tokens.",
+      "description" : "Signs in OneCredit staff and issues access tokens.",
       "documentation" : { },
       "id" : "23",
       "name" : "Identity Provider",
@@ -637,7 +637,7 @@
       "tags" : "Element,Software System,Test Tool"
     } ]
   },
-  "name" : "CorporateOne MVP",
+  "name" : "OneCredit MVP",
   "properties" : {
     "structurizr.inspection.error" : "26",
     "structurizr.inspection.info" : "0",
@@ -818,7 +818,7 @@
       } ],
       "externalSoftwareSystemBoundariesVisible" : false,
       "key" : "SettlementContainers",
-      "name" : "Container View: CorporateOne Settlement Accounts",
+      "name" : "Container View: OneCredit Settlement Accounts",
       "order" : 3,
       "relationships" : [ {
         "id" : "66"
@@ -924,7 +924,7 @@
         "id" : "34"
       } ],
       "softwareSystemId" : "9",
-      "title" : "CorporateOne Payment Orchestration — System Context"
+      "title" : "OneCredit Payment Orchestration — System Context"
     } ]
   }
 }

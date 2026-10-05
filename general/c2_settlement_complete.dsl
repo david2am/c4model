@@ -1,19 +1,19 @@
-workspace "CorporateOne Settlement Accounts - Containers" "Container view of the settlement ledger for member credit unions." {
+workspace "OneCredit Settlement Accounts - Containers" "Container view of the settlement ledger for member credit unions." {
 
     model {
 
         # ---------- People ----------
-        coFinance = person "CorporateOne Finance and Settlement Staff" "Review ledger balances, investigate differences, and approve manual adjustments."
+        coFinance = person "OneCredit Finance and Settlement Staff" "Review ledger balances, investigate differences, and approve manual adjustments."
         coAuditor = person "Auditor / Compliance Officer" "Reviews the history of entries and reconciliation results. Read-only access."
 
         # ---------- Other systems ----------
         platform = softwareSystem "Payment Orchestration Platform" "Receives payment requests, routes them to payment networks, and monitors liquidity." "Internal"
-        fedAccount = softwareSystem "Federal Reserve Account Services" "Provides statements and balance information for CorporateOne's master account at the Fed." "External"
-        coreSystems = softwareSystem "Corporate Core / General Ledger" "CorporateOne's accounting system for financial statements and reporting." "Internal"
-        identity = softwareSystem "Identity Provider" "Signs in CorporateOne staff and issues access tokens." "External"
+        fedAccount = softwareSystem "Federal Reserve Account Services" "Provides statements and balance information for OneCredit's master account at the Fed." "External"
+        coreSystems = softwareSystem "Corporate Core / General Ledger" "OneCredit's accounting system for financial statements and reporting." "Internal"
+        identity = softwareSystem "Identity Provider" "Signs in OneCredit staff and issues access tokens." "External"
 
         # ---------- The system we are zooming into ----------
-        ledger = softwareSystem "CorporateOne Settlement Accounts" "Ledger of member credit union accounts: balances, holds, and the full history of every entry." "In Scope" {
+        ledger = softwareSystem "OneCredit Settlement Accounts" "Ledger of member credit union accounts: balances, holds, and the full history of every entry." "In Scope" {
 
             # Entry point
             ledgerApi = container "Ledger API" "Secured entry point for the platform and the back-office portal. Checks identity and permissions." "Azure API Management" "Gateway"
@@ -79,7 +79,7 @@ workspace "CorporateOne Settlement Accounts - Containers" "Container view of the
         container ledger "Containers" {
             include *
             autoLayout lr
-            title "CorporateOne Settlement Accounts - Containers"
+            title "OneCredit Settlement Accounts - Containers"
             description "The building blocks of the ledger and how they connect to staff and other systems."
         }
 

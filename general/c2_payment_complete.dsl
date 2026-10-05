@@ -1,15 +1,15 @@
-workspace "CorporateOne Payment Orchestration - Containers" "Container view of the Payment Orchestration Platform." {
+workspace "OneCredit Payment Orchestration - Containers" "Container view of the Payment Orchestration Platform." {
 
     model {
 
         # ---------- People ----------
         cuOps = person "Credit Union Payments Staff" "Track payments, returns, and exceptions for their own credit union."
         cuTreasury = person "Credit Union Treasury Officer" "Monitors the credit union's liquidity and settlement position."
-        coOps = person "CorporateOne Payment Operations" "Monitor payment flow across all member credit unions and resolve exceptions."
+        coOps = person "OneCredit Payment Operations" "Monitor payment flow across all member credit unions and resolve exceptions."
 
         # ---------- Other systems ----------
         cuCore = softwareSystem "Credit Union Core Processor" "System of record for the credit union's member accounts and transactions." "External"
-        coLedger = softwareSystem "CorporateOne Settlement Accounts" "CorporateOne's ledger of member credit union accounts and settlement positions." "Internal"
+        coLedger = softwareSystem "OneCredit Settlement Accounts" "OneCredit's ledger of member credit union accounts and settlement positions." "Internal"
         screening = softwareSystem "Sanctions and Fraud Screening" "Third-party service that checks payments against sanctions lists and fraud signals." "External"
         fedServices = softwareSystem "Federal Reserve Payment Services" "Fed-operated services, including FedNow, that move and settle money." "External"
         rtpNetwork = softwareSystem "RTP Network" "Real-time payment network operated by The Clearing House." "External"
@@ -19,7 +19,7 @@ workspace "CorporateOne Payment Orchestration - Containers" "Container view of t
 
             # Entry points
             apiGateway = container "API Gateway" "Single secured entry point: authentication, rate limiting, and routing for credit union cores and the portal." "Azure API Management" "Gateway"
-            portal = container "Operations Portal" "Lets credit union and CorporateOne staff view payments, positions, and alerts. Users only see their own credit union's data, except CorporateOne staff." "Blazor WebAssembly" "WebApp"
+            portal = container "Operations Portal" "Lets credit union and OneCredit staff view payments, positions, and alerts. Users only see their own credit union's data, except OneCredit staff." "Blazor WebAssembly" "WebApp"
 
             # Core logic
             orchestrator = container "Payment Orchestrator" "Runs each payment from start to finish: checks for duplicates, screens, reserves funds, sends, and records the result." "ASP.NET Core"
@@ -85,7 +85,7 @@ workspace "CorporateOne Payment Orchestration - Containers" "Container view of t
         container platform "Containers" {
             include *
             autoLayout lr
-            title "CorporateOne Payment Orchestration - Containers"
+            title "OneCredit Payment Orchestration - Containers"
             description "The main building blocks of the platform and how they connect to people and outside systems."
         }
 
