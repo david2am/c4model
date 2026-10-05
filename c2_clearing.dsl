@@ -1,4 +1,4 @@
-// c2_payment.dsl — Clearing Platform relationships fragment
+// c2_clearing.dsl — Clearing Platform relationships fragment
 // Included into workspace.dsl. No workspace{} wrapper here.
 // Containers are declared in c1.dsl inside 'platform'.
 

@@ -1,38 +1,38 @@
 // workspace.dsl — OnePlatform workspace
-// Composes the system-context model (c1), Clearing Platform (c2_payment),
+// Composes the system-context model (c1), Clearing Platform (c2_clearing),
 // Settlement Platform (c2_settlement), and Post-Settlement Platform (c2_post-settlement).
 
-workspace "OnePlatform MVP" "Clearing and Settlement Accounts — MVP demo." {
+workspace "OnePlatform" "Payment clearing, settlement, and post-settlement for member credit unions." {
 
     model {
         !include c1.dsl
-        !include c2_payment.dsl
+        !include c2_clearing.dsl
         !include c2_settlement.dsl
         !include c2_post-settlement.dsl
     }
 
     views {
 
-        // 1. C1 — System context (only real systems, no MVP test tools)
+        // 1. C1 — Full pipeline context
         systemContext platform "SystemContext" {
             include platform
             include member cuOps cuTreasury coOps coFinance coCompliance
-            include cuDigital cuCore coLedger postSettlement coGL
+            include cuDigital cuCore settlement postSettlement generalLedger
             include fedServices rtpNetwork screening regulator identity
             autoLayout lr
             title "OnePlatform — System Context"
-            description "Who and what interacts directly with the Clearing Platform."
+            description "Everyone and everything involved in the payment pipeline, from credit union member to accounting."
         }
 
-        // 2. C2 — Payment platform containers
-        container platform "PaymentContainers" {
+        // 2. C2 — Clearing Platform containers
+        container platform "ClearingContainers" {
             include *
             autoLayout lr
             title "Clearing Platform"
         }
 
-        // 3. C2 — Settlement ledger containers
-        container coLedger "SettlementContainers" {
+        // 3. C2 — Settlement Platform containers
+        container settlement "SettlementContainers" {
             include *
             autoLayout lr
             title "Settlement Platform"

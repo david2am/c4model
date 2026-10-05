@@ -43,4 +43,4 @@ reportGenerator -> regulator "Submits regulatory reports to" "HTTPS / SFTP"
 
 // ---------- Relationships: accounting ----------
 accountingExporter -> db "Reads daily totals from" "SQL"
-accountingExporter -> coGL "Sends summarized entries to" "HTTPS/JSON"
+accountingExporter -> generalLedger "Sends summarized entries to" "HTTPS/JSON"

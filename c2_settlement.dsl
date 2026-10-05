@@ -1,6 +1,6 @@
 // c2_settlement.dsl — Settlement Platform relationships fragment
 // Included into workspace.dsl. No workspace{} wrapper here.
-// Containers are declared in c1.dsl inside 'coLedger'.
+// Containers are declared in c1.dsl inside 'settlement'.
 
 // ---------- People (MVP demo roles) ----------
 financeViewer = person "Finance Viewer (Demo: Manager)" "Views balances, holds, and entry history for each member credit union."
@@ -9,7 +9,7 @@ financeViewer = person "Finance Viewer (Demo: Manager)" "Views balances, holds, 
 simulator = softwareSystem "Payment Simulator" "Test tool that plays the role of the Clearing Platform. Sends reserve, post, and release requests, including duplicates and simultaneous ones." "Test Tool"
 
 // ---------- Relationships ----------
-// 'developer' is declared in c2_payment.dsl (included before this file)
+// 'developer' is declared in c2_clearing.dsl (included before this file)
 // 'identity' is declared in c1.dsl
 financeViewer -> ledgerService "Views balances and entry history using" "HTTPS"
 developer -> simulator "Runs load and duplicate-request tests with" "Command line"

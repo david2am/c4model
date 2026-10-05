@@ -23,7 +23,7 @@ group "OnePlatform" {
         platformDb = container "Platform Database" "Stores payments and their state history, idempotency keys, the work item queue, and raw network messages." "Azure SQL Database" "Database"
     }
 
-    coLedger = softwareSystem "Settlement Platform" "Handles settlement: ledger of member credit union accounts, balances, holds, and history of every entry." "In Scope" {
+    settlement = softwareSystem "Settlement Platform" "Real-time record of member credit union balances. Handles holds, posts, and releases; rejects overdrafts; and keeps a full history of every entry." "In Scope" {
         ledgerService = container "Ledger Service" "Only component that changes balances. Holds, posts, and releases funds, rejects overdrafts, ignores duplicate requests, accepts correcting entries (idempotent, with approver identity), serves entries and balances as of a cut-off time, and serves the read-only dashboard pages." "ASP.NET Core" "App"
         integrityJob = container "Integrity Check Job" "Checks the ledger against itself: debits equal credits, balances match the sum of entries, and no holds are stuck. Does not compare across systems." ".NET Worker Service" "App"
         eventPublisher = container "Event Publisher" "Reads new entries from an outbox table and sends balance-changed events. Stretch goal — for the MVP the Data Collector polls the Ledger Service directly." ".NET Worker Service" "Stretch"
@@ -36,12 +36,12 @@ group "OnePlatform" {
         collector = container "Data Collector" "Polls the Clearing Platform and Settlement Platform APIs for payment records and ledger entries as of a cut-off time. Downloads statements and reports from the Fed and RTP. Stores originals untouched and a normalized copy." ".NET Worker Service" "Worker,Future"
         reconEngine = container "Reconciliation Engine" "Checks across systems: compares platform vs. ledger, ledger vs. Fed statement, and platform vs. network report. Creates a break for every difference found." ".NET Worker Service" "Worker,Future"
         reportGenerator = container "Report Generator" "Builds member statements, activity reports, and regulatory reports from a frozen snapshot, and delivers them." "Azure Functions" "Worker,Future"
-        accountingExporter = container "Accounting Exporter" "Sends daily summarized entries to the corporate general ledger." "Azure Functions" "Worker,Future"
-        db = container "Post-Settlement Database" "Stores normalized data, matches, breaks, cases, correction approvals, report records, and job status." "Azure SQL Database" "Database,Future"
+        accountingExporter = container "Accounting Exporter" "Sends daily summarized entries to the corporate general ledger. Each export carries a batch ID so the GL never receives the same day twice." "Azure Functions" "Worker,Future"
+        db = container "Post-Settlement Database" "Stores normalized data, matches, breaks, cases, correction approvals, report records, job status, and daily totals ready for export. Only reconciled days are included in the export set." "Azure SQL Database" "Database,Future"
         archive = container "Immutable Archive" "Keeps original statements, network reports, and generated reports unchanged for the required retention period." "Azure Blob Storage" "Archive,Future"
     }
 
-    coGL = softwareSystem "Corporate General Ledger" "OnePlatform's accounting system for financial statements." "Internal"
+    generalLedger = softwareSystem "Corporate General Ledger" "Accounting record for OnePlatform's financial statements. Receives summarized daily entries from the Post-Settlement Platform after reconciliation." "Internal"
 }
 
 // ---------- External ----------
@@ -61,19 +61,23 @@ platform -> cuCore "Reports payment results to"
 platform -> screening "Screens payments with"
 platform -> fedServices "Sends payments to and receives answers from"
 platform -> rtpNetwork "Sends payments to and receives answers from"
-platform -> coLedger "Asks to settle (reserve, post, release) with"
+platform -> settlement "Asks to settle (reserve, post, release) with"
 
 // ---------- Live monitoring ----------
 cuOps -> platform "Tracks payments and resolves exceptions using"
 cuTreasury -> platform "Monitors liquidity and settlement position using"
 coOps -> platform "Monitors all payment activity using"
 
+// ---------- Authentication ----------
+platform -> identity "Validates staff tokens with"
+settlement -> identity "Validates staff tokens with"
+
 // ---------- After settlement ----------
 postSettlement -> platform "Reads payment records from"
-postSettlement -> coLedger "Reads entries and balances from, and sends correcting entries to"
+postSettlement -> settlement "Reads entries and balances from, and sends correcting entries to"
 postSettlement -> fedServices "Downloads account statements from"
 postSettlement -> rtpNetwork "Downloads settlement reports from"
-postSettlement -> coGL "Sends summarized entries to"
+postSettlement -> generalLedger "Sends summarized entries to"
 postSettlement -> regulator "Submits regulatory reports to"
 postSettlement -> cuCore "Sends statements and activity reports to"
 
