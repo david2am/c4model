@@ -1,4 +1,4 @@
-// c2_payment_mvp.dsl — Clearing MVP relationships fragment
+// c2_payment.dsl — Clearing Platform relationships fragment
 // Included into workspace.dsl. No workspace{} wrapper here.
 // Containers are declared in c1.dsl inside 'platform'.
 
@@ -13,6 +13,9 @@ screeningStub = softwareSystem "Sanctions Screening Stub" "Test tool that reject
 
 // ---------- Relationships: people ----------
 viewer -> orchestratorApi "Views payments and funds using" "HTTPS"
+cuOps -> orchestratorApi "Tracks payments and resolves exceptions using" "HTTPS"
+cuTreasury -> orchestratorApi "Monitors liquidity and settlement position using" "HTTPS"
+coOps -> orchestratorApi "Monitors all payment activity using" "HTTPS"
 developer -> coreSim "Submits normal, duplicate, and failing payments with" "Command line"
 developer -> networkSim "Chooses accept, reject, delay, or silence using" "Command line"
 developer -> paymentWorker "Stops and restarts, to show recovery, on" "Command line"
@@ -27,7 +30,10 @@ paymentWorker -> platformDb "Picks up work items and updates payment state" "SQL
 
 // ---------- Relationships: outgoing ----------
 paymentWorker -> screeningStub "Screens payments with" "HTTPS/JSON"
-paymentWorker -> coLedger "Reserves funds, posts entries, and releases holds with" "HTTPS/JSON"
+paymentWorker -> ledgerService "Reserves funds, posts entries, and releases holds with" "HTTPS/JSON, OAuth2 client credentials"
 paymentWorker -> networkSim "Sends payment messages to" "HTTPS (ISO 20022 pacs.008)"
 paymentWorker -> coreSim "Notifies payment results to" "Webhooks/HTTPS"
-orchestratorApi -> coLedger "Reads available funds from" "HTTPS/JSON"
+orchestratorApi -> ledgerService "Reads available funds from" "HTTPS/JSON, OAuth2 client credentials"
+
+// ---------- Downstream consumers ----------
+postSettlement -> orchestratorApi "Reads payment records from" "HTTPS/JSON, OAuth2 client credentials"

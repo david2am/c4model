@@ -6,6 +6,9 @@
 // ---------- People (new in this fragment) ----------
 coApprover = person "Finance Supervisor (Approver)" "Approves or rejects corrections. Must be a different person than the one who proposed it."
 
+// ---------- System-level relationship (coApprover declared here, not in c1.dsl) ----------
+coApprover -> postSettlement "Approves or rejects corrections using"
+
 // ---------- Relationships: people ----------
 coFinance -> portal "Investigates differences and proposes corrections using" "HTTPS"
 coApprover -> portal "Approves or rejects corrections using" "HTTPS"
@@ -18,13 +21,14 @@ portal -> identity "Signs users in with" "OpenID Connect"
 api -> identity "Validates tokens with" "OpenID Connect"
 api -> db "Reads results and saves cases and approvals in" "SQL"
 api -> archive "Reads reports from" "HTTPS"
-api -> coLedger "Sends approved correcting entries to" "HTTPS/JSON"
+api -> ledgerService "Sends approved correcting entries to" "HTTPS/JSON, OAuth2 client credentials"
 
 // ---------- Relationships: collecting ----------
+// MVP uses polling — eventPublisher (stretch) is not wired to the collector yet
 collector -> fedServices "Downloads account statements from" "HTTPS / SFTP"
 collector -> rtpNetwork "Downloads settlement reports from" "HTTPS / SFTP"
-collector -> platform "Reads payment records from" "HTTPS/JSON"
-collector -> coLedger "Reads entries and balances from" "HTTPS/JSON"
+collector -> orchestratorApi "Reads payment records from" "HTTPS/JSON, OAuth2 client credentials"
+collector -> ledgerService "Reads entries and balances as of a cut-off time from" "HTTPS/JSON, OAuth2 client credentials"
 collector -> db "Stores normalized data in" "SQL"
 collector -> archive "Stores original files in" "HTTPS"
 

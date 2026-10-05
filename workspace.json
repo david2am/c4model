@@ -3,7 +3,7 @@
   "description" : "Clearing and Settlement Accounts — MVP demo.",
   "documentation" : { },
   "id" : 1,
-  "lastModifiedDate" : "2026-10-05T21:27:01Z",
+  "lastModifiedDate" : "2026-10-05T21:56:31Z",
   "model" : {
     "people" : [ {
       "description" : "Person or business with an account at a member credit union, sending or receiving payments.",
@@ -42,9 +42,16 @@
         "sourceId" : "2",
         "tags" : "Relationship"
       }, {
+        "description" : "Tracks payments and resolves exceptions using",
+        "destinationId" : "10",
+        "id" : "61",
+        "sourceId" : "2",
+        "tags" : "Relationship",
+        "technology" : "HTTPS"
+      }, {
         "description" : "Downloads statements and reports using",
         "destinationId" : "19",
-        "id" : "100",
+        "id" : "109",
         "sourceId" : "2",
         "tags" : "Relationship",
         "technology" : "HTTPS"
@@ -64,6 +71,13 @@
         "id" : "42",
         "sourceId" : "3",
         "tags" : "Relationship"
+      }, {
+        "description" : "Monitors liquidity and settlement position using",
+        "destinationId" : "10",
+        "id" : "62",
+        "sourceId" : "3",
+        "tags" : "Relationship",
+        "technology" : "HTTPS"
       } ],
       "tags" : "Element,Person"
     }, {
@@ -80,6 +94,13 @@
         "id" : "43",
         "sourceId" : "6",
         "tags" : "Relationship"
+      }, {
+        "description" : "Monitors all payment activity using",
+        "destinationId" : "10",
+        "id" : "63",
+        "sourceId" : "6",
+        "tags" : "Relationship",
+        "technology" : "HTTPS"
       } ],
       "tags" : "Element,Person"
     }, {
@@ -99,7 +120,7 @@
       }, {
         "description" : "Investigates differences and proposes corrections using",
         "destinationId" : "19",
-        "id" : "96",
+        "id" : "106",
         "sourceId" : "7",
         "tags" : "Relationship",
         "technology" : "HTTPS"
@@ -122,7 +143,7 @@
       }, {
         "description" : "Reviews history and reports using",
         "destinationId" : "19",
-        "id" : "99",
+        "id" : "108",
         "sourceId" : "8",
         "tags" : "Relationship",
         "technology" : "HTTPS"
@@ -161,57 +182,57 @@
       "relationships" : [ {
         "description" : "Submits normal, duplicate, and failing payments with",
         "destinationId" : "56",
-        "id" : "61",
+        "id" : "64",
         "sourceId" : "55",
         "tags" : "Relationship",
         "technology" : "Command line"
       }, {
         "description" : "Chooses accept, reject, delay, or silence using",
         "destinationId" : "57",
-        "id" : "62",
+        "id" : "65",
         "sourceId" : "55",
         "tags" : "Relationship",
         "technology" : "Command line"
       }, {
         "description" : "Stops and restarts, to show recovery, on",
         "destinationId" : "11",
-        "id" : "63",
+        "id" : "66",
         "sourceId" : "55",
         "tags" : "Relationship",
         "technology" : "Command line"
       }, {
         "description" : "Stops and restarts, to show recovery, on",
         "destinationId" : "9",
-        "id" : "64",
-        "linkedRelationshipId" : "63",
+        "id" : "67",
+        "linkedRelationshipId" : "66",
         "sourceId" : "55",
         "technology" : "Command line"
       }, {
         "description" : "Runs load and duplicate-request tests with",
-        "destinationId" : "80",
-        "id" : "83",
+        "destinationId" : "87",
+        "id" : "90",
         "sourceId" : "55",
         "tags" : "Relationship",
         "technology" : "Command line"
       }, {
         "description" : "Triggers on demand and reviews results of",
         "destinationId" : "15",
-        "id" : "84",
+        "id" : "91",
         "sourceId" : "55",
         "tags" : "Relationship",
         "technology" : "Command line"
       }, {
         "description" : "Triggers on demand and reviews results of",
         "destinationId" : "13",
-        "id" : "85",
-        "linkedRelationshipId" : "84",
+        "id" : "92",
+        "linkedRelationshipId" : "91",
         "sourceId" : "55",
         "technology" : "Command line"
       } ],
       "tags" : "Element,Person"
     }, {
       "description" : "Views balances, holds, and entry history for each member credit union.",
-      "id" : "79",
+      "id" : "86",
       "name" : "Finance Viewer (Demo: Manager)",
       "properties" : {
         "structurizr.dsl.identifier" : "financeViewer"
@@ -219,39 +240,38 @@
       "relationships" : [ {
         "description" : "Views balances and entry history using",
         "destinationId" : "14",
-        "id" : "81",
-        "sourceId" : "79",
+        "id" : "88",
+        "sourceId" : "86",
         "tags" : "Relationship",
         "technology" : "HTTPS"
       }, {
         "description" : "Views balances and entry history using",
         "destinationId" : "13",
-        "id" : "82",
-        "linkedRelationshipId" : "81",
-        "sourceId" : "79",
+        "id" : "89",
+        "linkedRelationshipId" : "88",
+        "sourceId" : "86",
         "technology" : "HTTPS"
       } ],
       "tags" : "Element,Person"
     }, {
       "description" : "Approves or rejects corrections. Must be a different person than the one who proposed it.",
-      "id" : "95",
+      "id" : "104",
       "name" : "Finance Supervisor (Approver)",
       "properties" : {
         "structurizr.dsl.identifier" : "coApprover"
       },
       "relationships" : [ {
         "description" : "Approves or rejects corrections using",
-        "destinationId" : "19",
-        "id" : "97",
-        "sourceId" : "95",
-        "tags" : "Relationship",
-        "technology" : "HTTPS"
+        "destinationId" : "18",
+        "id" : "105",
+        "sourceId" : "104",
+        "tags" : "Relationship"
       }, {
         "description" : "Approves or rejects corrections using",
-        "destinationId" : "18",
-        "id" : "98",
-        "linkedRelationshipId" : "97",
-        "sourceId" : "95",
+        "destinationId" : "19",
+        "id" : "107",
+        "sourceId" : "104",
+        "tags" : "Relationship",
         "technology" : "HTTPS"
       } ],
       "tags" : "Element,Person"
@@ -292,7 +312,7 @@
       "tags" : "Element,Software System,External"
     }, {
       "containers" : [ {
-        "description" : "Accepts payment requests and network answers. Saves each one together with a work item in a single transaction, ignores duplicates, and serves the read-only operations pages.",
+        "description" : "Accepts payment requests and network answers. Saves each one together with a work item in a single transaction, ignores duplicates, serves the read-only operations pages, and exposes payment records for reconciliation.",
         "documentation" : { },
         "id" : "10",
         "name" : "Orchestrator API",
@@ -302,17 +322,24 @@
         "relationships" : [ {
           "description" : "Saves payments, idempotency keys, and work items in one transaction",
           "destinationId" : "12",
-          "id" : "69",
+          "id" : "72",
           "sourceId" : "10",
           "tags" : "Relationship",
           "technology" : "SQL"
         }, {
           "description" : "Reads available funds from",
-          "destinationId" : "13",
-          "id" : "78",
+          "destinationId" : "14",
+          "id" : "83",
           "sourceId" : "10",
           "tags" : "Relationship",
-          "technology" : "HTTPS/JSON"
+          "technology" : "HTTPS/JSON, OAuth2 client credentials"
+        }, {
+          "description" : "Reads available funds from",
+          "destinationId" : "13",
+          "id" : "84",
+          "linkedRelationshipId" : "83",
+          "sourceId" : "10",
+          "technology" : "HTTPS/JSON, OAuth2 client credentials"
         } ],
         "tags" : "Element,Container,App",
         "technology" : "ASP.NET Core"
@@ -327,35 +354,42 @@
         "relationships" : [ {
           "description" : "Picks up work items and updates payment state",
           "destinationId" : "12",
-          "id" : "70",
+          "id" : "73",
           "sourceId" : "11",
           "tags" : "Relationship",
           "technology" : "SQL"
         }, {
           "description" : "Screens payments with",
           "destinationId" : "58",
-          "id" : "71",
+          "id" : "74",
           "sourceId" : "11",
           "tags" : "Relationship",
           "technology" : "HTTPS/JSON"
         }, {
           "description" : "Reserves funds, posts entries, and releases holds with",
-          "destinationId" : "13",
-          "id" : "73",
+          "destinationId" : "14",
+          "id" : "76",
           "sourceId" : "11",
           "tags" : "Relationship",
-          "technology" : "HTTPS/JSON"
+          "technology" : "HTTPS/JSON, OAuth2 client credentials"
+        }, {
+          "description" : "Reserves funds, posts entries, and releases holds with",
+          "destinationId" : "13",
+          "id" : "77",
+          "linkedRelationshipId" : "76",
+          "sourceId" : "11",
+          "technology" : "HTTPS/JSON, OAuth2 client credentials"
         }, {
           "description" : "Sends payment messages to",
           "destinationId" : "57",
-          "id" : "74",
+          "id" : "79",
           "sourceId" : "11",
           "tags" : "Relationship",
           "technology" : "HTTPS (ISO 20022 pacs.008)"
         }, {
           "description" : "Notifies payment results to",
           "destinationId" : "56",
-          "id" : "76",
+          "id" : "81",
           "sourceId" : "11",
           "tags" : "Relationship",
           "technology" : "Webhooks/HTTPS"
@@ -414,29 +448,36 @@
       }, {
         "description" : "Screens payments with",
         "destinationId" : "58",
-        "id" : "72",
-        "linkedRelationshipId" : "71",
+        "id" : "75",
+        "linkedRelationshipId" : "74",
         "sourceId" : "9",
         "technology" : "HTTPS/JSON"
       }, {
+        "description" : "Reserves funds, posts entries, and releases holds with",
+        "destinationId" : "14",
+        "id" : "78",
+        "linkedRelationshipId" : "76",
+        "sourceId" : "9",
+        "technology" : "HTTPS/JSON, OAuth2 client credentials"
+      }, {
         "description" : "Sends payment messages to",
         "destinationId" : "57",
-        "id" : "75",
-        "linkedRelationshipId" : "74",
+        "id" : "80",
+        "linkedRelationshipId" : "79",
         "sourceId" : "9",
         "technology" : "HTTPS (ISO 20022 pacs.008)"
       }, {
         "description" : "Notifies payment results to",
         "destinationId" : "56",
-        "id" : "77",
-        "linkedRelationshipId" : "76",
+        "id" : "82",
+        "linkedRelationshipId" : "81",
         "sourceId" : "9",
         "technology" : "Webhooks/HTTPS"
       } ],
       "tags" : "Element,Software System,In Scope"
     }, {
       "containers" : [ {
-        "description" : "Only component that changes balances. Holds, posts, and releases funds, rejects overdrafts, ignores duplicate requests, and serves the read-only dashboard pages.",
+        "description" : "Only component that changes balances. Holds, posts, and releases funds, rejects overdrafts, ignores duplicate requests, accepts correcting entries (idempotent, with approver identity), serves entries and balances as of a cut-off time, and serves the read-only dashboard pages.",
         "documentation" : { },
         "id" : "14",
         "name" : "Ledger Service",
@@ -444,16 +485,16 @@
           "structurizr.dsl.identifier" : "ledgerService"
         },
         "relationships" : [ {
-          "description" : "Validates sign-ins and tokens with",
+          "description" : "Validates tokens with",
           "destinationId" : "32",
-          "id" : "88",
+          "id" : "95",
           "sourceId" : "14",
           "tags" : "Relationship",
           "technology" : "OpenID Connect"
         }, {
           "description" : "Reads and writes entries, balances, holds, and idempotency keys",
           "destinationId" : "17",
-          "id" : "90",
+          "id" : "97",
           "sourceId" : "14",
           "tags" : "Relationship",
           "technology" : "SQL"
@@ -461,7 +502,7 @@
         "tags" : "Element,Container,App",
         "technology" : "ASP.NET Core"
       }, {
-        "description" : "Runs on a schedule and checks that debits equal credits, balances match entries, and no holds are stuck.",
+        "description" : "Checks the ledger against itself: debits equal credits, balances match the sum of entries, and no holds are stuck. Does not compare across systems.",
         "documentation" : { },
         "id" : "15",
         "name" : "Integrity Check Job",
@@ -471,7 +512,7 @@
         "relationships" : [ {
           "description" : "Reads entries and balances, and stores check results in",
           "destinationId" : "17",
-          "id" : "91",
+          "id" : "98",
           "sourceId" : "15",
           "tags" : "Relationship",
           "technology" : "SQL"
@@ -479,7 +520,7 @@
         "tags" : "Element,Container,App",
         "technology" : ".NET Worker Service"
       }, {
-        "description" : "Reads new entries from an outbox table and sends balance-changed events. Stretch goal.",
+        "description" : "Reads new entries from an outbox table and sends balance-changed events. Stretch goal — for the MVP the Data Collector polls the Ledger Service directly.",
         "documentation" : { },
         "id" : "16",
         "name" : "Event Publisher",
@@ -489,14 +530,14 @@
         "relationships" : [ {
           "description" : "Reads new outbox events from",
           "destinationId" : "17",
-          "id" : "92",
+          "id" : "99",
           "sourceId" : "16",
           "tags" : "Relationship",
           "technology" : "SQL"
         }, {
           "description" : "Sends balance-changed events to",
-          "destinationId" : "80",
-          "id" : "93",
+          "destinationId" : "87",
+          "id" : "100",
           "sourceId" : "16",
           "tags" : "Relationship",
           "technology" : "Webhooks/HTTPS"
@@ -523,17 +564,17 @@
         "structurizr.dsl.identifier" : "coLedger"
       },
       "relationships" : [ {
-        "description" : "Validates sign-ins and tokens with",
+        "description" : "Validates tokens with",
         "destinationId" : "32",
-        "id" : "89",
-        "linkedRelationshipId" : "88",
+        "id" : "96",
+        "linkedRelationshipId" : "95",
         "sourceId" : "13",
         "technology" : "OpenID Connect"
       }, {
         "description" : "Sends balance-changed events to",
-        "destinationId" : "80",
-        "id" : "94",
-        "linkedRelationshipId" : "93",
+        "destinationId" : "87",
+        "id" : "101",
+        "linkedRelationshipId" : "100",
         "sourceId" : "13",
         "technology" : "Webhooks/HTTPS"
       } ],
@@ -550,19 +591,19 @@
         "relationships" : [ {
           "description" : "Requests data and actions from",
           "destinationId" : "20",
-          "id" : "101",
+          "id" : "110",
           "sourceId" : "19",
           "tags" : "Relationship",
           "technology" : "HTTPS/JSON"
         }, {
           "description" : "Signs users in with",
           "destinationId" : "32",
-          "id" : "102",
+          "id" : "111",
           "sourceId" : "19",
           "tags" : "Relationship",
           "technology" : "OpenID Connect"
         } ],
-        "tags" : "Element,Container,WebApp",
+        "tags" : "Element,Container,WebApp,Future",
         "technology" : "Blazor WebAssembly"
       }, {
         "description" : "Serves the portal. Manages cases and corrections, enforces the two-person rule and per-credit-union access, and sends approved corrections to the ledger.",
@@ -575,36 +616,43 @@
         "relationships" : [ {
           "description" : "Validates tokens with",
           "destinationId" : "32",
-          "id" : "104",
+          "id" : "113",
           "sourceId" : "20",
           "tags" : "Relationship",
           "technology" : "OpenID Connect"
         }, {
           "description" : "Reads results and saves cases and approvals in",
           "destinationId" : "25",
-          "id" : "105",
+          "id" : "114",
           "sourceId" : "20",
           "tags" : "Relationship",
           "technology" : "SQL"
         }, {
           "description" : "Reads reports from",
           "destinationId" : "26",
-          "id" : "106",
+          "id" : "115",
           "sourceId" : "20",
           "tags" : "Relationship",
           "technology" : "HTTPS"
         }, {
           "description" : "Sends approved correcting entries to",
-          "destinationId" : "13",
-          "id" : "107",
+          "destinationId" : "14",
+          "id" : "116",
           "sourceId" : "20",
           "tags" : "Relationship",
-          "technology" : "HTTPS/JSON"
+          "technology" : "HTTPS/JSON, OAuth2 client credentials"
+        }, {
+          "description" : "Sends approved correcting entries to",
+          "destinationId" : "13",
+          "id" : "117",
+          "linkedRelationshipId" : "116",
+          "sourceId" : "20",
+          "technology" : "HTTPS/JSON, OAuth2 client credentials"
         } ],
-        "tags" : "Element,Container,App",
+        "tags" : "Element,Container,App,Future",
         "technology" : "ASP.NET Core"
       }, {
-        "description" : "Downloads statements and reports from the Fed and RTP, and reads payment records and ledger entries. Stores originals untouched and a normalized copy.",
+        "description" : "Polls the Clearing Platform and Settlement Platform APIs for payment records and ledger entries as of a cut-off time. Downloads statements and reports from the Fed and RTP. Stores originals untouched and a normalized copy.",
         "documentation" : { },
         "id" : "21",
         "name" : "Data Collector",
@@ -614,50 +662,64 @@
         "relationships" : [ {
           "description" : "Downloads account statements from",
           "destinationId" : "28",
-          "id" : "108",
+          "id" : "118",
           "sourceId" : "21",
           "tags" : "Relationship",
           "technology" : "HTTPS / SFTP"
         }, {
           "description" : "Downloads settlement reports from",
           "destinationId" : "29",
-          "id" : "109",
+          "id" : "119",
           "sourceId" : "21",
           "tags" : "Relationship",
           "technology" : "HTTPS / SFTP"
         }, {
           "description" : "Reads payment records from",
-          "destinationId" : "9",
-          "id" : "110",
+          "destinationId" : "10",
+          "id" : "120",
           "sourceId" : "21",
           "tags" : "Relationship",
-          "technology" : "HTTPS/JSON"
+          "technology" : "HTTPS/JSON, OAuth2 client credentials"
         }, {
-          "description" : "Reads entries and balances from",
-          "destinationId" : "13",
-          "id" : "111",
+          "description" : "Reads payment records from",
+          "destinationId" : "9",
+          "id" : "121",
+          "linkedRelationshipId" : "120",
+          "sourceId" : "21",
+          "technology" : "HTTPS/JSON, OAuth2 client credentials"
+        }, {
+          "description" : "Reads entries and balances as of a cut-off time from",
+          "destinationId" : "14",
+          "id" : "122",
           "sourceId" : "21",
           "tags" : "Relationship",
-          "technology" : "HTTPS/JSON"
+          "technology" : "HTTPS/JSON, OAuth2 client credentials"
+        }, {
+          "description" : "Reads entries and balances as of a cut-off time from",
+          "destinationId" : "13",
+          "id" : "123",
+          "linkedRelationshipId" : "122",
+          "sourceId" : "21",
+          "technology" : "HTTPS/JSON, OAuth2 client credentials"
         }, {
           "description" : "Stores normalized data in",
           "destinationId" : "25",
-          "id" : "112",
+          "id" : "124",
           "sourceId" : "21",
           "tags" : "Relationship",
           "technology" : "SQL"
         }, {
           "description" : "Stores original files in",
           "destinationId" : "26",
-          "id" : "113",
+          "id" : "125",
           "sourceId" : "21",
           "tags" : "Relationship",
           "technology" : "HTTPS"
         } ],
-        "tags" : "Element,Container,Worker",
+        "tags" : "Element,Container,Worker,Future",
         "technology" : ".NET Worker Service"
       }, {
-        "description" : "Compares platform vs. ledger, ledger vs. Fed statement, and platform vs. network report. Creates a break for every difference.",
+        "description" : "Checks across systems: compares platform vs. ledger, ledger vs. Fed statement, and platform vs. network report. Creates a break for every difference found.",
         "documentation" : { },
         "id" : "22",
         "name" : "Reconciliation Engine",
@@ -667,12 +729,12 @@
         "relationships" : [ {
           "description" : "Reads normalized data and stores matches and breaks in",
           "destinationId" : "25",
-          "id" : "114",
+          "id" : "126",
           "sourceId" : "22",
           "tags" : "Relationship",
           "technology" : "SQL"
         } ],
-        "tags" : "Element,Container,Worker",
+        "tags" : "Element,Container,Worker,Future",
         "technology" : ".NET Worker Service"
       }, {
         "description" : "Builds member statements, activity reports, and regulatory reports from a frozen snapshot, and delivers them.",
@@ -685,33 +747,33 @@
         "relationships" : [ {
           "description" : "Reads the snapshot and stores report records in",
           "destinationId" : "25",
-          "id" : "115",
+          "id" : "127",
           "sourceId" : "23",
           "tags" : "Relationship",
           "technology" : "SQL"
         }, {
           "description" : "Stores generated reports in",
           "destinationId" : "26",
-          "id" : "116",
+          "id" : "128",
           "sourceId" : "23",
           "tags" : "Relationship",
           "technology" : "HTTPS"
         }, {
           "description" : "Sends statements and activity reports to",
           "destinationId" : "5",
-          "id" : "117",
+          "id" : "129",
           "sourceId" : "23",
           "tags" : "Relationship",
           "technology" : "HTTPS / SFTP"
         }, {
           "description" : "Submits regulatory reports to",
           "destinationId" : "31",
-          "id" : "118",
+          "id" : "130",
           "sourceId" : "23",
           "tags" : "Relationship",
           "technology" : "HTTPS / SFTP"
         } ],
-        "tags" : "Element,Container,Worker",
+        "tags" : "Element,Container,Worker,Future",
         "technology" : "Azure Functions"
       }, {
         "description" : "Sends daily summarized entries to the corporate general ledger.",
@@ -724,19 +786,19 @@
         "relationships" : [ {
           "description" : "Reads daily totals from",
           "destinationId" : "25",
-          "id" : "119",
+          "id" : "131",
           "sourceId" : "24",
           "tags" : "Relationship",
           "technology" : "SQL"
         }, {
           "description" : "Sends summarized entries to",
           "destinationId" : "27",
-          "id" : "120",
+          "id" : "132",
           "sourceId" : "24",
           "tags" : "Relationship",
           "technology" : "HTTPS/JSON"
         } ],
-        "tags" : "Element,Container,Worker",
+        "tags" : "Element,Container,Worker,Future",
         "technology" : "Azure Functions"
       }, {
         "description" : "Stores normalized data, matches, breaks, cases, correction approvals, report records, and job status.",
@@ -746,7 +808,7 @@
         "properties" : {
           "structurizr.dsl.identifier" : "db"
         },
-        "tags" : "Element,Container,Database",
+        "tags" : "Element,Container,Database,Future",
         "technology" : "Azure SQL Database"
       }, {
         "description" : "Keeps original statements, network reports, and generated reports unchanged for the required retention period.",
@@ -756,7 +818,7 @@
         "properties" : {
           "structurizr.dsl.identifier" : "archive"
         },
-        "tags" : "Element,Container,Archive",
+        "tags" : "Element,Container,Archive,Future",
         "technology" : "Azure Blob Storage"
       } ],
       "description" : "Checks that everything matches after settlement: reconciles, manages exceptions, produces member statements and reports, feeds accounting, and keeps the archive.",
@@ -774,7 +836,7 @@
         "sourceId" : "18",
         "tags" : "Relationship"
       }, {
-        "description" : "Reads entries and balances from, and asks for correcting entries in",
+        "description" : "Reads entries and balances from, and sends correcting entries to",
         "destinationId" : "13",
         "id" : "45",
         "sourceId" : "18",
@@ -810,10 +872,31 @@
         "sourceId" : "18",
         "tags" : "Relationship"
       }, {
+        "description" : "Reads payment records from",
+        "destinationId" : "10",
+        "id" : "85",
+        "sourceId" : "18",
+        "tags" : "Relationship",
+        "technology" : "HTTPS/JSON, OAuth2 client credentials"
+      }, {
+        "description" : "Reads entries and balances from",
+        "destinationId" : "14",
+        "id" : "102",
+        "sourceId" : "18",
+        "tags" : "Relationship",
+        "technology" : "HTTPS/JSON, OAuth2 client credentials"
+      }, {
+        "description" : "Sends approved correcting entries to",
+        "destinationId" : "14",
+        "id" : "103",
+        "sourceId" : "18",
+        "tags" : "Relationship",
+        "technology" : "HTTPS/JSON, OAuth2 client credentials"
+      }, {
         "description" : "Signs users in with",
         "destinationId" : "32",
-        "id" : "103",
-        "linkedRelationshipId" : "102",
+        "id" : "112",
+        "linkedRelationshipId" : "111",
         "sourceId" : "18",
         "technology" : "OpenID Connect"
       } ],
@@ -884,15 +967,15 @@
       "relationships" : [ {
         "description" : "Submits payment requests to",
         "destinationId" : "10",
-        "id" : "65",
+        "id" : "68",
         "sourceId" : "56",
         "tags" : "Relationship",
         "technology" : "HTTPS/JSON"
       }, {
         "description" : "Submits payment requests to",
         "destinationId" : "9",
-        "id" : "66",
-        "linkedRelationshipId" : "65",
+        "id" : "69",
+        "linkedRelationshipId" : "68",
         "sourceId" : "56",
         "technology" : "HTTPS/JSON"
       } ],
@@ -908,15 +991,15 @@
       "relationships" : [ {
         "description" : "Sends payment answers to",
         "destinationId" : "10",
-        "id" : "67",
+        "id" : "70",
         "sourceId" : "57",
         "tags" : "Relationship",
         "technology" : "Webhooks/HTTPS"
       }, {
         "description" : "Sends payment answers to",
         "destinationId" : "9",
-        "id" : "68",
-        "linkedRelationshipId" : "67",
+        "id" : "71",
+        "linkedRelationshipId" : "70",
         "sourceId" : "57",
         "technology" : "Webhooks/HTTPS"
       } ],
@@ -933,7 +1016,7 @@
     }, {
       "description" : "Test tool that plays the role of the Clearing Platform. Sends reserve, post, and release requests, including duplicates and simultaneous ones.",
       "documentation" : { },
-      "id" : "80",
+      "id" : "87",
       "name" : "Payment Simulator",
       "properties" : {
         "structurizr.dsl.identifier" : "simulator"
@@ -941,16 +1024,16 @@
       "relationships" : [ {
         "description" : "Reserves funds, posts entries, releases holds, and queries balances with",
         "destinationId" : "14",
-        "id" : "86",
-        "sourceId" : "80",
+        "id" : "93",
+        "sourceId" : "87",
         "tags" : "Relationship",
         "technology" : "HTTPS/JSON"
       }, {
         "description" : "Reserves funds, posts entries, releases holds, and queries balances with",
         "destinationId" : "13",
-        "id" : "87",
-        "linkedRelationshipId" : "86",
-        "sourceId" : "80",
+        "id" : "94",
+        "linkedRelationshipId" : "93",
+        "sourceId" : "87",
         "technology" : "HTTPS/JSON"
       } ],
       "tags" : "Element,Software System,Test Tool"
@@ -958,7 +1041,7 @@
   },
   "name" : "OnePlatform MVP",
   "properties" : {
-    "structurizr.inspection.error" : "30",
+    "structurizr.inspection.error" : "31",
     "structurizr.inspection.info" : "0",
     "structurizr.inspection.ignore" : "0",
     "structurizr.inspection.warning" : "0"
@@ -1042,6 +1125,18 @@
         "vertices" : true
       },
       "elements" : [ {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "3",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "6",
+        "x" : 0,
+        "y" : 0
+      }, {
         "id" : "10",
         "x" : 0,
         "y" : 0
@@ -1055,6 +1150,10 @@
         "y" : 0
       }, {
         "id" : "13",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "18",
         "x" : 0,
         "y" : 0
       }, {
@@ -1083,6 +1182,10 @@
       "name" : "Container View: Clearing Platform",
       "order" : 2,
       "relationships" : [ {
+        "id" : "45"
+      }, {
+        "id" : "53"
+      }, {
         "id" : "59"
       }, {
         "id" : "61"
@@ -1091,25 +1194,33 @@
       }, {
         "id" : "63"
       }, {
+        "id" : "64"
+      }, {
         "id" : "65"
       }, {
-        "id" : "67"
+        "id" : "66"
       }, {
-        "id" : "69"
+        "id" : "68"
       }, {
         "id" : "70"
       }, {
-        "id" : "71"
+        "id" : "72"
       }, {
         "id" : "73"
       }, {
         "id" : "74"
       }, {
-        "id" : "76"
+        "id" : "77"
       }, {
-        "id" : "78"
+        "id" : "79"
+      }, {
+        "id" : "81"
+      }, {
+        "id" : "84"
       }, {
         "id" : "85"
+      }, {
+        "id" : "92"
       } ],
       "softwareSystemId" : "9",
       "title" : "Clearing Platform"
@@ -1122,6 +1233,10 @@
         "vertices" : true
       },
       "elements" : [ {
+        "id" : "9",
+        "x" : 0,
+        "y" : 0
+      }, {
         "id" : "14",
         "x" : 0,
         "y" : 0
@@ -1138,6 +1253,10 @@
         "x" : 0,
         "y" : 0
       }, {
+        "id" : "18",
+        "x" : 0,
+        "y" : 0
+      }, {
         "id" : "32",
         "x" : 0,
         "y" : 0
@@ -1146,11 +1265,11 @@
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "79",
+        "id" : "86",
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "80",
+        "id" : "87",
         "x" : 0,
         "y" : 0
       } ],
@@ -1159,13 +1278,19 @@
       "name" : "Container View: Settlement Platform",
       "order" : 3,
       "relationships" : [ {
-        "id" : "81"
+        "id" : "100"
       }, {
-        "id" : "83"
+        "id" : "102"
       }, {
-        "id" : "84"
+        "id" : "103"
       }, {
-        "id" : "86"
+        "id" : "112"
+      }, {
+        "id" : "44"
+      }, {
+        "id" : "67"
+      }, {
+        "id" : "78"
       }, {
         "id" : "88"
       }, {
@@ -1173,9 +1298,15 @@
       }, {
         "id" : "91"
       }, {
-        "id" : "92"
-      }, {
         "id" : "93"
+      }, {
+        "id" : "95"
+      }, {
+        "id" : "97"
+      }, {
+        "id" : "98"
+      }, {
+        "id" : "99"
       } ],
       "softwareSystemId" : "13",
       "title" : "Settlement Platform"
@@ -1264,7 +1395,7 @@
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "95",
+        "id" : "104",
         "x" : 0,
         "y" : 0
       } ],
@@ -1273,16 +1404,6 @@
       "name" : "Container View: Post-Settlement Platform",
       "order" : 4,
       "relationships" : [ {
-        "id" : "100"
-      }, {
-        "id" : "101"
-      }, {
-        "id" : "102"
-      }, {
-        "id" : "104"
-      }, {
-        "id" : "105"
-      }, {
         "id" : "106"
       }, {
         "id" : "107"
@@ -1295,15 +1416,11 @@
       }, {
         "id" : "111"
       }, {
-        "id" : "112"
-      }, {
         "id" : "113"
       }, {
         "id" : "114"
       }, {
         "id" : "115"
-      }, {
-        "id" : "116"
       }, {
         "id" : "117"
       }, {
@@ -1311,7 +1428,27 @@
       }, {
         "id" : "119"
       }, {
-        "id" : "120"
+        "id" : "121"
+      }, {
+        "id" : "123"
+      }, {
+        "id" : "124"
+      }, {
+        "id" : "125"
+      }, {
+        "id" : "126"
+      }, {
+        "id" : "127"
+      }, {
+        "id" : "128"
+      }, {
+        "id" : "129"
+      }, {
+        "id" : "130"
+      }, {
+        "id" : "131"
+      }, {
+        "id" : "132"
       }, {
         "id" : "35"
       }, {
@@ -1325,13 +1462,7 @@
       }, {
         "id" : "41"
       }, {
-        "id" : "89"
-      }, {
         "id" : "96"
-      }, {
-        "id" : "97"
-      }, {
-        "id" : "99"
       } ],
       "softwareSystemId" : "18",
       "title" : "Post-Settlement Platform"
@@ -1419,7 +1550,7 @@
       "name" : "System Context View: Clearing Platform",
       "order" : 1,
       "relationships" : [ {
-        "id" : "103"
+        "id" : "112"
       }, {
         "id" : "33"
       }, {
@@ -1463,7 +1594,7 @@
       }, {
         "id" : "53"
       }, {
-        "id" : "89"
+        "id" : "96"
       } ],
       "softwareSystemId" : "9",
       "title" : "OnePlatform — System Context"

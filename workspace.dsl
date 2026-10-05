@@ -1,6 +1,6 @@
-// workspace.dsl — MVP workspace
-// Composes the system-context model (c1), payment MVP (c2_payment_mvp),
-// and settlement MVP (c2_settlement_mvp) into a single Structurizr workspace.
+// workspace.dsl — OnePlatform workspace
+// Composes the system-context model (c1), Clearing Platform (c2_payment),
+// Settlement Platform (c2_settlement), and Post-Settlement Platform (c2_post-settlement).
 
 workspace "OnePlatform MVP" "Clearing and Settlement Accounts — MVP demo." {
 

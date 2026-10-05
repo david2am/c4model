@@ -18,27 +18,27 @@ group "OnePlatform" {
     coCompliance = person "Auditor / Compliance Officer" "Review history, reconciliation results, and regulatory reports. Read-only."
 
     platform = softwareSystem "Clearing Platform" "Handles clearing: receives payment requests, screens them, sends payment messages to the networks, and tracks results." "In Scope" {
-        orchestratorApi = container "Orchestrator API" "Accepts payment requests and network answers. Saves each one together with a work item in a single transaction, ignores duplicates, and serves the read-only operations pages." "ASP.NET Core" "App"
+        orchestratorApi = container "Orchestrator API" "Accepts payment requests and network answers. Saves each one together with a work item in a single transaction, ignores duplicates, serves the read-only operations pages, and exposes payment records for reconciliation." "ASP.NET Core" "App"
         paymentWorker = container "Payment Worker" "Picks up work items and moves each payment through its steps: screen, reserve, send, confirm, post, notify. Retries safely, times out silent networks, and releases holds on failure." ".NET Worker Service" "App"
         platformDb = container "Platform Database" "Stores payments and their state history, idempotency keys, the work item queue, and raw network messages." "Azure SQL Database" "Database"
     }
 
     coLedger = softwareSystem "Settlement Platform" "Handles settlement: ledger of member credit union accounts, balances, holds, and history of every entry." "In Scope" {
-        ledgerService = container "Ledger Service" "Only component that changes balances. Holds, posts, and releases funds, rejects overdrafts, ignores duplicate requests, and serves the read-only dashboard pages." "ASP.NET Core" "App"
-        integrityJob = container "Integrity Check Job" "Runs on a schedule and checks that debits equal credits, balances match entries, and no holds are stuck." ".NET Worker Service" "App"
-        eventPublisher = container "Event Publisher" "Reads new entries from an outbox table and sends balance-changed events. Stretch goal." ".NET Worker Service" "Stretch"
+        ledgerService = container "Ledger Service" "Only component that changes balances. Holds, posts, and releases funds, rejects overdrafts, ignores duplicate requests, accepts correcting entries (idempotent, with approver identity), serves entries and balances as of a cut-off time, and serves the read-only dashboard pages." "ASP.NET Core" "App"
+        integrityJob = container "Integrity Check Job" "Checks the ledger against itself: debits equal credits, balances match the sum of entries, and no holds are stuck. Does not compare across systems." ".NET Worker Service" "App"
+        eventPublisher = container "Event Publisher" "Reads new entries from an outbox table and sends balance-changed events. Stretch goal — for the MVP the Data Collector polls the Ledger Service directly." ".NET Worker Service" "Stretch"
         ledgerDb = container "Ledger Database" "Source of truth. Stores accounts, the permanent journal, balances, holds, idempotency keys, outbox events, and integrity check results." "Azure SQL Database" "Database"
     }
 
     postSettlement = softwareSystem "Post-Settlement Platform" "Checks that everything matches after settlement: reconciles, manages exceptions, produces member statements and reports, feeds accounting, and keeps the archive." "Future" {
-        portal = container "Back-Office Portal" "Lets staff view reconciliation results, work cases, propose and approve corrections, and download reports." "Blazor WebAssembly" "WebApp"
-        api = container "Post-Settlement API" "Serves the portal. Manages cases and corrections, enforces the two-person rule and per-credit-union access, and sends approved corrections to the ledger." "ASP.NET Core" "App"
-        collector = container "Data Collector" "Downloads statements and reports from the Fed and RTP, and reads payment records and ledger entries. Stores originals untouched and a normalized copy." ".NET Worker Service" "Worker"
-        reconEngine = container "Reconciliation Engine" "Compares platform vs. ledger, ledger vs. Fed statement, and platform vs. network report. Creates a break for every difference." ".NET Worker Service" "Worker"
-        reportGenerator = container "Report Generator" "Builds member statements, activity reports, and regulatory reports from a frozen snapshot, and delivers them." "Azure Functions" "Worker"
-        accountingExporter = container "Accounting Exporter" "Sends daily summarized entries to the corporate general ledger." "Azure Functions" "Worker"
-        db = container "Post-Settlement Database" "Stores normalized data, matches, breaks, cases, correction approvals, report records, and job status." "Azure SQL Database" "Database"
-        archive = container "Immutable Archive" "Keeps original statements, network reports, and generated reports unchanged for the required retention period." "Azure Blob Storage" "Archive"
+        portal = container "Back-Office Portal" "Lets staff view reconciliation results, work cases, propose and approve corrections, and download reports." "Blazor WebAssembly" "WebApp,Future"
+        api = container "Post-Settlement API" "Serves the portal. Manages cases and corrections, enforces the two-person rule and per-credit-union access, and sends approved corrections to the ledger." "ASP.NET Core" "App,Future"
+        collector = container "Data Collector" "Polls the Clearing Platform and Settlement Platform APIs for payment records and ledger entries as of a cut-off time. Downloads statements and reports from the Fed and RTP. Stores originals untouched and a normalized copy." ".NET Worker Service" "Worker,Future"
+        reconEngine = container "Reconciliation Engine" "Checks across systems: compares platform vs. ledger, ledger vs. Fed statement, and platform vs. network report. Creates a break for every difference found." ".NET Worker Service" "Worker,Future"
+        reportGenerator = container "Report Generator" "Builds member statements, activity reports, and regulatory reports from a frozen snapshot, and delivers them." "Azure Functions" "Worker,Future"
+        accountingExporter = container "Accounting Exporter" "Sends daily summarized entries to the corporate general ledger." "Azure Functions" "Worker,Future"
+        db = container "Post-Settlement Database" "Stores normalized data, matches, breaks, cases, correction approvals, report records, and job status." "Azure SQL Database" "Database,Future"
+        archive = container "Immutable Archive" "Keeps original statements, network reports, and generated reports unchanged for the required retention period." "Azure Blob Storage" "Archive,Future"
     }
 
     coGL = softwareSystem "Corporate General Ledger" "OnePlatform's accounting system for financial statements." "Internal"
@@ -70,7 +70,7 @@ coOps -> platform "Monitors all payment activity using"
 
 // ---------- After settlement ----------
 postSettlement -> platform "Reads payment records from"
-postSettlement -> coLedger "Reads entries and balances from, and asks for correcting entries in"
+postSettlement -> coLedger "Reads entries and balances from, and sends correcting entries to"
 postSettlement -> fedServices "Downloads account statements from"
 postSettlement -> rtpNetwork "Downloads settlement reports from"
 postSettlement -> coGL "Sends summarized entries to"
