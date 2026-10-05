@@ -17,13 +17,13 @@ group "OneCredit" {
     coFinance = person "OneCredit Finance and Settlement Staff" "Review ledger balances, investigate differences, and approve manual adjustments."
     coAuditor = person "Auditor / Compliance Officer" "Reviews the history of entries and reconciliation results. Read-only access."
 
-    platform = softwareSystem "Payment Orchestration Platform" "Receives payment requests from member credit unions, validates and routes them to the right payment network, and monitors liquidity and settlement in real time." "In Scope" {
+    platform = softwareSystem "Clearing Platform" "Receives payment requests from member credit unions, validates and routes them to the right payment network, and monitors liquidity and settlement in real time." "In Scope" {
         orchestratorApi = container "Orchestrator API" "Accepts payment requests and network answers. Saves each one together with a work item in a single transaction, ignores duplicates, and serves the read-only operations pages." "ASP.NET Core" "App"
         paymentWorker = container "Payment Worker" "Picks up work items and moves each payment through its steps: screen, reserve, send, confirm, post, notify. Retries safely, times out silent networks, and releases holds on failure." ".NET Worker Service" "App"
         platformDb = container "Platform Database" "Stores payments and their state history, idempotency keys, the work item queue, and raw network messages." "Azure SQL Database" "Database"
     }
 
-    coLedger = softwareSystem "OneCredit Settlement Accounts" "OneCredit's ledger of member credit union accounts and settlement positions." "Internal" {
+    coLedger = softwareSystem "Settlement Platform" "OneCredit's ledger of member credit union accounts and settlement positions." "Internal" {
         ledgerService = container "Ledger Service" "Only component that changes balances. Holds, posts, and releases funds, rejects overdrafts, ignores duplicate requests, and serves the read-only dashboard pages." "ASP.NET Core" "App"
         integrityJob = container "Integrity Check Job" "Runs on a schedule and checks that debits equal credits, balances match entries, and no holds are stuck." ".NET Worker Service" "App"
         eventPublisher = container "Event Publisher" "Reads new entries from an outbox table and sends balance-changed events. Stretch goal." ".NET Worker Service" "Stretch"

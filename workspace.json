@@ -1,9 +1,9 @@
 {
   "configuration" : { },
-  "description" : "Payment Orchestration and Settlement Accounts — MVP demo.",
+  "description" : "Clearing and Settlement Accounts — MVP demo.",
   "documentation" : { },
   "id" : 1,
-  "lastModifiedDate" : "2026-10-05T19:55:05Z",
+  "lastModifiedDate" : "2026-10-05T20:04:32Z",
   "model" : {
     "people" : [ {
       "description" : "Person or business with an account at a member credit union, sending or receiving payments.",
@@ -327,7 +327,7 @@
       "documentation" : { },
       "group" : "OneCredit",
       "id" : "9",
-      "name" : "Payment Orchestration Platform",
+      "name" : "Clearing Platform",
       "properties" : {
         "structurizr.dsl.identifier" : "platform"
       },
@@ -468,7 +468,7 @@
       "documentation" : { },
       "group" : "OneCredit",
       "id" : "13",
-      "name" : "OneCredit Settlement Accounts",
+      "name" : "Settlement Platform",
       "properties" : {
         "structurizr.dsl.identifier" : "coLedger"
       },
@@ -612,7 +612,7 @@
       },
       "tags" : "Element,Software System,Test Tool"
     }, {
-      "description" : "Test tool that plays the role of the Payment Orchestration Platform. Sends reserve, post, and release requests, including duplicates and simultaneous ones.",
+      "description" : "Test tool that plays the role of the Clearing Platform. Sends reserve, post, and release requests, including duplicates and simultaneous ones.",
       "documentation" : { },
       "id" : "65",
       "name" : "Payment Simulator",
@@ -742,7 +742,7 @@
       } ],
       "externalSoftwareSystemBoundariesVisible" : false,
       "key" : "PaymentContainers",
-      "name" : "Container View: Payment Orchestration Platform",
+      "name" : "Container View: Clearing Platform",
       "order" : 2,
       "relationships" : [ {
         "id" : "44"
@@ -774,7 +774,7 @@
         "id" : "70"
       } ],
       "softwareSystemId" : "9",
-      "title" : "Payment Orchestration MVP — Containers"
+      "title" : "Clearing MVP — Containers"
     }, {
       "automaticLayout" : {
         "edgeSeparation" : 50,
@@ -818,7 +818,7 @@
       } ],
       "externalSoftwareSystemBoundariesVisible" : false,
       "key" : "SettlementContainers",
-      "name" : "Container View: OneCredit Settlement Accounts",
+      "name" : "Container View: Settlement Platform",
       "order" : 3,
       "relationships" : [ {
         "id" : "66"
@@ -850,7 +850,7 @@
         "rankSeparation" : 100,
         "vertices" : true
       },
-      "description" : "Who and what interacts directly with the Payment Orchestration Platform.",
+      "description" : "Who and what interacts directly with the Clearing Platform.",
       "elements" : [ {
         "id" : "1",
         "x" : 0,
@@ -898,7 +898,7 @@
       } ],
       "enterpriseBoundaryVisible" : true,
       "key" : "SystemContext",
-      "name" : "System Context View: Payment Orchestration Platform",
+      "name" : "System Context View: Clearing Platform",
       "order" : 1,
       "relationships" : [ {
         "id" : "24"
@@ -924,7 +924,7 @@
         "id" : "34"
       } ],
       "softwareSystemId" : "9",
-      "title" : "OneCredit Payment Orchestration — System Context"
+      "title" : "OneCredit Clearing — System Context"
     } ]
   }
 }

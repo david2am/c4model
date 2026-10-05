@@ -6,7 +6,7 @@
 financeViewer = person "Finance Viewer (Demo: Manager)" "Views balances, holds, and entry history for each member credit union."
 
 // ---------- Test tools ----------
-simulator = softwareSystem "Payment Simulator" "Test tool that plays the role of the Payment Orchestration Platform. Sends reserve, post, and release requests, including duplicates and simultaneous ones." "Test Tool"
+simulator = softwareSystem "Payment Simulator" "Test tool that plays the role of the Clearing Platform. Sends reserve, post, and release requests, including duplicates and simultaneous ones." "Test Tool"
 
 // ---------- Relationships ----------
 // 'developer' is declared in c2_payment_mvp.dsl (included before this file)

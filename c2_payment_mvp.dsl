@@ -1,4 +1,4 @@
-// c2_payment_mvp.dsl — Payment Orchestration MVP relationships fragment
+// c2_payment_mvp.dsl — Clearing MVP relationships fragment
 // Included into workspace.dsl. No workspace{} wrapper here.
 // Containers are declared in c1.dsl inside 'platform'.
 
