@@ -6,8 +6,9 @@ workspace "OnePlatform MVP" "Clearing and Settlement Accounts — MVP demo." {
 
     model {
         !include c1.dsl
-        !include c2_payment_mvp.dsl
-        !include c2_settlement_mvp.dsl
+        !include c2_payment.dsl
+        !include c2_settlement.dsl
+        !include c2_post-settlement.dsl
     }
 
     views {
@@ -15,11 +16,11 @@ workspace "OnePlatform MVP" "Clearing and Settlement Accounts — MVP demo." {
         // 1. C1 — System context (only real systems, no MVP test tools)
         systemContext platform "SystemContext" {
             include platform
-            include member cuOps cuTreasury coOps
-            include cuDigital cuCore coLedger
-            include fedServices rtpNetwork screening
+            include member cuOps cuTreasury coOps coFinance coCompliance
+            include cuDigital cuCore coLedger postSettlement coGL
+            include fedServices rtpNetwork screening regulator identity
             autoLayout lr
-            title "OnePlatform"
+            title "OnePlatform — System Context"
             description "Who and what interacts directly with the Clearing Platform."
         }
 
@@ -37,6 +38,13 @@ workspace "OnePlatform MVP" "Clearing and Settlement Accounts — MVP demo." {
             title "Settlement Platform"
         }
 
+        // 4. C2 — Post-Settlement Platform containers
+        container postSettlement "PostSettlementContainers" {
+            include *
+            autoLayout lr
+            title "Post-Settlement Platform"
+        }
+
         styles {
             element "Person" {
                 shape Person
@@ -50,6 +58,11 @@ workspace "OnePlatform MVP" "Clearing and Settlement Accounts — MVP demo." {
             element "In Scope" {
                 background #0b5394
                 color #ffffff
+            }
+            element "Future" {
+                background #6fa8dc
+                color #000000
+                border dashed
             }
             element "Internal" {
                 background #438dd5
@@ -76,6 +89,20 @@ workspace "OnePlatform MVP" "Clearing and Settlement Accounts — MVP demo." {
             element "Database" {
                 shape Cylinder
                 background #0078d4
+                color #ffffff
+            }
+            element "WebApp" {
+                shape WebBrowser
+                background #1168bd
+                color #ffffff
+            }
+            element "Worker" {
+                background #85bbf0
+                color #000000
+            }
+            element "Archive" {
+                shape Folder
+                background #5c5c5c
                 color #ffffff
             }
             relationship "Relationship" {

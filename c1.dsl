@@ -4,8 +4,8 @@
 // ---------- Member credit union side ----------
 group "Member Credit Union" {
     member = person "Credit Union Member" "Person or business with an account at a member credit union, sending or receiving payments."
-    cuOps = person "Credit Union Payments Staff" "Staff at a member credit union who track payments, returns, and exceptions."
-    cuTreasury = person "Credit Union Treasury Officer" "Manages the credit union's cash and liquidity, and needs to know settlement positions in real time."
+    cuOps = person "Credit Union Payments Staff" "Track payments, returns, and exceptions for their own credit union."
+    cuTreasury = person "Credit Union Treasury Officer" "Manages the credit union's cash and liquidity and needs to know settlement positions in real time."
 
     cuDigital = softwareSystem "Credit Union Digital Banking" "Online and mobile banking used by members to make payments and view balances." "External"
     cuCore = softwareSystem "Credit Union Core Processor" "System of record for the credit union's member accounts, balances, and transactions." "External"
@@ -13,49 +13,70 @@ group "Member Credit Union" {
 
 // ---------- OnePlatform side ----------
 group "OnePlatform" {
-    coOps = person "OnePlatform Payment Operations" "Staff who monitor payment flow across all member credit unions and resolve exceptions."
-    coFinance = person "OnePlatform Finance and Settlement Staff" "Review ledger balances, investigate differences, and approve manual adjustments."
-    coAuditor = person "Auditor / Compliance Officer" "Reviews the history of entries and reconciliation results. Read-only access."
+    coOps = person "OnePlatform Payment Operations" "Monitor payment flow across all member credit unions and resolve live exceptions."
+    coFinance = person "OnePlatform Finance and Settlement Staff" "Investigate reconciliation differences, approve corrections, and review reports."
+    coCompliance = person "Auditor / Compliance Officer" "Review history, reconciliation results, and regulatory reports. Read-only."
 
-    platform = softwareSystem "Clearing Platform" "Receives payment requests from member credit unions, validates and routes them to the right payment network, and monitors liquidity and settlement in real time." "In Scope" {
+    platform = softwareSystem "Clearing Platform" "Handles clearing: receives payment requests, screens them, sends payment messages to the networks, and tracks results." "In Scope" {
         orchestratorApi = container "Orchestrator API" "Accepts payment requests and network answers. Saves each one together with a work item in a single transaction, ignores duplicates, and serves the read-only operations pages." "ASP.NET Core" "App"
         paymentWorker = container "Payment Worker" "Picks up work items and moves each payment through its steps: screen, reserve, send, confirm, post, notify. Retries safely, times out silent networks, and releases holds on failure." ".NET Worker Service" "App"
         platformDb = container "Platform Database" "Stores payments and their state history, idempotency keys, the work item queue, and raw network messages." "Azure SQL Database" "Database"
     }
 
-    coLedger = softwareSystem "Settlement Platform" "OnePlatform's ledger of member credit union accounts and settlement positions." "Internal" {
+    coLedger = softwareSystem "Settlement Platform" "Handles settlement: ledger of member credit union accounts, balances, holds, and history of every entry." "In Scope" {
         ledgerService = container "Ledger Service" "Only component that changes balances. Holds, posts, and releases funds, rejects overdrafts, ignores duplicate requests, and serves the read-only dashboard pages." "ASP.NET Core" "App"
         integrityJob = container "Integrity Check Job" "Runs on a schedule and checks that debits equal credits, balances match entries, and no holds are stuck." ".NET Worker Service" "App"
         eventPublisher = container "Event Publisher" "Reads new entries from an outbox table and sends balance-changed events. Stretch goal." ".NET Worker Service" "Stretch"
         ledgerDb = container "Ledger Database" "Source of truth. Stores accounts, the permanent journal, balances, holds, idempotency keys, outbox events, and integrity check results." "Azure SQL Database" "Database"
     }
+
+    postSettlement = softwareSystem "Post-Settlement Platform" "Checks that everything matches after settlement: reconciles, manages exceptions, produces member statements and reports, feeds accounting, and keeps the archive." "Future" {
+        portal = container "Back-Office Portal" "Lets staff view reconciliation results, work cases, propose and approve corrections, and download reports." "Blazor WebAssembly" "WebApp"
+        api = container "Post-Settlement API" "Serves the portal. Manages cases and corrections, enforces the two-person rule and per-credit-union access, and sends approved corrections to the ledger." "ASP.NET Core" "App"
+        collector = container "Data Collector" "Downloads statements and reports from the Fed and RTP, and reads payment records and ledger entries. Stores originals untouched and a normalized copy." ".NET Worker Service" "Worker"
+        reconEngine = container "Reconciliation Engine" "Compares platform vs. ledger, ledger vs. Fed statement, and platform vs. network report. Creates a break for every difference." ".NET Worker Service" "Worker"
+        reportGenerator = container "Report Generator" "Builds member statements, activity reports, and regulatory reports from a frozen snapshot, and delivers them." "Azure Functions" "Worker"
+        accountingExporter = container "Accounting Exporter" "Sends daily summarized entries to the corporate general ledger." "Azure Functions" "Worker"
+        db = container "Post-Settlement Database" "Stores normalized data, matches, breaks, cases, correction approvals, report records, and job status." "Azure SQL Database" "Database"
+        archive = container "Immutable Archive" "Keeps original statements, network reports, and generated reports unchanged for the required retention period." "Azure Blob Storage" "Archive"
+    }
+
+    coGL = softwareSystem "Corporate General Ledger" "OnePlatform's accounting system for financial statements." "Internal"
 }
 
-// ---------- External services ----------
-fedServices = softwareSystem "Federal Reserve Payment Services" "Fed-operated services that move and settle money: FedNow (instant), FedACH (batch), and Fedwire (high value)." "External"
-fedAccount = softwareSystem "Federal Reserve Account Services" "Provides statements and balance information for OnePlatform's master account at the Fed." "External"
-rtpNetwork = softwareSystem "RTP Network" "Real-time payment network operated by The Clearing House." "External"
+// ---------- External ----------
+fedServices = softwareSystem "Federal Reserve Payment Services" "Fed services that move and settle money, such as FedNow. Also provides account statements." "External"
+rtpNetwork = softwareSystem "RTP Network" "Real-time payment network operated by The Clearing House. Also provides settlement reports." "External"
 screening = softwareSystem "Sanctions and Fraud Screening" "Third-party service that checks payments against sanctions lists and fraud signals." "External"
-coreSystems = softwareSystem "Corporate Core / General Ledger" "OnePlatform's accounting system for financial statements and reporting." "Internal"
+regulator = softwareSystem "Regulator (NCUA)" "Receives required regulatory reports." "External"
 identity = softwareSystem "Identity Provider" "Signs in OnePlatform staff and issues access tokens." "External"
 
-// ---------- System-level relationships ----------
+// ---------- Live payments ----------
 member -> cuDigital "Sends payments and checks balances using"
 cuDigital -> cuCore "Reads accounts and requests transactions from"
 
 cuCore -> platform "Submits payment requests to"
-platform -> cuCore "Reports payment status and returns to"
+platform -> cuCore "Reports payment results to"
 
+platform -> screening "Screens payments with"
+platform -> fedServices "Sends payments to and receives answers from"
+platform -> rtpNetwork "Sends payments to and receives answers from"
+platform -> coLedger "Asks to settle (reserve, post, release) with"
+
+// ---------- Live monitoring ----------
 cuOps -> platform "Tracks payments and resolves exceptions using"
 cuTreasury -> platform "Monitors liquidity and settlement position using"
-coOps -> platform "Monitors all payment activity and handles exceptions using"
+coOps -> platform "Monitors all payment activity using"
 
-platform -> coLedger "Checks funds and posts settlement entries to"
-platform -> screening "Screens payments with"
-platform -> fedServices "Sends payments to and receives confirmations from"
-platform -> rtpNetwork "Sends payments to and receives confirmations from"
+// ---------- After settlement ----------
+postSettlement -> platform "Reads payment records from"
+postSettlement -> coLedger "Reads entries and balances from, and asks for correcting entries in"
+postSettlement -> fedServices "Downloads account statements from"
+postSettlement -> rtpNetwork "Downloads settlement reports from"
+postSettlement -> coGL "Sends summarized entries to"
+postSettlement -> regulator "Submits regulatory reports to"
+postSettlement -> cuCore "Sends statements and activity reports to"
 
-coFinance -> coLedger "Reviews balances and approves adjustments using"
-coAuditor -> coLedger "Reviews entry history and reconciliation using"
-coLedger -> fedAccount "Downloads daily statements from"
-coLedger -> coreSystems "Sends summarized entries to"
+coFinance -> postSettlement "Investigates differences and approves corrections using"
+coCompliance -> postSettlement "Reviews history and reports using"
+cuOps -> postSettlement "Downloads statements and reports from"
