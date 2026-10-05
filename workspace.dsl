@@ -2,7 +2,7 @@
 // Composes the system-context model (c1), payment MVP (c2_payment_mvp),
 // and settlement MVP (c2_settlement_mvp) into a single Structurizr workspace.
 
-workspace "OneCredit MVP" "Clearing and Settlement Accounts — MVP demo." {
+workspace "OnePlatform MVP" "Clearing and Settlement Accounts — MVP demo." {
 
     model {
         !include c1.dsl
@@ -19,7 +19,7 @@ workspace "OneCredit MVP" "Clearing and Settlement Accounts — MVP demo." {
             include cuDigital cuCore coLedger
             include fedServices rtpNetwork screening
             autoLayout lr
-            title "OneCredit Clearing — System Context"
+            title "OnePlatform"
             description "Who and what interacts directly with the Clearing Platform."
         }
 
@@ -27,14 +27,14 @@ workspace "OneCredit MVP" "Clearing and Settlement Accounts — MVP demo." {
         container platform "PaymentContainers" {
             include *
             autoLayout lr
-            title "Clearing MVP — Containers"
+            title "Clearing Platform"
         }
 
         // 3. C2 — Settlement ledger containers
         container coLedger "SettlementContainers" {
             include *
             autoLayout lr
-            title "Settlement Accounts MVP — Containers"
+            title "Settlement Platform"
         }
 
         styles {

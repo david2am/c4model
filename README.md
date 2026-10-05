@@ -1,6 +1,6 @@
-# OneCredit C4 Model
+# OnePlatform C4 Model
 
-Architecture diagrams for the OneCredit Clearing Platform and Settlement Accounts, using the [C4 model](https://c4model.com/) and [Structurizr DSL](https://docs.structurizr.com/dsl).
+Architecture diagrams for the OnePlatform's Clearing and Settlement processes, using the [C4 model](https://c4model.com/) and [Structurizr DSL](https://docs.structurizr.com/dsl).
 
 ## Diagrams
 
@@ -9,8 +9,8 @@ Three diagrams are published in the workspace:
 | Diagram | View type | What it shows |
 |---|---|---|
 | System Context | C1 | People and systems that interact with the Clearing Platform |
-| Clearing MVP — Containers | C2 | Internal containers of the Clearing Platform |
-| Settlement Accounts MVP — Containers | C2 | Internal containers of the Settlement Platform ledger |
+| Clearing Process | C2 | Internal containers of the Clearing Platform |
+| Settlement Process — Containers | C2 | Internal containers of the Settlement Platform ledger |
 
 ## File structure
 
