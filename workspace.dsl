@@ -5,10 +5,10 @@
 workspace "OnePlatform" "Payment clearing, settlement, and post-settlement for member credit unions." {
 
     model {
-        !include c1.dsl
-        !include c2_clearing.dsl
-        !include c2_settlement.dsl
-        !include c2_post-settlement.dsl
+        !include src/c1.dsl
+        !include src/mvp/c2_clearing.dsl
+        !include src/mvp/c2_settlement.dsl
+        !include src/mvp/c2_post-settlement.dsl
     }
 
     views {

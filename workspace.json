@@ -3,7 +3,7 @@
   "description" : "Payment clearing, settlement, and post-settlement for member credit unions.",
   "documentation" : { },
   "id" : 1,
-  "lastModifiedDate" : "2026-10-05T22:06:53Z",
+  "lastModifiedDate" : "2026-10-06T14:10:12Z",
   "model" : {
     "people" : [ {
       "description" : "Person or business with an account at a member credit union, sending or receiving payments.",
