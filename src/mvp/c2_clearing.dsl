@@ -4,7 +4,6 @@
 
 // ---------- People (MVP demo roles) ----------
 viewer = person "Operations Viewer (Demo: Manager)" "Views payments, their status, and the available funds of each credit union."
-developer = person "Developer (Demo Presenter)" "Runs the simulators and triggers failure scenarios to show the platform recovers."
 
 // ---------- Test tools ----------
 coreSim = softwareSystem "Credit Union Core Simulator" "Test tool that plays the credit union core. Submits payment requests, sends duplicates, and receives status notifications." "Test Tool"
@@ -16,9 +15,6 @@ viewer -> orchestratorApi "Views payments and funds using" "HTTPS"
 cuOps -> orchestratorApi "Tracks payments and resolves exceptions using" "HTTPS"
 cuTreasury -> orchestratorApi "Monitors liquidity and settlement position using" "HTTPS"
 coOps -> orchestratorApi "Monitors all payment activity using" "HTTPS"
-developer -> coreSim "Submits normal, duplicate, and failing payments with" "Command line"
-developer -> networkSim "Chooses accept, reject, delay, or silence using" "Command line"
-developer -> paymentWorker "Stops and restarts, to show recovery, on" "Command line"
 
 // ---------- Relationships: incoming ----------
 coreSim -> orchestratorApi "Submits payment requests to" "HTTPS/JSON"

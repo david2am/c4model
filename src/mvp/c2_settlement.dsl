@@ -9,11 +9,8 @@ financeViewer = person "Finance Viewer (Demo: Manager)" "Views balances, holds, 
 simulator = softwareSystem "Payment Simulator" "Test tool that plays the role of the Clearing Platform. Sends reserve, post, and release requests, including duplicates and simultaneous ones." "Test Tool"
 
 // ---------- Relationships ----------
-// 'developer' is declared in c2_clearing.dsl (included before this file)
 // 'identity' is declared in c1.dsl
 financeViewer -> ledgerService "Views balances and entry history using" "HTTPS"
-developer -> simulator "Runs load and duplicate-request tests with" "Command line"
-developer -> integrityJob "Triggers on demand and reviews results of" "Command line"
 
 simulator -> ledgerService "Reserves funds, posts entries, releases holds, and queries balances with" "HTTPS/JSON"
 ledgerService -> identity "Validates tokens with" "OpenID Connect"
