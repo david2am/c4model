@@ -58,7 +58,20 @@ group "OnePlatform" {
         archive = container "Immutable Archive" "Keeps original Fed statements, RTP reports, and generated reports unchanged for the required retention period. Written by the collector (originals) and report generator (produced reports) — these are different write paths with different retention policies." "Azure Blob Storage" "Archive,Future"
     }
 
-    monitoring = softwareSystem "Monitoring and Alerting" "Centralizes metrics, logs, distributed traces, and alerts for all three platforms. Notifies payment operations of worker failures, dead-letter growth, network timeouts, and integrity check failures." "Internal"
+    monitoring = softwareSystem "Monitoring and Alerting" "Centralizes metrics, logs, distributed traces, and alerts for all three platforms. Notifies payment operations of worker failures, dead-letter growth, network timeouts, and integrity check failures." "Internal" {
+
+        metricsCollector = container "Metrics Collector" "Receives metrics from all platforms via push protocol (Prometheus remote write). Stores time-series data and serves queries to dashboards and alert rules." "Prometheus / Azure Monitor" "App"
+        
+        logAggregator = container "Log Aggregator" "Ingests structured logs from all platforms. Indexes and stores logs for search and correlation with traces. Handles high-volume log ingestion with buffering." "Azure Log Analytics / ELK Stack" "App"
+        
+        traceCollector = container "Trace Collector" "Receives distributed traces from all platforms via OpenTelemetry protocol. Assembles trace spans into complete request flows and stores them for query." "Azure Application Insights / Jaeger" "App"
+        
+        alertManager = container "Alert Manager" "Evaluates alert rules against metrics, logs, and trace anomalies. Routes alerts to appropriate channels (email, Slack, PagerDuty) based on severity and on-call schedules. Deduplicates and groups related alerts." "Prometheus AlertManager / Azure Monitor Alerts" "App"
+        
+        dashboardService = container "Dashboard Service" "Serves real-time operational dashboards showing payment flow metrics, worker health, dead-letter queue depth, network latency, settlement position trends, and integrity check status." "Grafana / Azure Dashboard" "WebApp"
+        
+        monitoringDb = container "Monitoring Database" "Stores time-series metrics, log index, trace data, alert history, and dashboard configurations. Optimized for time-range queries and high write throughput." "Azure Data Explorer / TimescaleDB" "Database"
+    }
 
     generalLedger = softwareSystem "Corporate General Ledger" "Accounting record for OnePlatform's financial statements. Receives idempotent daily summarized entries from the Post-Settlement Platform after reconciliation." "Internal"
 }
@@ -94,8 +107,8 @@ platform -> settlement "Reverses hold or credits back on return" "HTTPS/JSON, OA
 cuOps -> platform "Tracks payments and resolves exceptions using" "HTTPS"
 cuTreasury -> settlement "Monitors real-time settlement positions and available funds using" "HTTPS"
 coOps -> platform "Monitors all payment activity across all credit unions using" "HTTPS"
-platform -> monitoring "Emits metrics, logs, and alerts to"
-settlement -> monitoring "Emits metrics, logs, and alerts to"
+// platform -> monitoring — detailed container-level relationships in c2_monitoring.dsl
+// settlement -> monitoring — detailed container-level relationships in c2_monitoring.dsl
 
 // ---------- Authentication ----------
 platform -> identity "Validates staff tokens with" "OpenID Connect"

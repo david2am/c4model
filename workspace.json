@@ -3,7 +3,7 @@
   "description" : "Payment clearing, settlement, and post-settlement for member credit unions.",
   "documentation" : { },
   "id" : 1,
-  "lastModifiedDate" : "2026-10-06T16:06:35Z",
+  "lastModifiedDate" : "2026-10-06T16:17:13Z",
   "model" : {
     "people" : [ {
       "description" : "Person or business with an account at a member credit union, sending or receiving payments. Initiates outbound payments via digital banking and receives inbound credits.",
@@ -16,13 +16,13 @@
       "relationships" : [ {
         "description" : "Initiates outbound payments and checks balances using",
         "destinationId" : "4",
-        "id" : "39",
+        "id" : "45",
         "sourceId" : "1",
         "tags" : "Relationship"
       }, {
         "description" : "Views received payment in account balance via",
         "destinationId" : "4",
-        "id" : "49",
+        "id" : "55",
         "sourceId" : "1",
         "tags" : "Relationship"
       } ],
@@ -38,29 +38,43 @@
       "relationships" : [ {
         "description" : "Tracks payments and resolves exceptions using",
         "destinationId" : "9",
-        "id" : "53",
+        "id" : "59",
         "sourceId" : "2",
         "tags" : "Relationship",
         "technology" : "HTTPS"
       }, {
         "description" : "Downloads statements and reports from",
         "destinationId" : "23",
-        "id" : "72",
+        "id" : "76",
         "sourceId" : "2",
         "tags" : "Relationship"
       }, {
         "description" : "Tracks payments and resolves exceptions using",
         "destinationId" : "10",
-        "id" : "79",
+        "id" : "83",
         "sourceId" : "2",
         "tags" : "Relationship",
         "technology" : "HTTPS"
       }, {
         "description" : "Downloads member statements and activity reports using",
         "destinationId" : "24",
-        "id" : "125",
+        "id" : "129",
         "sourceId" : "2",
         "tags" : "Relationship",
+        "technology" : "HTTPS"
+      }, {
+        "description" : "Views payment flow metrics for their own credit union using",
+        "destinationId" : "37",
+        "id" : "225",
+        "sourceId" : "2",
+        "tags" : "Relationship",
+        "technology" : "HTTPS"
+      }, {
+        "description" : "Views payment flow metrics for their own credit union using",
+        "destinationId" : "32",
+        "id" : "226",
+        "linkedRelationshipId" : "225",
+        "sourceId" : "2",
         "technology" : "HTTPS"
       } ],
       "tags" : "Element,Person"
@@ -75,22 +89,36 @@
       "relationships" : [ {
         "description" : "Monitors real-time settlement positions and available funds using",
         "destinationId" : "16",
-        "id" : "54",
+        "id" : "60",
         "sourceId" : "3",
         "tags" : "Relationship",
         "technology" : "HTTPS"
       }, {
         "description" : "Reads available funds and settlement positions using",
         "destinationId" : "10",
-        "id" : "80",
+        "id" : "84",
         "sourceId" : "3",
         "tags" : "Relationship",
         "technology" : "HTTPS"
       }, {
         "description" : "Reads available funds and settlement positions using",
         "destinationId" : "9",
-        "id" : "81",
-        "linkedRelationshipId" : "80",
+        "id" : "85",
+        "linkedRelationshipId" : "84",
+        "sourceId" : "3",
+        "technology" : "HTTPS"
+      }, {
+        "description" : "Views settlement position trends and available funds charts using",
+        "destinationId" : "37",
+        "id" : "227",
+        "sourceId" : "3",
+        "tags" : "Relationship",
+        "technology" : "HTTPS"
+      }, {
+        "description" : "Views settlement position trends and available funds charts using",
+        "destinationId" : "32",
+        "id" : "228",
+        "linkedRelationshipId" : "227",
         "sourceId" : "3",
         "technology" : "HTTPS"
       } ],
@@ -106,16 +134,30 @@
       "relationships" : [ {
         "description" : "Monitors all payment activity across all credit unions using",
         "destinationId" : "9",
-        "id" : "55",
+        "id" : "61",
         "sourceId" : "6",
         "tags" : "Relationship",
         "technology" : "HTTPS"
       }, {
         "description" : "Monitors all payment activity across all credit unions using",
         "destinationId" : "10",
-        "id" : "82",
+        "id" : "86",
         "sourceId" : "6",
         "tags" : "Relationship",
+        "technology" : "HTTPS"
+      }, {
+        "description" : "Views real-time operational metrics and traces using",
+        "destinationId" : "37",
+        "id" : "221",
+        "sourceId" : "6",
+        "tags" : "Relationship",
+        "technology" : "HTTPS"
+      }, {
+        "description" : "Views real-time operational metrics and traces using",
+        "destinationId" : "32",
+        "id" : "222",
+        "linkedRelationshipId" : "221",
+        "sourceId" : "6",
         "technology" : "HTTPS"
       } ],
       "tags" : "Element,Person"
@@ -130,15 +172,29 @@
       "relationships" : [ {
         "description" : "Investigates reconciliation breaks and proposes corrections using",
         "destinationId" : "23",
-        "id" : "70",
+        "id" : "74",
         "sourceId" : "7",
         "tags" : "Relationship"
       }, {
         "description" : "Investigates reconciliation breaks and proposes correcting entries using",
         "destinationId" : "24",
-        "id" : "122",
+        "id" : "126",
         "sourceId" : "7",
         "tags" : "Relationship",
+        "technology" : "HTTPS"
+      }, {
+        "description" : "Views reconciliation metrics and trends using",
+        "destinationId" : "37",
+        "id" : "223",
+        "sourceId" : "7",
+        "tags" : "Relationship",
+        "technology" : "HTTPS"
+      }, {
+        "description" : "Views reconciliation metrics and trends using",
+        "destinationId" : "32",
+        "id" : "224",
+        "linkedRelationshipId" : "223",
+        "sourceId" : "7",
         "technology" : "HTTPS"
       } ],
       "tags" : "Element,Person"
@@ -153,13 +209,13 @@
       "relationships" : [ {
         "description" : "Reviews entry history and reports using",
         "destinationId" : "23",
-        "id" : "71",
+        "id" : "75",
         "sourceId" : "8",
         "tags" : "Relationship"
       }, {
         "description" : "Reviews entry history, reconciliation results, and regulatory reports using",
         "destinationId" : "24",
-        "id" : "124",
+        "id" : "128",
         "sourceId" : "8",
         "tags" : "Relationship",
         "technology" : "HTTPS"
@@ -167,7 +223,7 @@
       "tags" : "Element,Person"
     }, {
       "description" : "Demo persona for MVP. Views payments, their status, and available funds. Superseded by coOps in production with proper per-credit-union RBAC.",
-      "id" : "73",
+      "id" : "77",
       "name" : "Operations Viewer (Demo)",
       "properties" : {
         "structurizr.dsl.identifier" : "viewer"
@@ -175,22 +231,22 @@
       "relationships" : [ {
         "description" : "Views payments and available funds using",
         "destinationId" : "10",
-        "id" : "77",
-        "sourceId" : "73",
+        "id" : "81",
+        "sourceId" : "77",
         "tags" : "Relationship",
         "technology" : "HTTPS"
       }, {
         "description" : "Views payments and available funds using",
         "destinationId" : "9",
-        "id" : "78",
-        "linkedRelationshipId" : "77",
-        "sourceId" : "73",
+        "id" : "82",
+        "linkedRelationshipId" : "81",
+        "sourceId" : "77",
         "technology" : "HTTPS"
       } ],
       "tags" : "Element,Person,Test Tool"
     }, {
       "description" : "Demo persona for MVP. Views balances, holds, and entry history. Superseded by coFinance and cuTreasury in production with per-credit-union data isolation enforced.",
-      "id" : "106",
+      "id" : "110",
       "name" : "Finance Viewer (Demo)",
       "properties" : {
         "structurizr.dsl.identifier" : "financeViewer"
@@ -198,22 +254,22 @@
       "relationships" : [ {
         "description" : "Views balances, holds, and entry history using",
         "destinationId" : "17",
-        "id" : "108",
-        "sourceId" : "106",
+        "id" : "112",
+        "sourceId" : "110",
         "tags" : "Relationship",
         "technology" : "HTTPS"
       }, {
         "description" : "Views balances, holds, and entry history using",
         "destinationId" : "16",
-        "id" : "109",
-        "linkedRelationshipId" : "108",
-        "sourceId" : "106",
+        "id" : "113",
+        "linkedRelationshipId" : "112",
+        "sourceId" : "110",
         "technology" : "HTTPS"
       } ],
       "tags" : "Element,Person,Test Tool"
     }, {
       "description" : "Approves or rejects correcting entries proposed by coFinance. Must be a different person than the proposer — the two-person rule is enforced by the Post-Settlement API.",
-      "id" : "120",
+      "id" : "124",
       "name" : "Finance Supervisor (Approver)",
       "properties" : {
         "structurizr.dsl.identifier" : "coApprover"
@@ -221,14 +277,14 @@
       "relationships" : [ {
         "description" : "Approves or rejects correcting entries using",
         "destinationId" : "23",
-        "id" : "121",
-        "sourceId" : "120",
+        "id" : "125",
+        "sourceId" : "124",
         "tags" : "Relationship"
       }, {
         "description" : "Reviews and approves or rejects proposed corrections using",
         "destinationId" : "24",
-        "id" : "123",
-        "sourceId" : "120",
+        "id" : "127",
+        "sourceId" : "124",
         "tags" : "Relationship",
         "technology" : "HTTPS"
       } ],
@@ -246,7 +302,7 @@
       "relationships" : [ {
         "description" : "Reads accounts and requests transactions from",
         "destinationId" : "5",
-        "id" : "40",
+        "id" : "46",
         "sourceId" : "4",
         "tags" : "Relationship"
       } ],
@@ -263,7 +319,7 @@
       "relationships" : [ {
         "description" : "Submits outbound payment requests to",
         "destinationId" : "9",
-        "id" : "41",
+        "id" : "47",
         "sourceId" : "5",
         "tags" : "Relationship",
         "technology" : "HTTPS/JSON"
@@ -281,17 +337,45 @@
         "relationships" : [ {
           "description" : "Routes payment requests and read operations to",
           "destinationId" : "11",
-          "id" : "83",
+          "id" : "87",
           "sourceId" : "10",
           "tags" : "Relationship",
           "technology" : "HTTPS"
         }, {
           "description" : "Validates staff tokens with",
-          "destinationId" : "38",
-          "id" : "84",
+          "destinationId" : "44",
+          "id" : "88",
           "sourceId" : "10",
           "tags" : "Relationship",
           "technology" : "OpenID Connect"
+        }, {
+          "description" : "Emits API request metrics (rate, latency, error count) to",
+          "destinationId" : "33",
+          "id" : "152",
+          "sourceId" : "10",
+          "tags" : "Relationship",
+          "technology" : "Prometheus remote write / HTTPS"
+        }, {
+          "description" : "Emits API request metrics (rate, latency, error count) to",
+          "destinationId" : "32",
+          "id" : "153",
+          "linkedRelationshipId" : "152",
+          "sourceId" : "10",
+          "technology" : "Prometheus remote write / HTTPS"
+        }, {
+          "description" : "Sends structured logs (request traces, auth failures) to",
+          "destinationId" : "34",
+          "id" : "180",
+          "sourceId" : "10",
+          "tags" : "Relationship",
+          "technology" : "HTTPS/JSON"
+        }, {
+          "description" : "Sends trace spans for end-to-end request flows to",
+          "destinationId" : "35",
+          "id" : "196",
+          "sourceId" : "10",
+          "tags" : "Relationship",
+          "technology" : "OpenTelemetry / HTTPS"
         } ],
         "tags" : "Element,Container,Gateway",
         "technology" : "Azure API Management"
@@ -306,31 +390,59 @@
         "relationships" : [ {
           "description" : "Saves payments, idempotency keys, and work items in one transaction",
           "destinationId" : "15",
-          "id" : "89",
+          "id" : "93",
           "sourceId" : "11",
           "tags" : "Relationship",
           "technology" : "SQL"
         }, {
           "description" : "Retrieves API secrets from",
           "destinationId" : "14",
-          "id" : "93",
+          "id" : "97",
           "sourceId" : "11",
           "tags" : "Relationship",
           "technology" : "HTTPS"
         }, {
           "description" : "Reads available funds per credit union from",
           "destinationId" : "17",
-          "id" : "103",
+          "id" : "107",
           "sourceId" : "11",
           "tags" : "Relationship",
           "technology" : "HTTPS/JSON, OAuth2 client credentials"
         }, {
           "description" : "Reads available funds per credit union from",
           "destinationId" : "16",
-          "id" : "104",
-          "linkedRelationshipId" : "103",
+          "id" : "108",
+          "linkedRelationshipId" : "107",
           "sourceId" : "11",
           "technology" : "HTTPS/JSON, OAuth2 client credentials"
+        }, {
+          "description" : "Emits payment creation metrics, idempotency hit rate to",
+          "destinationId" : "33",
+          "id" : "156",
+          "sourceId" : "11",
+          "tags" : "Relationship",
+          "technology" : "Prometheus remote write / HTTPS"
+        }, {
+          "description" : "Emits payment creation metrics, idempotency hit rate to",
+          "destinationId" : "32",
+          "id" : "157",
+          "linkedRelationshipId" : "156",
+          "sourceId" : "11",
+          "technology" : "Prometheus remote write / HTTPS"
+        }, {
+          "description" : "Sends structured logs (payment state transitions, duplicate detection) to",
+          "destinationId" : "34",
+          "id" : "182",
+          "sourceId" : "11",
+          "tags" : "Relationship",
+          "technology" : "HTTPS/JSON"
+        }, {
+          "description" : "Sends trace spans (payment submission, database writes) to",
+          "destinationId" : "35",
+          "id" : "198",
+          "sourceId" : "11",
+          "tags" : "Relationship",
+          "technology" : "OpenTelemetry / HTTPS"
         } ],
         "tags" : "Element,Container,App",
         "technology" : "ASP.NET Core"
@@ -345,59 +457,87 @@
         "relationships" : [ {
           "description" : "Picks up work items, updates payment state, and writes to dead-letter on unrecoverable failure",
           "destinationId" : "15",
-          "id" : "90",
+          "id" : "94",
           "sourceId" : "12",
           "tags" : "Relationship",
           "technology" : "SQL"
         }, {
           "description" : "Builds and parses ISO 20022 messages (pacs.008, pacs.004, pacs.002) via",
           "destinationId" : "13",
-          "id" : "91",
+          "id" : "95",
           "sourceId" : "12",
           "tags" : "Relationship",
           "technology" : "gRPC"
         }, {
           "description" : "Retrieves network certificates and API secrets from",
           "destinationId" : "14",
-          "id" : "92",
+          "id" : "96",
           "sourceId" : "12",
           "tags" : "Relationship",
           "technology" : "HTTPS"
         }, {
           "description" : "Screens payment against OFAC list via",
-          "destinationId" : "76",
-          "id" : "94",
+          "destinationId" : "80",
+          "id" : "98",
           "sourceId" : "12",
           "tags" : "Relationship",
           "technology" : "HTTPS/JSON"
         }, {
           "description" : "Reserves funds before sending, posts final entries on confirmation, releases holds on failure or return",
           "destinationId" : "17",
-          "id" : "96",
+          "id" : "100",
           "sourceId" : "12",
           "tags" : "Relationship",
           "technology" : "HTTPS/JSON, OAuth2 client credentials"
         }, {
           "description" : "Reserves funds before sending, posts final entries on confirmation, releases holds on failure or return",
           "destinationId" : "16",
-          "id" : "97",
-          "linkedRelationshipId" : "96",
+          "id" : "101",
+          "linkedRelationshipId" : "100",
           "sourceId" : "12",
           "technology" : "HTTPS/JSON, OAuth2 client credentials"
         }, {
           "description" : "Sends outbound FedNow payment messages to",
-          "destinationId" : "75",
-          "id" : "99",
+          "destinationId" : "79",
+          "id" : "103",
           "sourceId" : "12",
           "tags" : "Relationship",
           "technology" : "HTTPS (ISO 20022 pacs.008 / mTLS simulated)"
         }, {
           "description" : "Notifies of payment results, inbound credits, and return outcomes via",
-          "destinationId" : "74",
-          "id" : "101",
+          "destinationId" : "78",
+          "id" : "105",
           "sourceId" : "12",
           "tags" : "Relationship",
           "technology" : "Webhooks/HTTPS"
+        }, {
+          "description" : "Emits worker health, work item processing time, dead-letter count, network timeout count to",
+          "destinationId" : "33",
+          "id" : "158",
+          "sourceId" : "12",
+          "tags" : "Relationship",
+          "technology" : "Prometheus remote write / HTTPS"
+        }, {
+          "description" : "Emits worker health, work item processing time, dead-letter count, network timeout count to",
+          "destinationId" : "32",
+          "id" : "159",
+          "linkedRelationshipId" : "158",
+          "sourceId" : "12",
+          "technology" : "Prometheus remote write / HTTPS"
+        }, {
+          "description" : "Sends structured logs (work item lifecycle, network responses, dead-letter writes) to",
+          "destinationId" : "34",
+          "id" : "183",
+          "sourceId" : "12",
+          "tags" : "Relationship",
+          "technology" : "HTTPS/JSON"
+        }, {
+          "description" : "Sends trace spans (work item processing, network calls, settlement calls) to",
+          "destinationId" : "35",
+          "id" : "199",
+          "sourceId" : "12",
+          "tags" : "Relationship",
+          "technology" : "OpenTelemetry / HTTPS"
         } ],
         "tags" : "Element,Container,App",
         "technology" : ".NET Worker Service"
@@ -409,6 +549,35 @@
         "properties" : {
           "structurizr.dsl.identifier" : "isoService"
         },
+        "relationships" : [ {
+          "description" : "Emits message parsing success/failure metrics to",
+          "destinationId" : "33",
+          "id" : "160",
+          "sourceId" : "13",
+          "tags" : "Relationship",
+          "technology" : "Prometheus remote write / HTTPS"
+        }, {
+          "description" : "Emits message parsing success/failure metrics to",
+          "destinationId" : "32",
+          "id" : "161",
+          "linkedRelationshipId" : "160",
+          "sourceId" : "13",
+          "technology" : "Prometheus remote write / HTTPS"
+        }, {
+          "description" : "Sends structured logs (message validation errors) to",
+          "destinationId" : "34",
+          "id" : "184",
+          "sourceId" : "13",
+          "tags" : "Relationship",
+          "technology" : "HTTPS/JSON"
+        }, {
+          "description" : "Sends trace spans (message build/parse operations) to",
+          "destinationId" : "35",
+          "id" : "200",
+          "sourceId" : "13",
+          "tags" : "Relationship",
+          "technology" : "OpenTelemetry / HTTPS"
+        } ],
         "tags" : "Element,Container,App",
         "technology" : ".NET Worker Service"
       }, {
@@ -442,87 +611,109 @@
       },
       "relationships" : [ {
         "description" : "Screens every payment before routing — blocks if unavailable",
-        "destinationId" : "36",
-        "id" : "42",
+        "destinationId" : "42",
+        "id" : "48",
         "sourceId" : "9",
         "tags" : "Relationship",
         "technology" : "HTTPS/JSON"
       }, {
         "description" : "Reserves, posts, and releases settlement funds with",
         "destinationId" : "16",
-        "id" : "43",
+        "id" : "49",
         "sourceId" : "9",
         "tags" : "Relationship",
         "technology" : "HTTPS/JSON, OAuth2 client credentials"
       }, {
         "description" : "Sends outbound FedNow payments to and receives network answers from",
-        "destinationId" : "34",
-        "id" : "44",
+        "destinationId" : "40",
+        "id" : "50",
         "sourceId" : "9",
         "tags" : "Relationship",
         "technology" : "ISO 20022 pacs.008 / mTLS"
       }, {
         "description" : "Sends outbound RTP payments to and receives network answers from",
-        "destinationId" : "35",
-        "id" : "45",
+        "destinationId" : "41",
+        "id" : "51",
         "sourceId" : "9",
         "tags" : "Relationship",
         "technology" : "ISO 20022 pacs.008 / mTLS"
       }, {
         "description" : "Notifies credit union cores of payment results and inbound credits via",
         "destinationId" : "5",
-        "id" : "48",
+        "id" : "54",
         "sourceId" : "9",
         "tags" : "Relationship",
         "technology" : "Webhooks/HTTPS"
       }, {
         "description" : "Reverses hold or credits back on return",
         "destinationId" : "16",
-        "id" : "52",
+        "id" : "58",
         "sourceId" : "9",
         "tags" : "Relationship",
         "technology" : "HTTPS/JSON, OAuth2 client credentials"
       }, {
-        "description" : "Emits metrics, logs, and alerts to",
-        "destinationId" : "32",
-        "id" : "56",
-        "sourceId" : "9",
-        "tags" : "Relationship"
-      }, {
         "description" : "Validates staff tokens with",
-        "destinationId" : "38",
-        "id" : "58",
+        "destinationId" : "44",
+        "id" : "62",
         "sourceId" : "9",
         "tags" : "Relationship",
         "technology" : "OpenID Connect"
       }, {
         "description" : "Screens payment against OFAC list via",
-        "destinationId" : "76",
-        "id" : "95",
-        "linkedRelationshipId" : "94",
+        "destinationId" : "80",
+        "id" : "99",
+        "linkedRelationshipId" : "98",
         "sourceId" : "9",
         "technology" : "HTTPS/JSON"
       }, {
         "description" : "Reserves funds before sending, posts final entries on confirmation, releases holds on failure or return",
         "destinationId" : "17",
-        "id" : "98",
-        "linkedRelationshipId" : "96",
+        "id" : "102",
+        "linkedRelationshipId" : "100",
         "sourceId" : "9",
         "technology" : "HTTPS/JSON, OAuth2 client credentials"
       }, {
         "description" : "Sends outbound FedNow payment messages to",
-        "destinationId" : "75",
-        "id" : "100",
-        "linkedRelationshipId" : "99",
+        "destinationId" : "79",
+        "id" : "104",
+        "linkedRelationshipId" : "103",
         "sourceId" : "9",
         "technology" : "HTTPS (ISO 20022 pacs.008 / mTLS simulated)"
       }, {
         "description" : "Notifies of payment results, inbound credits, and return outcomes via",
-        "destinationId" : "74",
-        "id" : "102",
-        "linkedRelationshipId" : "101",
+        "destinationId" : "78",
+        "id" : "106",
+        "linkedRelationshipId" : "105",
         "sourceId" : "9",
         "technology" : "Webhooks/HTTPS"
+      }, {
+        "description" : "Emits API request metrics (rate, latency, error count) to",
+        "destinationId" : "33",
+        "id" : "154",
+        "linkedRelationshipId" : "152",
+        "sourceId" : "9",
+        "technology" : "Prometheus remote write / HTTPS"
+      }, {
+        "description" : "Emits API request metrics (rate, latency, error count) to",
+        "destinationId" : "32",
+        "id" : "155",
+        "linkedRelationshipId" : "152",
+        "sourceId" : "9",
+        "technology" : "Prometheus remote write / HTTPS"
+      }, {
+        "description" : "Sends structured logs (request traces, auth failures) to",
+        "destinationId" : "34",
+        "id" : "181",
+        "linkedRelationshipId" : "180",
+        "sourceId" : "9",
+        "technology" : "HTTPS/JSON"
+      }, {
+        "description" : "Sends trace spans for end-to-end request flows to",
+        "destinationId" : "35",
+        "id" : "197",
+        "linkedRelationshipId" : "196",
+        "sourceId" : "9",
+        "technology" : "OpenTelemetry / HTTPS"
       } ],
       "tags" : "Element,Software System,In Scope"
     }, {
@@ -536,18 +727,46 @@
         },
         "relationships" : [ {
           "description" : "Validates staff tokens with",
-          "destinationId" : "38",
-          "id" : "110",
+          "destinationId" : "44",
+          "id" : "114",
           "sourceId" : "17",
           "tags" : "Relationship",
           "technology" : "OpenID Connect"
         }, {
           "description" : "Reads and writes entries, balances, holds, idempotency keys, and outbox events atomically",
           "destinationId" : "22",
-          "id" : "113",
+          "id" : "117",
           "sourceId" : "17",
           "tags" : "Relationship",
           "technology" : "SQL"
+        }, {
+          "description" : "Emits hold/post/release operation metrics, overdraft rejection count, balance query latency to",
+          "destinationId" : "33",
+          "id" : "162",
+          "sourceId" : "17",
+          "tags" : "Relationship",
+          "technology" : "Prometheus remote write / HTTPS"
+        }, {
+          "description" : "Emits hold/post/release operation metrics, overdraft rejection count, balance query latency to",
+          "destinationId" : "32",
+          "id" : "163",
+          "linkedRelationshipId" : "162",
+          "sourceId" : "17",
+          "technology" : "Prometheus remote write / HTTPS"
+        }, {
+          "description" : "Sends structured logs (entry posts, overdraft rejections, idempotency hits) to",
+          "destinationId" : "34",
+          "id" : "185",
+          "sourceId" : "17",
+          "tags" : "Relationship",
+          "technology" : "HTTPS/JSON"
+        }, {
+          "description" : "Sends trace spans (hold/post/release operations) to",
+          "destinationId" : "35",
+          "id" : "201",
+          "sourceId" : "17",
+          "tags" : "Relationship",
+          "technology" : "OpenTelemetry / HTTPS"
         } ],
         "tags" : "Element,Container,App",
         "technology" : "ASP.NET Core"
@@ -562,10 +781,31 @@
         "relationships" : [ {
           "description" : "Writes the end-of-day cut-off marker to begin the next business day",
           "destinationId" : "22",
-          "id" : "114",
+          "id" : "118",
           "sourceId" : "18",
           "tags" : "Relationship",
           "technology" : "SQL"
+        }, {
+          "description" : "Emits business day cut-off event timestamps to",
+          "destinationId" : "33",
+          "id" : "168",
+          "sourceId" : "18",
+          "tags" : "Relationship",
+          "technology" : "Prometheus remote write / HTTPS"
+        }, {
+          "description" : "Emits business day cut-off event timestamps to",
+          "destinationId" : "32",
+          "id" : "169",
+          "linkedRelationshipId" : "168",
+          "sourceId" : "18",
+          "technology" : "Prometheus remote write / HTTPS"
+        }, {
+          "description" : "Sends structured logs (business day transitions) to",
+          "destinationId" : "34",
+          "id" : "188",
+          "sourceId" : "18",
+          "tags" : "Relationship",
+          "technology" : "HTTPS/JSON"
         } ],
         "tags" : "Element,Container,App",
         "technology" : "Azure Functions"
@@ -580,10 +820,38 @@
         "relationships" : [ {
           "description" : "Reads entries and balances, verifies debits = credits, balances = sum of entries, no stuck holds; stores check results",
           "destinationId" : "22",
-          "id" : "115",
+          "id" : "119",
           "sourceId" : "19",
           "tags" : "Relationship",
           "technology" : "SQL"
+        }, {
+          "description" : "Emits integrity check pass/fail status, discrepancy count to",
+          "destinationId" : "33",
+          "id" : "166",
+          "sourceId" : "19",
+          "tags" : "Relationship",
+          "technology" : "Prometheus remote write / HTTPS"
+        }, {
+          "description" : "Emits integrity check pass/fail status, discrepancy count to",
+          "destinationId" : "32",
+          "id" : "167",
+          "linkedRelationshipId" : "166",
+          "sourceId" : "19",
+          "technology" : "Prometheus remote write / HTTPS"
+        }, {
+          "description" : "Sends structured logs (integrity check results, discrepancies found) to",
+          "destinationId" : "34",
+          "id" : "187",
+          "sourceId" : "19",
+          "tags" : "Relationship",
+          "technology" : "HTTPS/JSON"
+        }, {
+          "description" : "Sends trace spans (integrity check runs) to",
+          "destinationId" : "35",
+          "id" : "203",
+          "sourceId" : "19",
+          "tags" : "Relationship",
+          "technology" : "OpenTelemetry / HTTPS"
         } ],
         "tags" : "Element,Container,App",
         "technology" : ".NET Worker Service"
@@ -598,14 +866,14 @@
         "relationships" : [ {
           "description" : "Reads committed outbox entries (new balance changes) from",
           "destinationId" : "22",
-          "id" : "116",
+          "id" : "120",
           "sourceId" : "20",
           "tags" : "Relationship",
           "technology" : "SQL"
         }, {
           "description" : "Publishes balance-changed events exactly once to",
           "destinationId" : "21",
-          "id" : "117",
+          "id" : "121",
           "sourceId" : "20",
           "tags" : "Relationship",
           "technology" : "AMQP"
@@ -642,24 +910,46 @@
         "structurizr.dsl.identifier" : "settlement"
       },
       "relationships" : [ {
-        "description" : "Emits metrics, logs, and alerts to",
-        "destinationId" : "32",
-        "id" : "57",
-        "sourceId" : "16",
-        "tags" : "Relationship"
-      }, {
         "description" : "Validates staff tokens with",
-        "destinationId" : "38",
-        "id" : "59",
+        "destinationId" : "44",
+        "id" : "63",
         "sourceId" : "16",
         "tags" : "Relationship",
         "technology" : "OpenID Connect"
       }, {
         "description" : "Notifies of cut-off completion via Business Day Scheduler event",
         "destinationId" : "23",
-        "id" : "61",
+        "id" : "65",
         "sourceId" : "16",
         "tags" : "Relationship"
+      }, {
+        "description" : "Emits hold/post/release operation metrics, overdraft rejection count, balance query latency to",
+        "destinationId" : "33",
+        "id" : "164",
+        "linkedRelationshipId" : "162",
+        "sourceId" : "16",
+        "technology" : "Prometheus remote write / HTTPS"
+      }, {
+        "description" : "Emits hold/post/release operation metrics, overdraft rejection count, balance query latency to",
+        "destinationId" : "32",
+        "id" : "165",
+        "linkedRelationshipId" : "162",
+        "sourceId" : "16",
+        "technology" : "Prometheus remote write / HTTPS"
+      }, {
+        "description" : "Sends structured logs (entry posts, overdraft rejections, idempotency hits) to",
+        "destinationId" : "34",
+        "id" : "186",
+        "linkedRelationshipId" : "185",
+        "sourceId" : "16",
+        "technology" : "HTTPS/JSON"
+      }, {
+        "description" : "Sends trace spans (hold/post/release operations) to",
+        "destinationId" : "35",
+        "id" : "202",
+        "linkedRelationshipId" : "201",
+        "sourceId" : "16",
+        "technology" : "OpenTelemetry / HTTPS"
       } ],
       "tags" : "Element,Software System,In Scope"
     }, {
@@ -673,17 +963,31 @@
         },
         "relationships" : [ {
           "description" : "Signs users in with",
-          "destinationId" : "38",
-          "id" : "126",
+          "destinationId" : "44",
+          "id" : "130",
           "sourceId" : "24",
           "tags" : "Relationship",
           "technology" : "OpenID Connect"
         }, {
           "description" : "Requests reconciliation data, cases, corrections, and reports from",
           "destinationId" : "25",
-          "id" : "127",
+          "id" : "131",
           "sourceId" : "24",
           "tags" : "Relationship",
+          "technology" : "HTTPS/JSON"
+        }, {
+          "description" : "Sends structured logs (user actions, correction proposals) to",
+          "destinationId" : "34",
+          "id" : "189",
+          "sourceId" : "24",
+          "tags" : "Relationship",
+          "technology" : "HTTPS/JSON"
+        }, {
+          "description" : "Sends structured logs (user actions, correction proposals) to",
+          "destinationId" : "32",
+          "id" : "190",
+          "linkedRelationshipId" : "189",
+          "sourceId" : "24",
           "technology" : "HTTPS/JSON"
         } ],
         "tags" : "Element,Container,WebApp,Future",
@@ -698,39 +1002,60 @@
         },
         "relationships" : [ {
           "description" : "Validates tokens and enforces per-credit-union access controls with",
-          "destinationId" : "38",
-          "id" : "128",
+          "destinationId" : "44",
+          "id" : "132",
           "sourceId" : "25",
           "tags" : "Relationship",
           "technology" : "OpenID Connect"
         }, {
           "description" : "Reads recon results and stores cases, corrections, and approval records in",
           "destinationId" : "30",
-          "id" : "129",
+          "id" : "133",
           "sourceId" : "25",
           "tags" : "Relationship",
           "technology" : "SQL"
         }, {
           "description" : "Reads generated report files from",
           "destinationId" : "31",
-          "id" : "130",
+          "id" : "134",
           "sourceId" : "25",
           "tags" : "Relationship",
           "technology" : "HTTPS"
         }, {
           "description" : "Sends approved correcting entries with approver identity in payload to",
           "destinationId" : "17",
-          "id" : "131",
+          "id" : "135",
           "sourceId" : "25",
           "tags" : "Relationship",
           "technology" : "HTTPS/JSON, OAuth2 client credentials"
         }, {
           "description" : "Sends approved correcting entries with approver identity in payload to",
           "destinationId" : "16",
-          "id" : "132",
-          "linkedRelationshipId" : "131",
+          "id" : "136",
+          "linkedRelationshipId" : "135",
           "sourceId" : "25",
           "technology" : "HTTPS/JSON, OAuth2 client credentials"
+        }, {
+          "description" : "Sends structured logs (two-person rule validations, approvals) to",
+          "destinationId" : "34",
+          "id" : "192",
+          "sourceId" : "25",
+          "tags" : "Relationship",
+          "technology" : "HTTPS/JSON"
+        }, {
+          "description" : "Sends structured logs (two-person rule validations, approvals) to",
+          "destinationId" : "32",
+          "id" : "193",
+          "linkedRelationshipId" : "192",
+          "sourceId" : "25",
+          "technology" : "HTTPS/JSON"
+        }, {
+          "description" : "Sends trace spans (correction submissions, ledger calls) to",
+          "destinationId" : "35",
+          "id" : "204",
+          "sourceId" : "25",
+          "tags" : "Relationship",
+          "technology" : "OpenTelemetry / HTTPS"
         } ],
         "tags" : "Element,Container,App,Future",
         "technology" : "ASP.NET Core"
@@ -745,59 +1070,87 @@
         "relationships" : [ {
           "description" : "Reads payment records as of cut-off time from",
           "destinationId" : "11",
-          "id" : "133",
+          "id" : "137",
           "sourceId" : "26",
           "tags" : "Relationship",
           "technology" : "HTTPS/JSON, OAuth2 client credentials"
         }, {
           "description" : "Reads payment records as of cut-off time from",
           "destinationId" : "9",
-          "id" : "134",
-          "linkedRelationshipId" : "133",
+          "id" : "138",
+          "linkedRelationshipId" : "137",
           "sourceId" : "26",
           "technology" : "HTTPS/JSON, OAuth2 client credentials"
         }, {
           "description" : "Reads entries and balances as of cut-off time from",
           "destinationId" : "17",
-          "id" : "135",
+          "id" : "139",
           "sourceId" : "26",
           "tags" : "Relationship",
           "technology" : "HTTPS/JSON, OAuth2 client credentials"
         }, {
           "description" : "Reads entries and balances as of cut-off time from",
           "destinationId" : "16",
-          "id" : "136",
-          "linkedRelationshipId" : "135",
+          "id" : "140",
+          "linkedRelationshipId" : "139",
           "sourceId" : "26",
           "technology" : "HTTPS/JSON, OAuth2 client credentials"
         }, {
           "description" : "Downloads FedNow account statements via FedLine API from",
-          "destinationId" : "34",
-          "id" : "137",
+          "destinationId" : "40",
+          "id" : "141",
           "sourceId" : "26",
           "tags" : "Relationship",
           "technology" : "HTTPS (FedLine API)"
         }, {
           "description" : "Downloads RTP settlement reports via SFTP from",
-          "destinationId" : "35",
-          "id" : "138",
+          "destinationId" : "41",
+          "id" : "142",
           "sourceId" : "26",
           "tags" : "Relationship",
           "technology" : "SFTP (TCH)"
         }, {
           "description" : "Stores normalized payment and ledger data in",
           "destinationId" : "30",
-          "id" : "139",
+          "id" : "143",
           "sourceId" : "26",
           "tags" : "Relationship",
           "technology" : "SQL"
         }, {
           "description" : "Stores original Fed statements and RTP reports untouched in",
           "destinationId" : "31",
-          "id" : "140",
+          "id" : "144",
           "sourceId" : "26",
           "tags" : "Relationship",
           "technology" : "HTTPS"
+        }, {
+          "description" : "Emits data collection job completion time, API polling latency to",
+          "destinationId" : "33",
+          "id" : "170",
+          "sourceId" : "26",
+          "tags" : "Relationship",
+          "technology" : "Prometheus remote write / HTTPS"
+        }, {
+          "description" : "Emits data collection job completion time, API polling latency to",
+          "destinationId" : "32",
+          "id" : "171",
+          "linkedRelationshipId" : "170",
+          "sourceId" : "26",
+          "technology" : "Prometheus remote write / HTTPS"
+        }, {
+          "description" : "Sends structured logs (data collection runs, download failures) to",
+          "destinationId" : "34",
+          "id" : "194",
+          "sourceId" : "26",
+          "tags" : "Relationship",
+          "technology" : "HTTPS/JSON"
+        }, {
+          "description" : "Sends trace spans (data collection runs, downstream API calls) to",
+          "destinationId" : "35",
+          "id" : "206",
+          "sourceId" : "26",
+          "tags" : "Relationship",
+          "technology" : "OpenTelemetry / HTTPS"
         } ],
         "tags" : "Element,Container,Worker,Future",
         "technology" : ".NET Worker Service"
@@ -812,10 +1165,38 @@
         "relationships" : [ {
           "description" : "Reads normalized data and writes match records and break records to",
           "destinationId" : "30",
-          "id" : "141",
+          "id" : "145",
           "sourceId" : "27",
           "tags" : "Relationship",
           "technology" : "SQL"
+        }, {
+          "description" : "Emits reconciliation break count, match rate to",
+          "destinationId" : "33",
+          "id" : "174",
+          "sourceId" : "27",
+          "tags" : "Relationship",
+          "technology" : "Prometheus remote write / HTTPS"
+        }, {
+          "description" : "Emits reconciliation break count, match rate to",
+          "destinationId" : "32",
+          "id" : "175",
+          "linkedRelationshipId" : "174",
+          "sourceId" : "27",
+          "technology" : "Prometheus remote write / HTTPS"
+        }, {
+          "description" : "Sends structured logs (recon runs, break details) to",
+          "destinationId" : "34",
+          "id" : "195",
+          "sourceId" : "27",
+          "tags" : "Relationship",
+          "technology" : "HTTPS/JSON"
+        }, {
+          "description" : "Sends trace spans (reconciliation runs) to",
+          "destinationId" : "35",
+          "id" : "207",
+          "sourceId" : "27",
+          "tags" : "Relationship",
+          "technology" : "OpenTelemetry / HTTPS"
         } ],
         "tags" : "Element,Container,Worker,Future",
         "technology" : ".NET Worker Service"
@@ -830,31 +1211,45 @@
         "relationships" : [ {
           "description" : "Reads the frozen daily snapshot and stores report records in",
           "destinationId" : "30",
-          "id" : "142",
+          "id" : "146",
           "sourceId" : "28",
           "tags" : "Relationship",
           "technology" : "SQL"
         }, {
           "description" : "Stores generated member statements and regulatory reports in",
           "destinationId" : "31",
-          "id" : "143",
+          "id" : "147",
           "sourceId" : "28",
           "tags" : "Relationship",
           "technology" : "HTTPS"
         }, {
           "description" : "Delivers member statements and activity reports to",
           "destinationId" : "5",
-          "id" : "144",
+          "id" : "148",
           "sourceId" : "28",
           "tags" : "Relationship",
           "technology" : "SFTP"
         }, {
           "description" : "Submits regulatory reports to",
-          "destinationId" : "37",
-          "id" : "145",
+          "destinationId" : "43",
+          "id" : "149",
           "sourceId" : "28",
           "tags" : "Relationship",
           "technology" : "HTTPS / SFTP"
+        }, {
+          "description" : "Emits report generation success/failure, delivery metrics to",
+          "destinationId" : "33",
+          "id" : "176",
+          "sourceId" : "28",
+          "tags" : "Relationship",
+          "technology" : "Prometheus remote write / HTTPS"
+        }, {
+          "description" : "Emits report generation success/failure, delivery metrics to",
+          "destinationId" : "32",
+          "id" : "177",
+          "linkedRelationshipId" : "176",
+          "sourceId" : "28",
+          "technology" : "Prometheus remote write / HTTPS"
         } ],
         "tags" : "Element,Container,Worker,Future",
         "technology" : "Azure Functions"
@@ -869,17 +1264,31 @@
         "relationships" : [ {
           "description" : "Reads reconciled daily totals and records export attempts in",
           "destinationId" : "30",
-          "id" : "146",
+          "id" : "150",
           "sourceId" : "29",
           "tags" : "Relationship",
           "technology" : "SQL"
         }, {
           "description" : "Sends idempotent daily summarized entries (debit/credit) to",
-          "destinationId" : "33",
-          "id" : "147",
+          "destinationId" : "39",
+          "id" : "151",
           "sourceId" : "29",
           "tags" : "Relationship",
           "technology" : "HTTPS/JSON"
+        }, {
+          "description" : "Emits GL export success/failure, retry count to",
+          "destinationId" : "33",
+          "id" : "178",
+          "sourceId" : "29",
+          "tags" : "Relationship",
+          "technology" : "Prometheus remote write / HTTPS"
+        }, {
+          "description" : "Emits GL export success/failure, retry count to",
+          "destinationId" : "32",
+          "id" : "179",
+          "linkedRelationshipId" : "178",
+          "sourceId" : "29",
+          "technology" : "Prometheus remote write / HTTPS"
         } ],
         "tags" : "Element,Container,Worker,Future",
         "technology" : "Azure Functions"
@@ -914,91 +1323,269 @@
       },
       "relationships" : [ {
         "description" : "Validates staff tokens with",
-        "destinationId" : "38",
-        "id" : "60",
+        "destinationId" : "44",
+        "id" : "64",
         "sourceId" : "23",
         "tags" : "Relationship",
         "technology" : "OpenID Connect"
       }, {
         "description" : "Reads payment records as of cut-off time from",
         "destinationId" : "9",
-        "id" : "62",
+        "id" : "66",
         "sourceId" : "23",
         "tags" : "Relationship",
         "technology" : "HTTPS/JSON, OAuth2 client credentials"
       }, {
         "description" : "Reads entries and balances as of cut-off time from",
         "destinationId" : "16",
-        "id" : "63",
+        "id" : "67",
         "sourceId" : "23",
         "tags" : "Relationship",
         "technology" : "HTTPS/JSON, OAuth2 client credentials"
       }, {
         "description" : "Sends approved correcting entries with approver identity to",
         "destinationId" : "16",
-        "id" : "64",
+        "id" : "68",
         "sourceId" : "23",
         "tags" : "Relationship",
         "technology" : "HTTPS/JSON, OAuth2 client credentials"
       }, {
         "description" : "Downloads FedNow account statements from",
-        "destinationId" : "34",
-        "id" : "65",
+        "destinationId" : "40",
+        "id" : "69",
         "sourceId" : "23",
         "tags" : "Relationship",
         "technology" : "FedLine API / HTTPS"
       }, {
         "description" : "Downloads RTP settlement reports from",
-        "destinationId" : "35",
-        "id" : "66",
+        "destinationId" : "41",
+        "id" : "70",
         "sourceId" : "23",
         "tags" : "Relationship",
         "technology" : "SFTP"
       }, {
         "description" : "Sends idempotent daily summarized entries to",
-        "destinationId" : "33",
-        "id" : "67",
+        "destinationId" : "39",
+        "id" : "71",
         "sourceId" : "23",
         "tags" : "Relationship",
         "technology" : "HTTPS/JSON"
       }, {
         "description" : "Submits regulatory reports to",
-        "destinationId" : "37",
-        "id" : "68",
+        "destinationId" : "43",
+        "id" : "72",
         "sourceId" : "23",
         "tags" : "Relationship",
         "technology" : "HTTPS / SFTP"
       }, {
         "description" : "Sends member statements and activity reports to",
         "destinationId" : "5",
-        "id" : "69",
+        "id" : "73",
         "sourceId" : "23",
         "tags" : "Relationship",
         "technology" : "SFTP"
       }, {
         "description" : "Reads payment records as of cut-off time from",
         "destinationId" : "11",
-        "id" : "105",
+        "id" : "109",
         "sourceId" : "23",
         "tags" : "Relationship",
         "technology" : "HTTPS/JSON, OAuth2 client credentials"
       }, {
         "description" : "Reads entries and balances as of cut-off time from",
         "destinationId" : "17",
-        "id" : "118",
+        "id" : "122",
         "sourceId" : "23",
         "tags" : "Relationship",
         "technology" : "HTTPS/JSON, OAuth2 client credentials"
       }, {
         "description" : "Sends approved correcting entries with approver identity in payload to",
         "destinationId" : "17",
-        "id" : "119",
+        "id" : "123",
         "sourceId" : "23",
         "tags" : "Relationship",
         "technology" : "HTTPS/JSON, OAuth2 client credentials"
+      }, {
+        "description" : "Emits data collection job completion time, API polling latency to",
+        "destinationId" : "33",
+        "id" : "172",
+        "linkedRelationshipId" : "170",
+        "sourceId" : "23",
+        "technology" : "Prometheus remote write / HTTPS"
+      }, {
+        "description" : "Emits data collection job completion time, API polling latency to",
+        "destinationId" : "32",
+        "id" : "173",
+        "linkedRelationshipId" : "170",
+        "sourceId" : "23",
+        "technology" : "Prometheus remote write / HTTPS"
+      }, {
+        "description" : "Sends structured logs (user actions, correction proposals) to",
+        "destinationId" : "34",
+        "id" : "191",
+        "linkedRelationshipId" : "189",
+        "sourceId" : "23",
+        "technology" : "HTTPS/JSON"
+      }, {
+        "description" : "Sends trace spans (correction submissions, ledger calls) to",
+        "destinationId" : "35",
+        "id" : "205",
+        "linkedRelationshipId" : "204",
+        "sourceId" : "23",
+        "technology" : "OpenTelemetry / HTTPS"
       } ],
       "tags" : "Element,Software System,Future"
     }, {
+      "containers" : [ {
+        "description" : "Receives metrics from all platforms via push protocol (Prometheus remote write). Stores time-series data and serves queries to dashboards and alert rules.",
+        "documentation" : { },
+        "id" : "33",
+        "name" : "Metrics Collector",
+        "properties" : {
+          "structurizr.dsl.identifier" : "metricsCollector"
+        },
+        "relationships" : [ {
+          "description" : "Writes time-series metrics to",
+          "destinationId" : "38",
+          "id" : "208",
+          "sourceId" : "33",
+          "tags" : "Relationship",
+          "technology" : "SQL / Prometheus TSDB"
+        } ],
+        "tags" : "Element,Container,App",
+        "technology" : "Prometheus / Azure Monitor"
+      }, {
+        "description" : "Ingests structured logs from all platforms. Indexes and stores logs for search and correlation with traces. Handles high-volume log ingestion with buffering.",
+        "documentation" : { },
+        "id" : "34",
+        "name" : "Log Aggregator",
+        "properties" : {
+          "structurizr.dsl.identifier" : "logAggregator"
+        },
+        "relationships" : [ {
+          "description" : "Writes log index and structured log data to",
+          "destinationId" : "38",
+          "id" : "209",
+          "sourceId" : "34",
+          "tags" : "Relationship",
+          "technology" : "SQL / Elasticsearch"
+        } ],
+        "tags" : "Element,Container,App",
+        "technology" : "Azure Log Analytics / ELK Stack"
+      }, {
+        "description" : "Receives distributed traces from all platforms via OpenTelemetry protocol. Assembles trace spans into complete request flows and stores them for query.",
+        "documentation" : { },
+        "id" : "35",
+        "name" : "Trace Collector",
+        "properties" : {
+          "structurizr.dsl.identifier" : "traceCollector"
+        },
+        "relationships" : [ {
+          "description" : "Writes assembled trace spans to",
+          "destinationId" : "38",
+          "id" : "210",
+          "sourceId" : "35",
+          "tags" : "Relationship",
+          "technology" : "SQL / Jaeger storage"
+        } ],
+        "tags" : "Element,Container,App",
+        "technology" : "Azure Application Insights / Jaeger"
+      }, {
+        "description" : "Evaluates alert rules against metrics, logs, and trace anomalies. Routes alerts to appropriate channels (email, Slack, PagerDuty) based on severity and on-call schedules. Deduplicates and groups related alerts.",
+        "documentation" : { },
+        "id" : "36",
+        "name" : "Alert Manager",
+        "properties" : {
+          "structurizr.dsl.identifier" : "alertManager"
+        },
+        "relationships" : [ {
+          "description" : "Queries metrics for alert rule evaluation",
+          "destinationId" : "33",
+          "id" : "211",
+          "sourceId" : "36",
+          "tags" : "Relationship",
+          "technology" : "PromQL / HTTPS"
+        }, {
+          "description" : "Queries logs for alert rule evaluation",
+          "destinationId" : "34",
+          "id" : "212",
+          "sourceId" : "36",
+          "tags" : "Relationship",
+          "technology" : "Kusto / HTTPS"
+        }, {
+          "description" : "Queries traces for anomaly detection",
+          "destinationId" : "35",
+          "id" : "213",
+          "sourceId" : "36",
+          "tags" : "Relationship",
+          "technology" : "HTTPS"
+        }, {
+          "description" : "Notifies of worker failures, dead-letter growth, network timeouts, integrity check failures via",
+          "destinationId" : "6",
+          "id" : "217",
+          "sourceId" : "36",
+          "tags" : "Relationship",
+          "technology" : "Email / Slack / PagerDuty"
+        }, {
+          "description" : "Notifies of reconciliation break count threshold exceeded via",
+          "destinationId" : "7",
+          "id" : "219",
+          "sourceId" : "36",
+          "tags" : "Relationship",
+          "technology" : "Email / Slack"
+        } ],
+        "tags" : "Element,Container,App",
+        "technology" : "Prometheus AlertManager / Azure Monitor Alerts"
+      }, {
+        "description" : "Serves real-time operational dashboards showing payment flow metrics, worker health, dead-letter queue depth, network latency, settlement position trends, and integrity check status.",
+        "documentation" : { },
+        "id" : "37",
+        "name" : "Dashboard Service",
+        "properties" : {
+          "structurizr.dsl.identifier" : "dashboardService"
+        },
+        "relationships" : [ {
+          "description" : "Queries time-series metrics for dashboard visualization",
+          "destinationId" : "33",
+          "id" : "214",
+          "sourceId" : "37",
+          "tags" : "Relationship",
+          "technology" : "PromQL / HTTPS"
+        }, {
+          "description" : "Queries logs for dashboard panels",
+          "destinationId" : "34",
+          "id" : "215",
+          "sourceId" : "37",
+          "tags" : "Relationship",
+          "technology" : "Kusto / HTTPS"
+        }, {
+          "description" : "Queries traces for request flow visualization",
+          "destinationId" : "35",
+          "id" : "216",
+          "sourceId" : "37",
+          "tags" : "Relationship",
+          "technology" : "HTTPS"
+        }, {
+          "description" : "Validates staff tokens with",
+          "destinationId" : "44",
+          "id" : "229",
+          "sourceId" : "37",
+          "tags" : "Relationship",
+          "technology" : "OpenID Connect"
+        } ],
+        "tags" : "Element,Container,WebApp",
+        "technology" : "Grafana / Azure Dashboard"
+      }, {
+        "description" : "Stores time-series metrics, log index, trace data, alert history, and dashboard configurations. Optimized for time-range queries and high write throughput.",
+        "documentation" : { },
+        "id" : "38",
+        "name" : "Monitoring Database",
+        "properties" : {
+          "structurizr.dsl.identifier" : "monitoringDb"
+        },
+        "tags" : "Element,Container,Database",
+        "technology" : "Azure Data Explorer / TimescaleDB"
+      } ],
       "description" : "Centralizes metrics, logs, distributed traces, and alerts for all three platforms. Notifies payment operations of worker failures, dead-letter growth, network timeouts, and integrity check failures.",
       "documentation" : { },
       "group" : "OnePlatform",
@@ -1007,12 +1594,34 @@
       "properties" : {
         "structurizr.dsl.identifier" : "monitoring"
       },
+      "relationships" : [ {
+        "description" : "Notifies of worker failures, dead-letter growth, network timeouts, integrity check failures via",
+        "destinationId" : "6",
+        "id" : "218",
+        "linkedRelationshipId" : "217",
+        "sourceId" : "32",
+        "technology" : "Email / Slack / PagerDuty"
+      }, {
+        "description" : "Notifies of reconciliation break count threshold exceeded via",
+        "destinationId" : "7",
+        "id" : "220",
+        "linkedRelationshipId" : "219",
+        "sourceId" : "32",
+        "technology" : "Email / Slack"
+      }, {
+        "description" : "Validates staff tokens with",
+        "destinationId" : "44",
+        "id" : "230",
+        "linkedRelationshipId" : "229",
+        "sourceId" : "32",
+        "technology" : "OpenID Connect"
+      } ],
       "tags" : "Element,Software System,Internal"
     }, {
       "description" : "Accounting record for OnePlatform's financial statements. Receives idempotent daily summarized entries from the Post-Settlement Platform after reconciliation.",
       "documentation" : { },
       "group" : "OnePlatform",
-      "id" : "33",
+      "id" : "39",
       "name" : "Corporate General Ledger",
       "properties" : {
         "structurizr.dsl.identifier" : "generalLedger"
@@ -1021,7 +1630,7 @@
     }, {
       "description" : "FedNow real-time payment network. Movements settle against OnePlatform's master account at the Fed. FedLine API provides account statements for daily reconciliation. Requires mTLS with Fed-issued certificates.",
       "documentation" : { },
-      "id" : "34",
+      "id" : "40",
       "name" : "Federal Reserve Payment Services",
       "properties" : {
         "structurizr.dsl.identifier" : "fedServices"
@@ -1029,15 +1638,15 @@
       "relationships" : [ {
         "description" : "Delivers inbound FedNow credits to",
         "destinationId" : "9",
-        "id" : "46",
-        "sourceId" : "34",
+        "id" : "52",
+        "sourceId" : "40",
         "tags" : "Relationship",
         "technology" : "ISO 20022 pacs.008 / mTLS"
       }, {
         "description" : "Delivers FedNow return messages (pacs.004) to",
         "destinationId" : "9",
-        "id" : "50",
-        "sourceId" : "34",
+        "id" : "56",
+        "sourceId" : "40",
         "tags" : "Relationship",
         "technology" : "ISO 20022 pacs.004 / mTLS"
       } ],
@@ -1045,7 +1654,7 @@
     }, {
       "description" : "Real-time payment network operated by The Clearing House. Settlement moves positions in OnePlatform's prefunded account held at TCH — a different settlement model from FedNow. Provides daily settlement reports via SFTP.",
       "documentation" : { },
-      "id" : "35",
+      "id" : "41",
       "name" : "RTP Network (TCH)",
       "properties" : {
         "structurizr.dsl.identifier" : "rtpNetwork"
@@ -1053,15 +1662,15 @@
       "relationships" : [ {
         "description" : "Delivers inbound RTP credits to",
         "destinationId" : "9",
-        "id" : "47",
-        "sourceId" : "35",
+        "id" : "53",
+        "sourceId" : "41",
         "tags" : "Relationship",
         "technology" : "ISO 20022 pacs.008 / mTLS"
       }, {
         "description" : "Delivers RTP return messages to",
         "destinationId" : "9",
-        "id" : "51",
-        "sourceId" : "35",
+        "id" : "57",
+        "sourceId" : "41",
         "tags" : "Relationship",
         "technology" : "ISO 20022 / mTLS"
       } ],
@@ -1069,7 +1678,7 @@
     }, {
       "description" : "Third-party service that checks payments against OFAC sanctions lists and fraud signals. Blocks the payment and rejects it to the sender if unavailable or if a match is found — it is never silently bypassed.",
       "documentation" : { },
-      "id" : "36",
+      "id" : "42",
       "name" : "Sanctions and Fraud Screening",
       "properties" : {
         "structurizr.dsl.identifier" : "screening"
@@ -1078,7 +1687,7 @@
     }, {
       "description" : "Receives required regulatory reports submitted by the Post-Settlement Platform.",
       "documentation" : { },
-      "id" : "37",
+      "id" : "43",
       "name" : "Regulator (NCUA)",
       "properties" : {
         "structurizr.dsl.identifier" : "regulator"
@@ -1087,7 +1696,7 @@
     }, {
       "description" : "Signs in OnePlatform staff and issues short-lived access tokens. All staff-facing APIs validate tokens before serving any request.",
       "documentation" : { },
-      "id" : "38",
+      "id" : "44",
       "name" : "Identity Provider",
       "properties" : {
         "structurizr.dsl.identifier" : "identity"
@@ -1096,7 +1705,7 @@
     }, {
       "description" : "Test tool. Plays both sender (submits outbound payment requests, sends duplicates) and receiver (accepts inbound credit notifications and return notifications via webhook) roles of a credit union core.",
       "documentation" : { },
-      "id" : "74",
+      "id" : "78",
       "name" : "Credit Union Core Simulator",
       "properties" : {
         "structurizr.dsl.identifier" : "coreSim"
@@ -1104,23 +1713,23 @@
       "relationships" : [ {
         "description" : "Submits outbound payment requests to",
         "destinationId" : "10",
-        "id" : "85",
-        "sourceId" : "74",
+        "id" : "89",
+        "sourceId" : "78",
         "tags" : "Relationship",
         "technology" : "HTTPS/JSON"
       }, {
         "description" : "Submits outbound payment requests to",
         "destinationId" : "9",
-        "id" : "86",
-        "linkedRelationshipId" : "85",
-        "sourceId" : "74",
+        "id" : "90",
+        "linkedRelationshipId" : "89",
+        "sourceId" : "78",
         "technology" : "HTTPS/JSON"
       } ],
       "tags" : "Element,Software System,Test Tool"
     }, {
       "description" : "Test tool that simulates FedNow. Accepts, rejects, delays, or ignores payments, generates return messages (pacs.004), and can send duplicate answers to test idempotency.",
       "documentation" : { },
-      "id" : "75",
+      "id" : "79",
       "name" : "Payment Network Simulator",
       "properties" : {
         "structurizr.dsl.identifier" : "networkSim"
@@ -1128,23 +1737,23 @@
       "relationships" : [ {
         "description" : "Sends payment confirmations, inbound credits, and return messages (pacs.004) to",
         "destinationId" : "10",
-        "id" : "87",
-        "sourceId" : "75",
+        "id" : "91",
+        "sourceId" : "79",
         "tags" : "Relationship",
         "technology" : "Webhooks/HTTPS"
       }, {
         "description" : "Sends payment confirmations, inbound credits, and return messages (pacs.004) to",
         "destinationId" : "9",
-        "id" : "88",
-        "linkedRelationshipId" : "87",
-        "sourceId" : "75",
+        "id" : "92",
+        "linkedRelationshipId" : "91",
+        "sourceId" : "79",
         "technology" : "Webhooks/HTTPS"
       } ],
       "tags" : "Element,Software System,Test Tool"
     }, {
       "description" : "Test tool that rejects payments for a small hardcoded list of names. Returns a block response to simulate the real screening service being unavailable.",
       "documentation" : { },
-      "id" : "76",
+      "id" : "80",
       "name" : "Sanctions Screening Stub",
       "properties" : {
         "structurizr.dsl.identifier" : "screeningStub"
@@ -1153,7 +1762,7 @@
     }, {
       "description" : "Test tool that plays the role of the Clearing Platform. Sends reserve, post, and release requests including duplicates, simultaneous calls, and overdraft attempts to verify rejection. Also used to simulate correction entries.",
       "documentation" : { },
-      "id" : "107",
+      "id" : "111",
       "name" : "Payment Simulator",
       "properties" : {
         "structurizr.dsl.identifier" : "simulator"
@@ -1161,16 +1770,16 @@
       "relationships" : [ {
         "description" : "Reserves funds, posts final entries, releases holds, sends overdraft attempts, and submits correction entries with approver identity",
         "destinationId" : "17",
-        "id" : "111",
-        "sourceId" : "107",
+        "id" : "115",
+        "sourceId" : "111",
         "tags" : "Relationship",
         "technology" : "HTTPS/JSON"
       }, {
         "description" : "Reserves funds, posts final entries, releases holds, sends overdraft attempts, and submits correction entries with approver identity",
         "destinationId" : "16",
-        "id" : "112",
-        "linkedRelationshipId" : "111",
-        "sourceId" : "107",
+        "id" : "116",
+        "linkedRelationshipId" : "115",
+        "sourceId" : "111",
         "technology" : "HTTPS/JSON"
       } ],
       "tags" : "Element,Software System,Test Tool"
@@ -1324,23 +1933,27 @@
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "38",
+        "id" : "32",
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "73",
+        "id" : "44",
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "74",
+        "id" : "77",
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "75",
+        "id" : "78",
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "76",
+        "id" : "79",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "80",
         "x" : 0,
         "y" : 0
       } ],
@@ -1351,55 +1964,77 @@
       "relationships" : [ {
         "id" : "101"
       }, {
-        "id" : "104"
+        "id" : "103"
       }, {
         "id" : "105"
       }, {
-        "id" : "54"
+        "id" : "108"
       }, {
-        "id" : "59"
+        "id" : "109"
+      }, {
+        "id" : "153"
+      }, {
+        "id" : "157"
+      }, {
+        "id" : "159"
+      }, {
+        "id" : "161"
+      }, {
+        "id" : "165"
+      }, {
+        "id" : "173"
+      }, {
+        "id" : "218"
+      }, {
+        "id" : "222"
+      }, {
+        "id" : "226"
+      }, {
+        "id" : "228"
+      }, {
+        "id" : "230"
       }, {
         "id" : "60"
-      }, {
-        "id" : "61"
       }, {
         "id" : "63"
       }, {
         "id" : "64"
       }, {
-        "id" : "72"
+        "id" : "65"
       }, {
-        "id" : "77"
+        "id" : "67"
       }, {
-        "id" : "79"
+        "id" : "68"
       }, {
-        "id" : "80"
+        "id" : "76"
       }, {
-        "id" : "82"
+        "id" : "81"
       }, {
         "id" : "83"
       }, {
         "id" : "84"
       }, {
-        "id" : "85"
+        "id" : "86"
       }, {
         "id" : "87"
       }, {
+        "id" : "88"
+      }, {
         "id" : "89"
       }, {
-        "id" : "90"
-      }, {
         "id" : "91"
-      }, {
-        "id" : "92"
       }, {
         "id" : "93"
       }, {
         "id" : "94"
       }, {
+        "id" : "95"
+      }, {
+        "id" : "96"
+      }, {
         "id" : "97"
       }, {
-        "id" : "99"
+        "id" : "98"
       } ],
       "softwareSystemId" : "9",
       "title" : "Clearing Platform"
@@ -1445,15 +2080,19 @@
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "38",
+        "id" : "32",
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "106",
+        "id" : "44",
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "107",
+        "id" : "110",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "111",
         "x" : 0,
         "y" : 0
       } ],
@@ -1462,19 +2101,13 @@
       "name" : "Container View: Settlement Platform",
       "order" : 3,
       "relationships" : [ {
-        "id" : "108"
+        "id" : "102"
       }, {
-        "id" : "110"
-      }, {
-        "id" : "111"
-      }, {
-        "id" : "113"
+        "id" : "112"
       }, {
         "id" : "114"
       }, {
         "id" : "115"
-      }, {
-        "id" : "116"
       }, {
         "id" : "117"
       }, {
@@ -1482,13 +2115,31 @@
       }, {
         "id" : "119"
       }, {
-        "id" : "58"
+        "id" : "120"
       }, {
-        "id" : "60"
+        "id" : "121"
+      }, {
+        "id" : "122"
+      }, {
+        "id" : "123"
+      }, {
+        "id" : "155"
+      }, {
+        "id" : "163"
+      }, {
+        "id" : "167"
+      }, {
+        "id" : "169"
+      }, {
+        "id" : "173"
+      }, {
+        "id" : "230"
       }, {
         "id" : "62"
       }, {
-        "id" : "98"
+        "id" : "64"
+      }, {
+        "id" : "66"
       } ],
       "softwareSystemId" : "16",
       "title" : "Settlement Platform"
@@ -1558,27 +2209,31 @@
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "33",
+        "id" : "32",
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "34",
+        "id" : "39",
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "35",
+        "id" : "40",
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "37",
+        "id" : "41",
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "38",
+        "id" : "43",
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "120",
+        "id" : "44",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "124",
         "x" : 0,
         "y" : 0
       } ],
@@ -1587,14 +2242,6 @@
       "name" : "Container View: Post-Settlement Platform",
       "order" : 4,
       "relationships" : [ {
-        "id" : "122"
-      }, {
-        "id" : "123"
-      }, {
-        "id" : "124"
-      }, {
-        "id" : "125"
-      }, {
         "id" : "126"
       }, {
         "id" : "127"
@@ -1605,17 +2252,17 @@
       }, {
         "id" : "130"
       }, {
+        "id" : "131"
+      }, {
         "id" : "132"
+      }, {
+        "id" : "133"
       }, {
         "id" : "134"
       }, {
         "id" : "136"
       }, {
-        "id" : "137"
-      }, {
         "id" : "138"
-      }, {
-        "id" : "139"
       }, {
         "id" : "140"
       }, {
@@ -1633,19 +2280,41 @@
       }, {
         "id" : "147"
       }, {
-        "id" : "41"
+        "id" : "148"
       }, {
-        "id" : "43"
+        "id" : "149"
       }, {
-        "id" : "44"
+        "id" : "150"
       }, {
-        "id" : "45"
+        "id" : "151"
       }, {
-        "id" : "46"
+        "id" : "155"
+      }, {
+        "id" : "165"
+      }, {
+        "id" : "171"
+      }, {
+        "id" : "175"
+      }, {
+        "id" : "177"
+      }, {
+        "id" : "179"
+      }, {
+        "id" : "190"
+      }, {
+        "id" : "193"
+      }, {
+        "id" : "220"
+      }, {
+        "id" : "224"
+      }, {
+        "id" : "226"
+      }, {
+        "id" : "230"
       }, {
         "id" : "47"
       }, {
-        "id" : "48"
+        "id" : "49"
       }, {
         "id" : "50"
       }, {
@@ -1655,12 +2324,175 @@
       }, {
         "id" : "53"
       }, {
+        "id" : "54"
+      }, {
+        "id" : "56"
+      }, {
+        "id" : "57"
+      }, {
         "id" : "58"
       }, {
         "id" : "59"
+      }, {
+        "id" : "62"
+      }, {
+        "id" : "63"
       } ],
       "softwareSystemId" : "23",
       "title" : "Post-Settlement Platform"
+    }, {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "description" : "Containers of the Monitoring and Alerting Platform: Metrics Collector, Log Aggregator, Trace Collector, Alert Manager, Dashboard Service, and Monitoring Database.",
+      "elements" : [ {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "3",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "6",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "7",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "9",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "16",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "23",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "33",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "34",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "35",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "36",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "37",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "38",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "44",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalSoftwareSystemBoundariesVisible" : false,
+      "key" : "MonitoringContainers",
+      "name" : "Container View: Monitoring and Alerting",
+      "order" : 5,
+      "relationships" : [ {
+        "id" : "154"
+      }, {
+        "id" : "164"
+      }, {
+        "id" : "172"
+      }, {
+        "id" : "181"
+      }, {
+        "id" : "186"
+      }, {
+        "id" : "191"
+      }, {
+        "id" : "197"
+      }, {
+        "id" : "202"
+      }, {
+        "id" : "205"
+      }, {
+        "id" : "208"
+      }, {
+        "id" : "209"
+      }, {
+        "id" : "210"
+      }, {
+        "id" : "211"
+      }, {
+        "id" : "212"
+      }, {
+        "id" : "213"
+      }, {
+        "id" : "214"
+      }, {
+        "id" : "215"
+      }, {
+        "id" : "216"
+      }, {
+        "id" : "217"
+      }, {
+        "id" : "219"
+      }, {
+        "id" : "221"
+      }, {
+        "id" : "223"
+      }, {
+        "id" : "225"
+      }, {
+        "id" : "227"
+      }, {
+        "id" : "229"
+      }, {
+        "id" : "49"
+      }, {
+        "id" : "58"
+      }, {
+        "id" : "59"
+      }, {
+        "id" : "60"
+      }, {
+        "id" : "61"
+      }, {
+        "id" : "62"
+      }, {
+        "id" : "63"
+      }, {
+        "id" : "64"
+      }, {
+        "id" : "65"
+      }, {
+        "id" : "66"
+      }, {
+        "id" : "67"
+      }, {
+        "id" : "68"
+      }, {
+        "id" : "74"
+      }, {
+        "id" : "76"
+      }, {
+        "id" : "85"
+      } ],
+      "softwareSystemId" : "32",
+      "title" : "Monitoring and Alerting Platform"
     } ],
     "dynamicViews" : [ {
       "automaticLayout" : {
@@ -1697,90 +2529,90 @@
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "74",
+        "id" : "78",
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "75",
+        "id" : "79",
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "76",
+        "id" : "80",
         "x" : 0,
         "y" : 0
       } ],
       "externalBoundariesVisible" : false,
       "key" : "HappyPath",
       "name" : "Dynamic View: Clearing Platform",
-      "order" : 5,
+      "order" : 6,
       "relationships" : [ {
         "description" : "1. Submits outbound payment request",
-        "id" : "85",
+        "id" : "89",
         "order" : "1",
         "response" : false
       }, {
         "description" : "2. Routes request after token validation",
-        "id" : "83",
+        "id" : "87",
         "order" : "2",
         "response" : false
       }, {
         "description" : "3. Checks idempotency key; saves payment + work item atomically",
-        "id" : "89",
+        "id" : "93",
         "order" : "3",
         "response" : false
       }, {
         "description" : "4. Picks up work item",
-        "id" : "90",
+        "id" : "94",
         "order" : "4",
         "response" : false
       }, {
         "description" : "5. Requests ISO 20022 pacs.008 message",
-        "id" : "91",
+        "id" : "95",
         "order" : "5",
         "response" : false
       }, {
         "description" : "6. Screens payment (blocks if unavailable)",
-        "id" : "94",
+        "id" : "98",
         "order" : "6",
         "response" : false
       }, {
         "description" : "7. Reserves funds (hold)",
-        "id" : "96",
+        "id" : "100",
         "order" : "7",
         "response" : false
       }, {
         "description" : "8. Sends pacs.008 to FedNow simulator",
-        "id" : "99",
+        "id" : "103",
         "order" : "8",
         "response" : false
       }, {
         "description" : "9. Returns pacs.002 confirmation",
-        "id" : "87",
+        "id" : "91",
         "order" : "9",
         "response" : false
       }, {
         "description" : "10. Delivers confirmation",
-        "id" : "83",
+        "id" : "87",
         "order" : "10",
         "response" : false
       }, {
         "description" : "11. Records confirmation",
-        "id" : "89",
+        "id" : "93",
         "order" : "11",
         "response" : false
       }, {
         "description" : "12. Picks up confirmation work item",
-        "id" : "90",
+        "id" : "94",
         "order" : "12",
         "response" : false
       }, {
         "description" : "13. Posts final settlement entries (converts hold to debit)",
-        "id" : "96",
+        "id" : "100",
         "order" : "13",
         "response" : false
       }, {
         "description" : "14. Notifies credit union core of confirmed result",
-        "id" : "101",
+        "id" : "105",
         "order" : "14",
         "response" : false
       } ]
@@ -1811,42 +2643,42 @@
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "107",
+        "id" : "111",
         "x" : 0,
         "y" : 0
       } ],
       "externalBoundariesVisible" : false,
       "key" : "ReserveAndPost",
       "name" : "Dynamic View: Settlement Platform",
-      "order" : 6,
+      "order" : 7,
       "relationships" : [ {
         "description" : "1. Requests hold (reserve) for payment amount",
-        "id" : "111",
+        "id" : "115",
         "order" : "1",
         "response" : false
       }, {
         "description" : "2. Checks available funds; creates hold entry atomically",
-        "id" : "113",
+        "id" : "117",
         "order" : "2",
         "response" : false
       }, {
         "description" : "3. On network confirmation, requests post",
-        "id" : "111",
+        "id" : "115",
         "order" : "3",
         "response" : false
       }, {
         "description" : "4. Converts hold into permanent debit; writes outbox event",
-        "id" : "113",
+        "id" : "117",
         "order" : "4",
         "response" : false
       }, {
         "description" : "5. Reads new outbox entry (stretch)",
-        "id" : "116",
+        "id" : "120",
         "order" : "5",
         "response" : false
       }, {
         "description" : "6. Publishes balance-changed event (stretch)",
-        "id" : "117",
+        "id" : "121",
         "order" : "6",
         "response" : false
       } ]
@@ -1893,56 +2725,56 @@
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "34",
+        "id" : "40",
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "35",
+        "id" : "41",
         "x" : 0,
         "y" : 0
       } ],
       "externalBoundariesVisible" : false,
       "key" : "DailyReconciliation",
       "name" : "Dynamic View: Post-Settlement Platform",
-      "order" : 7,
+      "order" : 8,
       "relationships" : [ {
         "description" : "1. Writes end-of-day cut-off marker",
-        "id" : "114",
+        "id" : "118",
         "order" : "1",
         "response" : false
       }, {
         "description" : "2. Downloads payment records as of cut-off",
-        "id" : "133",
+        "id" : "137",
         "order" : "2",
         "response" : false
       }, {
         "description" : "3. Downloads ledger entries as of cut-off",
-        "id" : "135",
+        "id" : "139",
         "order" : "3",
         "response" : false
       }, {
         "description" : "4. Downloads FedNow statement via FedLine API",
-        "id" : "137",
+        "id" : "141",
         "order" : "4",
         "response" : false
       }, {
         "description" : "5. Downloads RTP settlement report via SFTP",
-        "id" : "138",
+        "id" : "142",
         "order" : "5",
         "response" : false
       }, {
         "description" : "6. Stores normalized data",
-        "id" : "139",
+        "id" : "143",
         "order" : "6",
         "response" : false
       }, {
         "description" : "7. Stores originals untouched",
-        "id" : "140",
+        "id" : "144",
         "order" : "7",
         "response" : false
       }, {
         "description" : "8. Compares platform vs ledger vs network statements; writes breaks",
-        "id" : "141",
+        "id" : "145",
         "order" : "8",
         "response" : false
       } ]
@@ -1981,51 +2813,51 @@
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "74",
+        "id" : "78",
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "75",
+        "id" : "79",
         "x" : 0,
         "y" : 0
       } ],
       "externalBoundariesVisible" : false,
       "key" : "EndToEnd",
       "name" : "Dynamic View: Clearing Platform",
-      "order" : 8,
+      "order" : 9,
       "relationships" : [ {
         "description" : "1. Delivers inbound pacs.008 credit",
-        "id" : "87",
+        "id" : "91",
         "order" : "1",
         "response" : false
       }, {
         "description" : "2. Routes inbound credit",
-        "id" : "83",
+        "id" : "87",
         "order" : "2",
         "response" : false
       }, {
         "description" : "3. Checks idempotency; saves inbound payment + work item",
-        "id" : "89",
+        "id" : "93",
         "order" : "3",
         "response" : false
       }, {
         "description" : "4. Picks up inbound work item",
-        "id" : "90",
+        "id" : "94",
         "order" : "4",
         "response" : false
       }, {
         "description" : "5. Parses ISO 20022 pacs.008",
-        "id" : "91",
+        "id" : "95",
         "order" : "5",
         "response" : false
       }, {
         "description" : "6. Posts credit to receiving credit union's account",
-        "id" : "96",
+        "id" : "100",
         "order" : "6",
         "response" : false
       }, {
         "description" : "7. Notifies credit union core to credit member's account",
-        "id" : "101",
+        "id" : "105",
         "order" : "7",
         "response" : false
       } ]
@@ -2060,42 +2892,42 @@
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "75",
+        "id" : "79",
         "x" : 0,
         "y" : 0
       } ],
       "externalBoundariesVisible" : false,
       "key" : "WorkerCrash",
       "name" : "Dynamic View: Clearing Platform",
-      "order" : 9,
+      "order" : 10,
       "relationships" : [ {
         "description" : "1. Picks up work item; lease expires on crash",
-        "id" : "90",
+        "id" : "94",
         "order" : "1",
         "response" : false
       }, {
         "description" : "2. On restart, picks up same item (lease reacquired)",
-        "id" : "90",
+        "id" : "94",
         "order" : "2",
         "response" : false
       }, {
         "description" : "3. Retries reserve — ledgerService ignores duplicate (idempotency key)",
-        "id" : "96",
+        "id" : "100",
         "order" : "3",
         "response" : false
       }, {
         "description" : "4. Retries send — network sees duplicate; returns original answer",
-        "id" : "99",
+        "id" : "103",
         "order" : "4",
         "response" : false
       }, {
         "description" : "5. Max retries exceeded — moves item to dead-letter table",
-        "id" : "90",
+        "id" : "94",
         "order" : "5",
         "response" : false
       }, {
         "description" : "6. Ops staff investigates dead-letter entry",
-        "id" : "82",
+        "id" : "86",
         "order" : "6",
         "response" : false
       } ]
@@ -2134,52 +2966,52 @@
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "120",
+        "id" : "124",
         "x" : 0,
         "y" : 0
       } ],
       "externalBoundariesVisible" : false,
       "key" : "CorrectionApproval",
       "name" : "Dynamic View: Post-Settlement Platform",
-      "order" : 10,
+      "order" : 11,
       "relationships" : [ {
         "description" : "1. Investigates break; proposes correcting entry",
-        "id" : "122",
+        "id" : "126",
         "order" : "1",
         "response" : false
       }, {
         "description" : "2. Submits proposed correction",
-        "id" : "127",
+        "id" : "131",
         "order" : "2",
         "response" : false
       }, {
         "description" : "3. Saves correction in pending state",
-        "id" : "129",
+        "id" : "133",
         "order" : "3",
         "response" : false
       }, {
         "description" : "4. Reviews and approves correction (must be different person)",
-        "id" : "123",
+        "id" : "127",
         "order" : "4",
         "response" : false
       }, {
         "description" : "5. Submits approval with approver identity",
-        "id" : "127",
+        "id" : "131",
         "order" : "5",
         "response" : false
       }, {
         "description" : "6. Records approval",
-        "id" : "129",
+        "id" : "133",
         "order" : "6",
         "response" : false
       }, {
         "description" : "7. Sends correcting entry with approver identity in payload",
-        "id" : "131",
+        "id" : "135",
         "order" : "7",
         "response" : false
       }, {
         "description" : "8. Posts idempotent correcting entry; records approver identity",
-        "id" : "113",
+        "id" : "117",
         "order" : "8",
         "response" : false
       } ]
@@ -2242,55 +3074,55 @@
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "33",
+        "id" : "39",
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "34",
+        "id" : "40",
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "35",
+        "id" : "41",
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "36",
+        "id" : "42",
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "37",
+        "id" : "43",
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "38",
+        "id" : "44",
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "73",
+        "id" : "77",
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "74",
+        "id" : "78",
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "75",
+        "id" : "79",
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "76",
+        "id" : "80",
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "106",
+        "id" : "110",
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "107",
+        "id" : "111",
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "120",
+        "id" : "124",
         "x" : 0,
         "y" : 0
       } ],
@@ -2299,27 +3131,35 @@
       "name" : "System Landscape View",
       "order" : 1,
       "relationships" : [ {
-        "id" : "100"
+        "id" : "104"
       }, {
-        "id" : "102"
+        "id" : "106"
       }, {
-        "id" : "109"
+        "id" : "113"
       }, {
-        "id" : "112"
+        "id" : "116"
       }, {
-        "id" : "121"
+        "id" : "125"
       }, {
-        "id" : "39"
+        "id" : "155"
       }, {
-        "id" : "40"
+        "id" : "165"
       }, {
-        "id" : "41"
+        "id" : "173"
       }, {
-        "id" : "42"
+        "id" : "218"
       }, {
-        "id" : "43"
+        "id" : "220"
       }, {
-        "id" : "44"
+        "id" : "222"
+      }, {
+        "id" : "224"
+      }, {
+        "id" : "226"
+      }, {
+        "id" : "228"
+      }, {
+        "id" : "230"
       }, {
         "id" : "45"
       }, {
@@ -2377,15 +3217,23 @@
       }, {
         "id" : "72"
       }, {
-        "id" : "78"
+        "id" : "73"
       }, {
-        "id" : "81"
+        "id" : "74"
       }, {
-        "id" : "86"
+        "id" : "75"
       }, {
-        "id" : "88"
+        "id" : "76"
       }, {
-        "id" : "95"
+        "id" : "82"
+      }, {
+        "id" : "85"
+      }, {
+        "id" : "90"
+      }, {
+        "id" : "92"
+      }, {
+        "id" : "99"
       } ],
       "title" : "OnePlatform — System Landscape"
     } ]

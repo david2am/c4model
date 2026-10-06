@@ -9,6 +9,7 @@ workspace "OnePlatform" "Payment clearing, settlement, and post-settlement for m
         !include src/mvp/c2_clearing.dsl
         !include src/mvp/c2_settlement.dsl
         !include src/mvp/c2_post-settlement.dsl
+        !include src/mvp/c2_monitoring.dsl
     }
 
     views {
@@ -45,7 +46,15 @@ workspace "OnePlatform" "Payment clearing, settlement, and post-settlement for m
             description "Containers of the Post-Settlement Platform (future): Back-Office Portal, API, Data Collector, Reconciliation Engine, Report Generator, Accounting Exporter, Database, and Archive."
         }
 
-        // 5. Dynamic — Outbound payment happy path (Clearing)
+        // 5. C2 — Monitoring and Alerting Platform containers
+        container monitoring "MonitoringContainers" {
+            include *
+            autoLayout lr
+            title "Monitoring and Alerting Platform"
+            description "Containers of the Monitoring and Alerting Platform: Metrics Collector, Log Aggregator, Trace Collector, Alert Manager, Dashboard Service, and Monitoring Database."
+        }
+
+        // 6. Dynamic — Outbound payment happy path (Clearing)
         dynamic platform "HappyPath" "How one outbound FedNow payment travels through the Clearing Platform end to end." {
             coreSim -> apim "1. Submits outbound payment request"
             apim -> orchestratorApi "2. Routes request after token validation"
@@ -64,7 +73,7 @@ workspace "OnePlatform" "Payment clearing, settlement, and post-settlement for m
             autoLayout lr
         }
 
-        // 6. Dynamic — Reserve and post in the Settlement Platform
+        // 7. Dynamic — Reserve and post in the Settlement Platform
         dynamic settlement "ReserveAndPost" "How funds are held, then posted, for one outbound payment." {
             simulator -> ledgerService "1. Requests hold (reserve) for payment amount"
             ledgerService -> ledgerDb "2. Checks available funds; creates hold entry atomically"
@@ -75,7 +84,7 @@ workspace "OnePlatform" "Payment clearing, settlement, and post-settlement for m
             autoLayout lr
         }
 
-        // 7. Dynamic — Daily reconciliation (Post-Settlement)
+        // 8. Dynamic — Daily reconciliation (Post-Settlement)
         dynamic postSettlement "DailyReconciliation" "How the Post-Settlement Platform reconciles numbers after the daily cut-off." {
             cutoffScheduler -> ledgerDb "1. Writes end-of-day cut-off marker"
             collector -> orchestratorApi "2. Downloads payment records as of cut-off"
@@ -88,7 +97,7 @@ workspace "OnePlatform" "Payment clearing, settlement, and post-settlement for m
             autoLayout lr
         }
 
-        // 8. Dynamic — End-to-end: inbound credit received from FedNow
+        // 9. Dynamic — End-to-end: inbound credit received from FedNow
         dynamic platform "EndToEnd" "How an inbound FedNow credit is received and credited to the member's account." {
             networkSim -> apim "1. Delivers inbound pacs.008 credit"
             apim -> orchestratorApi "2. Routes inbound credit"
@@ -100,7 +109,7 @@ workspace "OnePlatform" "Payment clearing, settlement, and post-settlement for m
             autoLayout lr
         }
 
-        // 9. Dynamic — Worker crash recovery (dead-letter scenario)
+        // 10. Dynamic — Worker crash recovery (dead-letter scenario)
         dynamic platform "WorkerCrash" "What happens when a Payment Worker crashes mid-flight on a work item." {
             paymentWorker -> platformDb "1. Picks up work item; lease expires on crash"
             paymentWorker -> platformDb "2. On restart, picks up same item (lease reacquired)"
@@ -111,7 +120,7 @@ workspace "OnePlatform" "Payment clearing, settlement, and post-settlement for m
             autoLayout lr
         }
 
-        // 10. Dynamic — Correction approval flow (Post-Settlement)
+        // 11. Dynamic — Correction approval flow (Post-Settlement)
         dynamic postSettlement "CorrectionApproval" "How a two-person correction is proposed, approved, and applied to the ledger." {
             coFinance -> portal "1. Investigates break; proposes correcting entry"
             portal -> api "2. Submits proposed correction"
